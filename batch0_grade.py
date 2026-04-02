@@ -1,0 +1,409 @@
+"""
+PropEdge V14.0 — batch0_grade.py
+Batch 0: Grade yesterday → append gamelogs → H2H rebuild → DVP update → retrain → git push.
+Runs at 08:00 UK. All steps are sequential and order-critical.
+"""
+
+import json
+import re
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+from config import (
+    VERSION, FILE_GL_2526, FILE_H2H, FILE_TODAY, FILE_SEASON_2526,
+    FILE_CLF, FILE_REG, FILE_CAL, FILE_TRUST, FILE_DVP,
+    get_uk, today_et, clean_json, GIT_REMOTE, REPO_DIR,
+)
+from rolling_engine import filter_played, compute_rolling_for_new_rows
+from h2h_builder import build_h2h
+from dvp_updater import compute_and_save_dvp
+from model_trainer import train_and_save
+from reasoning_engine import generate_post_match_reason
+from audit import log_event, verify_no_deletion
+from batch_predict import git_push
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NBA API HELPERS
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _parse_min(v) -> float:
+    s = str(v).strip()
+    if s in ("", "None", "nan", "0", "PT00M00.00S"):
+        return 0.0
+    if s.startswith("PT") and "M" in s:
+        m = re.match(r"PT(\d+)M([\d.]+)S", s)
+        return float(m.group(1)) + float(m.group(2)) / 60 if m else 0.0
+    if ":" in s:
+        p = s.split(":")
+        return float(p[0]) + float(p[1]) / 60
+    try:
+        return float(s)
+    except Exception:
+        return 0.0
+
+
+def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
+    """Fetch yesterday's box scores via nba_api. Returns (played_rows, players_in_box)."""
+    from nba_api.stats.endpoints import scoreboardv3, boxscoretraditionalv3
+    import time
+
+    print(f"  Fetching box scores for {date_str}...")
+    played_rows: list[dict]  = []
+    players_in_box: set[str] = set()
+
+    try:
+        sb = scoreboardv3.ScoreboardV3(
+            game_date=date_str, league_id="00"
+        ).get_normalized_dict()
+        games = sb.get("scoreboard", {}).get("games", [])
+    except Exception as e:
+        log_event("B0", "FETCH_EMPTY_WARNING", detail=f"ScoreboardV3 error: {e}")
+        print(f"  ⚠ ScoreboardV3 error: {e}")
+        return [], set()
+
+    if not games:
+        log_event("B0", "FETCH_EMPTY_WARNING", detail="0 games on scoreboard")
+        print(f"  ⚠ 0 games found for {date_str}")
+        return [], set()
+
+    for game in games:
+        gid = game.get("gameId") or game.get("id", "")
+        if not gid:
+            continue
+        try:
+            time.sleep(0.6)  # rate limit
+            bx = boxscoretraditionalv3.BoxScoreTraditionalV3(game_id=gid).get_normalized_dict()
+            for team_key in ("homeTeam", "awayTeam"):
+                team_data = bx.get(team_key, {})
+                for player in team_data.get("players", []):
+                    pname = str(player.get("name", "")).strip()
+                    if not pname:
+                        continue
+                    players_in_box.add(pname)
+                    mins = _parse_min(player.get("statistics", {}).get("minutesCalculated", 0))
+                    if mins <= 0:
+                        continue   # DNP-CD — in box but didn't play
+                    s = player.get("statistics", {})
+                    played_rows.append({
+                        "PLAYER_NAME":    pname,
+                        "GAME_DATE":      date_str,
+                        "PTS":            float(s.get("points", 0) or 0),
+                        "MIN_NUM":        round(mins, 2),
+                        "FGA":            float(s.get("fieldGoalsAttempted", 0) or 0),
+                        "FGM":            float(s.get("fieldGoalsMade", 0) or 0),
+                        "FG3A":           float(s.get("threePointersAttempted", 0) or 0),
+                        "FG3M":           float(s.get("threePointersMade", 0) or 0),
+                        "FTA":            float(s.get("freeThrowsAttempted", 0) or 0),
+                        "FTM":            float(s.get("freeThrowsMade", 0) or 0),
+                        "REB":            float(s.get("reboundsTotal", 0) or 0),
+                        "AST":            float(s.get("assists", 0) or 0),
+                        "STL":            float(s.get("steals", 0) or 0),
+                        "BLK":            float(s.get("blocks", 0) or 0),
+                        "TOV":            float(s.get("turnovers", 0) or 0),
+                        "PLUS_MINUS":     float(s.get("plusMinusPoints", 0) or 0),
+                        "DNP":            0,
+                        "OPPONENT":       team_data.get("teamCity", ""),
+                        "IS_HOME":        1 if team_key == "homeTeam" else 0,
+                    })
+        except Exception as e:
+            print(f"  ⚠ BoxScore error game {gid}: {e}")
+
+    log_event("B0", "BOXSCORES_FETCHED", detail=f"{len(played_rows)} rows, {len(players_in_box)} players")
+    print(f"  Box scores: {len(played_rows)} played rows, {len(players_in_box)} in box")
+    return played_rows, players_in_box
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# GRADE PLAYS
+# ─────────────────────────────────────────────────────────────────────────────
+
+def grade_plays(
+    date_str: str,
+    played_rows: list[dict],
+    players_in_box: set[str],
+) -> tuple[list[str], list[dict]]:
+    """Grade yesterday's plays. Graded plays are permanently immutable."""
+
+    results_map = {r["PLAYER_NAME"]: r for r in played_rows}
+
+    def _load(path: Path) -> list[dict]:
+        if not path.exists():
+            return []
+        with open(path) as f:
+            return json.load(f)
+
+    graded_count = wins = losses = dnps = 0
+    dnp_names: list[str] = []
+    plays_for_check: list[dict] = []
+
+    for path in (FILE_TODAY, FILE_SEASON_2526):
+        data = _load(path)
+        changed = False
+        for play in data:
+            if play.get("date") != date_str:
+                continue
+            if play.get("result") in ("WIN", "LOSS", "DNP"):
+                continue   # immutable
+
+            pname = play.get("player", "")
+            line  = float(play.get("line", 20))
+            dr    = str(play.get("direction", ""))
+            is_over = "OVER" in dr.upper() and "LEAN" not in dr.upper()
+            is_under= "UNDER"in dr.upper() and "LEAN" not in dr.upper()
+
+            box = results_map.get(pname)
+
+            if pname not in players_in_box or (box is None):
+                # DNP — not in box at all
+                play["result"] = "DNP"
+                play["actualPts"] = None
+                play["actualMin"] = 0
+                post, lt = generate_post_match_reason(play)
+                play["postMatchReason"] = post
+                play["lossType"] = "DNP"
+                dnps += 1; dnp_names.append(pname)
+            else:
+                actual = float(box.get("PTS", 0))
+                actual_min = float(box.get("MIN_NUM", 0))
+                play["actualPts"] = actual
+                play["actualMin"] = round(actual_min, 1)
+                play["delta"]     = round(actual - line, 1)
+
+                if is_over:
+                    win = actual > line
+                elif is_under:
+                    win = actual <= line
+                else:
+                    # LEAN — grade direction but 0 units
+                    win = (actual > line and "OVER" in dr) or (actual <= line and "UNDER" in dr)
+
+                play["result"] = "WIN" if win else "LOSS"
+                if win: wins += 1
+                else:   losses += 1
+
+                box_data = {
+                    "actual_pts": actual, "actual_min": actual_min,
+                    "actual_fga": box.get("FGA", 0), "actual_fgm": box.get("FGM", 0),
+                    "actual_fg_pct": box.get("FGM", 0) / max(box.get("FGA", 1), 1),
+                }
+                post, lt = generate_post_match_reason(play, box_data)
+                play["postMatchReason"] = post
+                play["lossType"] = lt
+                plays_for_check.append(play)
+
+            graded_count += 1
+            changed = True
+
+        if changed:
+            with open(path, "w") as f:
+                json.dump(clean_json(data), f, indent=2)
+
+    log_event("B0", "BATCH_SUMMARY",
+              detail=f"graded={graded_count} wins={wins} losses={losses} dnp={dnps}")
+    print(f"  Graded: {graded_count} | W:{wins} L:{losses} DNP:{dnps}")
+    return dnp_names, plays_for_check
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# APPEND GAME LOGS
+# ─────────────────────────────────────────────────────────────────────────────
+
+def append_gamelogs(played_rows: list[dict], dnp_names: list[str], date_str: str) -> None:
+    """Append yesterday's played rows + DNP stubs to nba_gamelogs_2025_26.csv."""
+    existing = pd.read_csv(FILE_GL_2526, parse_dates=["GAME_DATE"])
+    rows_before = len(existing)
+    log_event("B0", "FILE_STATE_BEFORE_APPEND", str(FILE_GL_2526.name), rows_before, rows_before)
+
+    # DNP stubs (players in our predictions who didn't play)
+    # Get bio from last known row
+    bio_cache: dict[str, dict] = {}
+    for _, r in existing.drop_duplicates("PLAYER_NAME", keep="last").iterrows():
+        bio_cache[r["PLAYER_NAME"]] = r.to_dict()
+
+    new_rows = []
+    for r in played_rows:
+        row = dict(r)
+        row["GAME_DATE"] = date_str
+        row["DNP"] = 0
+        new_rows.append(row)
+
+    for pname in set(dnp_names):
+        bio = bio_cache.get(pname, {})
+        stub = {
+            "PLAYER_NAME": pname, "GAME_DATE": date_str,
+            "PTS": float("nan"), "MIN_NUM": 0, "FGA": float("nan"),
+            "FGM": float("nan"), "FG3A": float("nan"), "FG3M": float("nan"),
+            "FTA": float("nan"), "FTM": float("nan"),
+            "DNP": 1,
+            "PLAYER_POSITION": bio.get("PLAYER_POSITION", ""),
+            "GAME_TEAM_ABBREVIATION": bio.get("GAME_TEAM_ABBREVIATION", ""),
+            "USAGE_APPROX": float("nan"), "IS_HOME": bio.get("IS_HOME", 0),
+            "OPPONENT": bio.get("OPPONENT", ""),
+        }
+        new_rows.append(stub)
+
+    new_df = pd.DataFrame(new_rows)
+    new_df["GAME_DATE"] = pd.to_datetime(new_df["GAME_DATE"])
+
+    # Rolling stats for new played rows
+    combined = pd.concat([existing, new_df], ignore_index=True)
+    combined  = compute_rolling_for_new_rows(combined)
+
+    # Dedup — keep last per (PLAYER_NAME, GAME_DATE)
+    combined = combined.drop_duplicates(subset=["PLAYER_NAME","GAME_DATE"], keep="last")
+    combined = combined.sort_values(["PLAYER_NAME","GAME_DATE"]).reset_index(drop=True)
+    combined.to_csv(FILE_GL_2526, index=False)
+
+    verify_no_deletion(FILE_GL_2526, rows_before, "B0")
+    print(f"  Gamelogs: {rows_before} → {len(combined)} rows (+{len(combined)-rows_before})")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# POST-MATCH ROLLING UPDATE
+# ─────────────────────────────────────────────────────────────────────────────
+
+def update_postmatch_rolling(date_str: str) -> None:
+    """Recompute L30/L10 display fields for graded plays AFTER new rows appended."""
+    from rolling_engine import extract_prediction_features, filter_played
+
+    gl = pd.read_csv(FILE_GL_2526, parse_dates=["GAME_DATE"])
+    played = filter_played(gl)
+    cutoff = pd.Timestamp(date_str) + timedelta(days=1)
+
+    player_idx = {
+        pname: grp.sort_values("GAME_DATE").reset_index(drop=True)
+        for pname, grp in played.groupby("PLAYER_NAME")
+    }
+
+    for path in (FILE_TODAY, FILE_SEASON_2526):
+        if not path.exists(): continue
+        with open(path) as f: data = json.load(f)
+        changed = False
+        for play in data:
+            if play.get("date") != date_str: continue
+            if play.get("result") == "DNP":   continue
+            pname = play.get("player","")
+            hist  = player_idx.get(pname)
+            if hist is None: continue
+            prior = hist[hist["GAME_DATE"] < cutoff]
+            if len(prior) < 2: continue
+            pts = prior["PTS"].values.astype(float)
+            play["l30"] = round(float(np.mean(pts[-30:])), 1)
+            play["l10"] = round(float(np.mean(pts[-10:])), 1)
+            play["l5"]  = round(float(np.mean(pts[-5:])),  1)
+            play["l3"]  = round(float(np.mean(pts[-3:])),  1)
+            changed = True
+        if changed:
+            with open(path,"w") as f: json.dump(clean_json(data), f, indent=2)
+    print("  Post-match rolling updated.")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ROLLING CROSSCHECK
+# ─────────────────────────────────────────────────────────────────────────────
+
+def crosscheck_rolling_stats(plays: list[dict], date_str: str) -> dict[str, str | None]:
+    """Recompute L30 fresh and compare against stored. Flag > 1pt deviations."""
+    from rolling_engine import filter_played
+
+    gl = pd.read_csv(FILE_GL_2526, parse_dates=["GAME_DATE"])
+    played = filter_played(gl)
+    player_idx = {
+        pname: grp.sort_values("GAME_DATE").reset_index(drop=True)
+        for pname, grp in played.groupby("PLAYER_NAME")
+    }
+    integrity: dict[str, str | None] = {}
+
+    for play in plays:
+        pname = play.get("player", "")
+        stored_l30 = float(play.get("l30", 0) or 0)
+        hist = player_idx.get(pname)
+        if hist is None: continue
+        prior = hist[hist["GAME_DATE"] < pd.Timestamp(date_str)]
+        if len(prior) < 5: continue
+        fresh_l30 = float(np.mean(prior["PTS"].values[-30:]))
+        dev = abs(fresh_l30 - stored_l30)
+        if dev > 1.0:
+            msg = f"L30 drift {dev:.2f}pts (stored {stored_l30:.1f}, fresh {fresh_l30:.1f})"
+            log_event("B0", "ROLLING_CROSSCHECK_FAIL", pname, detail=msg)
+            integrity[pname] = msg
+        else:
+            integrity[pname] = None
+
+    fails = sum(1 for v in integrity.values() if v)
+    print(f"  Rolling crosscheck: {fails} flag(s) of {len(integrity)} checked")
+    return integrity
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MAIN BATCH 0
+# ─────────────────────────────────────────────────────────────────────────────
+
+def main():
+    from datetime import datetime as dt
+
+    # Yesterday in ET
+    yesterday_ts = dt.now(get_uk()) - timedelta(days=1)
+    yesterday    = yesterday_ts.strftime("%Y-%m-%d")
+
+    print(f"\n{'='*60}")
+    print(f"  PropEdge {VERSION} — Batch 0 (Grade + Retrain)")
+    print(f"  Grading: {yesterday}")
+    print(f"{'='*60}")
+    log_event("B0", "BATCH_START", detail=f"grading_date={yesterday}")
+
+    # 1. Fetch box scores
+    played_rows, players_in_box = fetch_boxscores(yesterday)
+
+    # 2. Grade plays (immutable once set)
+    dnp_names, plays_for_check = grade_plays(yesterday, played_rows, players_in_box)
+
+    # 3. Append game logs
+    if played_rows or dnp_names:
+        append_gamelogs(played_rows, dnp_names, yesterday)
+
+    # 3b. Post-game rolling refresh
+    update_postmatch_rolling(yesterday)
+
+    # 4. Rolling crosscheck
+    integrity = crosscheck_rolling_stats(plays_for_check, yesterday)
+
+    # 5. Apply integrity flags to post-match reason
+    for path in (FILE_TODAY, FILE_SEASON_2526):
+        if not path.exists(): continue
+        with open(path) as f: data = json.load(f)
+        changed = False
+        for play in data:
+            if play.get("date") != yesterday: continue
+            flag = integrity.get(play.get("player",""))
+            if flag:
+                play["postMatchReason"] = (play.get("postMatchReason","") +
+                                            f" ⚠ Data integrity: {flag}")
+                changed = True
+        if changed:
+            with open(path,"w") as f: json.dump(clean_json(data), f, indent=2)
+
+    # 6. Rebuild H2H
+    from config import FILE_GL_2425
+    build_h2h(FILE_GL_2425, FILE_GL_2526, FILE_H2H)
+
+    # 7. Update DVP
+    compute_and_save_dvp(FILE_GL_2526, FILE_DVP)
+
+    # 8. Retrain all models
+    print("  Retraining V14 models (~5-8 min)...")
+    train_and_save(FILE_CLF, FILE_REG, FILE_CAL, FILE_TRUST)
+
+    # 9. Git push
+    git_push(f"B0: grade {yesterday}")
+
+    log_event("B0", "BATCH_COMPLETE", detail=f"grade_date={yesterday}")
+    print(f"\n  ✓ Batch 0 complete — graded {yesterday}.\n")
+
+
+if __name__ == "__main__":
+    main()
