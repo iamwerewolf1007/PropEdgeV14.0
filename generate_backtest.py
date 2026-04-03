@@ -166,6 +166,7 @@ def _load_excel_props():
                 "game":      str(r.get("Game","")).strip(),
                 "home":      str(r.get("Home","")).strip(),
                 "away":      str(r.get("Away","")).strip(),
+                "game_time": str(r.get("Game_Time_ET","") or "").replace(" ET","").strip(),
                 "books":     int(r.get("Books",1) or 1),
                 "season":    "2025-26",
                 "source":    "real",
@@ -277,7 +278,7 @@ def build_feature_rows(player_idx, h2h_lkp, dvp_rank, pace_cache, b2b_map, props
             "opponent":    opponent,
             "h2h_avg":     float(hk.get("H2H_AVG_PTS", 0) or 0),
             **{k: prop[k] for k in ("line","min_line","max_line","over_odds","under_odds",
-                                     "game","home","away","books","season","source")},
+                                     "game","home","away","game_time","books","season","source")},
         }
         rows.append(row)
 
@@ -575,6 +576,11 @@ def _build_play(row, recent_idx):
         "lineSharpness": round(float(row.get("line_sharpness",0.67)),3),
         "is_b2b":    int(row.get("is_b2b",0)),
         "rest_days": int(row.get("rest_days",2)),
+        "game_time": str(row.get("game_time","") or ""),
+        "home_l10":  round(float(row.get("home_l10",0)),1),
+        "away_l10":  round(float(row.get("away_l10",0)),1),
+        "min_l30":   round(float(row.get("min_l30",0)),1),
+        "vol_risk":  round(float(row.get("vol_risk",0)),3),
         "recent20":  r20,
         "preMatchReason":  "",
         "postMatchReason": "",

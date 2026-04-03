@@ -99,18 +99,22 @@ def fetch_props_from_excel(date_str: str) -> list[dict]:
         subset = xl[xl["Date"] == today].dropna(subset=["Line"])
         props = []
         for _, r in subset.iterrows():
+            # Parse game time — strip 'ET' suffix so _tMin() in dashboard works
+            raw_time = str(r.get("Game_Time_ET", "")).strip()
+            game_time = raw_time.replace(" ET", "").strip() if raw_time and raw_time != "nan" else ""
             props.append({
-                "player":   str(r["Player"]).strip(),
-                "game":     str(r.get("Game", "")),
-                "home":     str(r.get("Home", "")),
-                "away":     str(r.get("Away", "")),
-                "line":     float(r["Line"]),
+                "player":    str(r["Player"]).strip(),
+                "game":      str(r.get("Game", "")),
+                "home":      str(r.get("Home", "")),
+                "away":      str(r.get("Away", "")),
+                "game_time": game_time,
+                "line":      float(r["Line"]),
                 "over_odds":  float(r["Over Odds"])  if pd.notna(r.get("Over Odds"))  else -110,
                 "under_odds": float(r["Under Odds"]) if pd.notna(r.get("Under Odds")) else -110,
-                "books":    int(r["Books"])           if pd.notna(r.get("Books"))      else 1,
-                "min_line": float(r["Min Line"])      if pd.notna(r.get("Min Line"))   else None,
-                "max_line": float(r["Max Line"])      if pd.notna(r.get("Max Line"))   else None,
-                "source":   "excel",
+                "books":     int(r["Books"])          if pd.notna(r.get("Books"))      else 1,
+                "min_line":  float(r["Min Line"])     if pd.notna(r.get("Min Line"))   else None,
+                "max_line":  float(r["Max Line"])     if pd.notna(r.get("Max Line"))   else None,
+                "source":    "excel",
             })
         print(f"  Excel: {len(props)} props for {date_str}")
         return props
@@ -363,7 +367,15 @@ def score_play(
 # ─────────────────────────────────────────────────────────────────────────────
 
 def save_today(plays: list[dict]) -> None:
-    """Merge new predictions into today.json. Graded plays are immutable."""
+    """
+    Merge new predictions into today.json.
+    Rules:
+    - Only keep plays from today's date (the batch date).
+    - Graded plays (WIN/LOSS/DNP) are immutable — never overwritten.
+    - Ungraded plays from a prior date are discarded (stale).
+    - DNP plays from a prior date are also discarded — they may be incorrect
+      from a failed API call and should not persist across days.
+    """
     existing: list[dict] = []
     if FILE_TODAY.exists():
         try:
@@ -372,29 +384,47 @@ def save_today(plays: list[dict]) -> None:
         except Exception:
             existing = []
 
-    # Key: (player, date, line)
+    # Current batch date
+    batch_date = plays[0].get("date", "") if plays else ""
+
     def key(p): return (p.get("player",""), p.get("date",""), str(p.get("line","")))
-    graded = {key(p): p for p in existing if p.get("result") in ("WIN", "LOSS", "DNP")}
+
+    # Only keep graded plays from TODAY's date (WIN/LOSS only — not DNP from today,
+    # those come from the live game and will be re-graded properly in batch0)
+    graded = {
+        key(p): p for p in existing
+        if p.get("result") in ("WIN", "LOSS")
+        and p.get("date") == batch_date
+    }
 
     merged = list(graded.values())
     for p in plays:
         k = key(p)
         if k in graded:
-            continue    # immutable
-        # Stitch lineHistory from old ungraded if exists
-        old = next((e for e in existing if key(e) == k), None)
+            continue  # immutable
+        # Stitch lineHistory from prior ungraded for same date
+        old = next(
+            (e for e in existing
+             if key(e) == k and e.get("date") == batch_date),
+            None
+        )
         if old:
             p["lineHistory"] = old.get("lineHistory", [])
             if not any(h.get("batch") == BATCH for h in p["lineHistory"]):
-                p["lineHistory"].append({"line": p["line"], "batch": BATCH, "ts": p.get("batchTs","")})
+                p["lineHistory"].append(
+                    {"line": p["line"], "batch": BATCH, "ts": p.get("batchTs","")}
+                )
         else:
-            p["lineHistory"] = [{"line": p["line"], "batch": BATCH, "ts": p.get("batchTs","")}]
+            p["lineHistory"] = [
+                {"line": p["line"], "batch": BATCH, "ts": p.get("batchTs","")}
+            ]
         merged.append(p)
 
     merged.sort(key=lambda p: (p.get("tier", 9), -p.get("conf", 0)))
     with open(FILE_TODAY, "w") as f:
         json.dump(clean_json(merged), f, indent=2)
-    print(f"  today.json: {len(merged)} plays saved ({len(graded)} graded preserved)")
+    print(f"  today.json: {len(merged)} plays saved "
+          f"({len(graded)} graded from today preserved)")
 
 
 def append_season_json(plays: list[dict]) -> None:
@@ -559,7 +589,11 @@ def main():
         opp_team = ""
         if home and away:
             my_team = prior["GAME_TEAM_ABBREVIATION"].iloc[-1] if "GAME_TEAM_ABBREVIATION" in prior.columns else ""
-            opp_team = home if my_team == away else away
+            # if player's team matches away → opponent is home; and vice versa
+            if my_team:
+                opp_team = home if my_team.upper() == away.upper() else away
+            else:
+                opp_team = away  # default: treat as away opponent
 
         rest_days = b2b_map.get((resolved, date_str), 99)
 
@@ -615,7 +649,16 @@ def main():
             "defP_dynamic": feats.get("defP_dynamic", 15),
             "pace_rank":    feats.get("pace_rank", 15),
             "h2h_avg":      float(h2h_row.get("H2H_AVG_PTS", 0) or 0),
-            "h2h_games_display": int(h2h_row.get("H2H_GAMES", 0) or 0),
+            "h2h_games":    int(h2h_row.get("H2H_GAMES", 0) or 0),
+            "h2h_ts_dev":   float(feats.get("h2h_ts_dev",  0) or 0),
+            "h2h_fga_dev":  float(feats.get("h2h_fga_dev", 0) or 0),
+            "h2h_conf":     float(feats.get("h2h_conf",    0) or 0),
+            "game_time":    prop.get("game_time", ""),
+            "home_l10":     round(feats.get("home_l10", 0), 1),
+            "away_l10":     round(feats.get("away_l10", 0), 1),
+            "min_l30":      round(feats.get("min_l30", 0), 1),
+            "fga_l10":      round(feats.get("fga_l10", 0), 1),
+            "vol_risk":     round(feats.get("vol_risk", 0), 3),
         }
 
         play["preMatchReason"] = generate_pre_match_reason(play)
