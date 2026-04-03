@@ -230,11 +230,18 @@ def build_feature_rows(
     player_idx, h2h_lkp, dvp_rank, pace_cache, b2b_map, props
 ) -> pd.DataFrame:
     """
-    Build one feature-rich row per prop. Applies rolling_engine for each player's
-    prior history up to the prop date. Rules 1-5 are enforced inside rolling_engine.
+    Build one feature-rich row per prop.
+
+    FIX: actual_pts is now OPTIONAL.
+    - Props with a game log result → actual_pts set, target_cls set (used for training)
+    - Props with NO game log result yet (future/incomplete log) → actual_pts = NaN,
+      target_cls = -1 (excluded from model training, but still scored for the dashboard)
+    - opponent derived from Excel home/away fields FIRST; game log used as fallback.
+      This means props are never skipped just because the game hasn't been played yet.
     """
     rows: list[dict] = []
-    skip = {"no_player": 0, "thin_history": 0, "no_actual": 0, "no_feats": 0}
+    skip = {"no_player": 0, "thin_history": 0, "no_feats": 0}
+    ungraded = 0
 
     for prop in props:
         pname    = prop["player"]
@@ -250,18 +257,39 @@ def build_feature_rows(
         if len(prior) < 5:
             skip["thin_history"] += 1; continue
 
+        pos = str(prior["PLAYER_POSITION"].iloc[-1])
+
+        # ── Derive opponent from Excel home/away (FIX: no game log dependency) ──
+        # Excel has Home and Away team abbreviations already.
+        # Determine which side the player is on from their most recent team abbreviation.
+        home = str(prop.get("home", "")).strip()
+        away = str(prop.get("away", "")).strip()
+        my_team = str(prior["GAME_TEAM_ABBREVIATION"].iloc[-1]).strip() if "GAME_TEAM_ABBREVIATION" in prior.columns else ""
+
+        if home and away and my_team:
+            opponent = home if my_team.upper() == away.upper() else away
+        elif home and away:
+            opponent = away  # default: player is home team
+        else:
+            # Last resort: check game log for this exact date
+            actual_game_for_opp = hist[hist["GAME_DATE"] == pd.Timestamp(date)]
+            opponent = str(actual_game_for_opp["OPPONENT"].values[0]) if len(actual_game_for_opp) else ""
+
+        # ── Look up actual result from game log (optional — does NOT skip if missing) ──
         actual_game = hist[hist["GAME_DATE"] == pd.Timestamp(date)]
-        if len(actual_game) == 0:
-            skip["no_actual"] += 1; continue
+        if len(actual_game) > 0 and pd.notna(actual_game["PTS"].values[0]):
+            actual_pts = float(actual_game["PTS"].values[0])
+            target_cls = 1 if actual_pts > line else 0
+            # Use game log opponent as ground truth if available (more reliable)
+            if len(actual_game) > 0 and "OPPONENT" in actual_game.columns:
+                opponent = str(actual_game["OPPONENT"].values[0])
+        else:
+            actual_pts = float("nan")
+            target_cls = -1   # sentinel: exclude from model training
+            ungraded += 1
 
-        actual_pts = float(actual_game["PTS"].values[0])
-        if pd.isna(actual_pts):
-            skip["no_actual"] += 1; continue
-
-        pos      = str(prior["PLAYER_POSITION"].iloc[-1])
-        opponent = str(actual_game["OPPONENT"].values[0])
-        rest_d   = b2b_map.get((pname, date_str), 99)
-        pos_grp  = get_pos_group(pos)
+        rest_d  = b2b_map.get((pname, date_str), 99)
+        pos_grp = get_pos_group(pos)
 
         feats = extract_prediction_features(
             prior_played=prior,
@@ -289,7 +317,7 @@ def build_feature_rows(
         row = {
             **feats,
             "actual_pts": actual_pts,
-            "target_cls": 1 if actual_pts > line else 0,
+            "target_cls": target_cls,
             "player":     pname,
             "date":       pd.Timestamp(date),
             "date_str":   date_str,
@@ -304,9 +332,15 @@ def build_feature_rows(
         rows.append(row)
 
     df = pd.DataFrame(rows).sort_values("date").reset_index(drop=True)
-    df = df.fillna(0)
-    print(f"    Rows built: {len(df):,}  |  Skipped: {skip}")
-    print(f"    OVER rate: {df['target_cls'].mean():.1%}")
+    # fillna(0) for feature columns only — preserve NaN in actual_pts for ungraded rows
+    feat_cols = [c for c in df.columns if c != "actual_pts"]
+    df[feat_cols] = df[feat_cols].fillna(0)
+
+    graded    = df[df["target_cls"] >= 0]
+    over_rate = graded["target_cls"].mean() if len(graded) else float("nan")
+    print(f"    Rows built: {len(df):,}  |  Graded: {len(graded):,}  |  Ungraded: {ungraded:,}  |  Skipped: {skip}")
+    if len(graded):
+        print(f"    OVER rate (graded only): {over_rate:.1%}")
     return df
 
 
@@ -320,12 +354,23 @@ def train_models_oof(df: pd.DataFrame, skip_train: bool = False):
     Fit isotonic calibrator on OOF predictions.
     Compute player trust scores from OOF accuracy.
     Save all models to MODEL_DIR.
+
+    FIX: df may contain ungraded rows (target_cls == -1, actual_pts == NaN).
+    These are excluded from training but still receive OOF scores for the dashboard.
+    oof_prob and oof_reg are returned indexed to the FULL df (n rows), with zeros
+    for ungraded rows so apply_v14_scoring can handle them uniformly.
     """
-    X     = df[ML_FEATURES].values
-    y_cls = df["target_cls"].values
-    y_reg = df["actual_pts"].values
-    lines = df["line"].values
-    n     = len(df)
+    # Split into graded (has actual result) and ungraded (future / no CSV match)
+    graded_mask = df["target_cls"].values >= 0
+    df_tr  = df[graded_mask].reset_index(drop=True)
+    n_full = len(df)
+    n_tr   = len(df_tr)
+    print(f"  Training on {n_tr:,} graded rows  ({n_full - n_tr:,} ungraded rows will be scored only)")
+
+    X_tr   = df_tr[ML_FEATURES].values
+    y_cls  = df_tr["target_cls"].values
+    y_reg  = df_tr["actual_pts"].values
+    lines  = df_tr["line"].values
 
     if skip_train and FILE_CLF.exists():
         print("  --no-train: using existing models")
@@ -333,20 +378,18 @@ def train_models_oof(df: pd.DataFrame, skip_train: bool = False):
         with open(FILE_REG, "rb") as f: reg = pickle.load(f)
         with open(FILE_CAL, "rb") as f: cal = pickle.load(f)
         trust = json.loads(FILE_TRUST.read_text()) if FILE_TRUST.exists() else {}
-        oof_prob = np.zeros(n)
-        oof_reg  = np.zeros(n)
-        tscv = TimeSeriesSplit(n_splits=5)
-        for _, (_, va) in enumerate(tscv.split(X)):
-            oof_prob[va] = clf.predict_proba(X[va])[:, 1]
-            oof_reg[va]  = reg.predict(X[va])
+        # Score ALL rows (graded + ungraded) using existing models
+        X_full   = df[ML_FEATURES].values
+        oof_prob = clf.predict_proba(X_full)[:, 1]
+        oof_reg  = reg.predict(X_full)
         return clf, reg, cal, trust, oof_prob, oof_reg
 
-    # Sample weights — recency + quality adjustments
-    w = 1.0 + (np.arange(n) / n)
-    w[df["date"].dt.month.values == 10] *= 0.4   # Oct early-season downweight
-    w[df["date"].dt.month.values == 11] *= 0.7
-    w[df["h2h_conf"].values > 0.6] *= 1.2
-    w[df["mean_reversion_risk"].values == 1.0] *= 0.8
+    # Sample weights — recency + quality adjustments (training rows only)
+    w = 1.0 + (np.arange(n_tr) / n_tr)
+    w[df_tr["date"].dt.month.values == 10] *= 0.4   # Oct early-season downweight
+    w[df_tr["date"].dt.month.values == 11] *= 0.7
+    w[df_tr["h2h_conf"].values > 0.6] *= 1.2
+    w[df_tr["mean_reversion_risk"].values == 1.0] *= 0.8
     w = w / w.mean()
 
     clf_kw = dict(
@@ -360,38 +403,39 @@ def train_models_oof(df: pd.DataFrame, skip_train: bool = False):
         n_iter_no_change=30, validation_fraction=0.1, tol=1e-4, random_state=42,
     )
 
-    tscv     = TimeSeriesSplit(n_splits=5)
-    oof_prob = np.zeros(n)
-    oof_reg  = np.zeros(n)
+    # OOF loop — trained and evaluated on graded rows only
+    tscv         = TimeSeriesSplit(n_splits=5)
+    oof_prob_tr  = np.zeros(n_tr)   # indexed to df_tr (graded rows)
+    oof_reg_tr   = np.zeros(n_tr)
 
-    for fold, (tr, va) in enumerate(tscv.split(X), 1):
+    for fold, (tr, va) in enumerate(tscv.split(X_tr), 1):
         cf = GradientBoostingClassifier(**clf_kw)
         rf = GradientBoostingRegressor(**reg_kw)
-        cf.fit(X[tr], y_cls[tr], sample_weight=w[tr])
-        rf.fit(X[tr], y_reg[tr], sample_weight=w[tr])
-        oof_prob[va] = cf.predict_proba(X[va])[:, 1]
-        oof_reg[va]  = rf.predict(X[va])
-        c = ((oof_prob[va] > 0.5) == y_cls[va]).mean()
-        r = ((oof_reg[va]  > lines[va]) == y_cls[va]).mean()
+        cf.fit(X_tr[tr], y_cls[tr], sample_weight=w[tr])
+        rf.fit(X_tr[tr], y_reg[tr], sample_weight=w[tr])
+        oof_prob_tr[va] = cf.predict_proba(X_tr[va])[:, 1]
+        oof_reg_tr[va]  = rf.predict(X_tr[va])
+        c = ((oof_prob_tr[va] > 0.5) == y_cls[va]).mean()
+        r = ((oof_reg_tr[va]  > lines[va]) == y_cls[va]).mean()
         print(f"    Fold {fold}: clf={c:.3f}  reg={r:.3f}")
 
     cal = IsotonicRegression(out_of_bounds="clip")
-    cal.fit(oof_prob, y_cls)
+    cal.fit(oof_prob_tr, y_cls)
 
-    # OOF trust scores per player (minimum 10 games)
-    oof_dir = (oof_prob > 0.5).astype(int)
-    df["_oof_correct"] = (oof_dir == y_cls).astype(int)
+    # OOF trust scores per player (minimum 10 games, graded rows only)
+    oof_dir_tr = (oof_prob_tr > 0.5).astype(int)
+    df_tr["_oof_correct"] = (oof_dir_tr == y_cls).astype(int)
     trust = {
         p: round(float(g["_oof_correct"].mean()), 4)
-        for p, g in df.groupby("player")
+        for p, g in df_tr.groupby("player")
         if len(g) >= 10
     }
 
-    # Final models trained on FULL data
+    # Final models trained on graded data only
     clf = GradientBoostingClassifier(**clf_kw)
     reg = GradientBoostingRegressor(**reg_kw)
-    clf.fit(X, y_cls, sample_weight=w)
-    reg.fit(X, y_reg, sample_weight=w)
+    clf.fit(X_tr, y_cls, sample_weight=w)
+    reg.fit(X_tr, y_reg, sample_weight=w)
     print(f"  Final models: clf={clf.n_estimators_} trees  reg={reg.n_estimators_} trees")
 
     MODEL_DIR.mkdir(exist_ok=True)
@@ -400,6 +444,16 @@ def train_models_oof(df: pd.DataFrame, skip_train: bool = False):
     with open(FILE_CAL, "wb") as f: pickle.dump(cal, f)
     FILE_TRUST.write_text(json.dumps(trust, indent=2))
     print(f"  Models saved → {MODEL_DIR}")
+
+    # Score ALL rows (graded + ungraded) with the final fitted models
+    # oof_prob/oof_reg are indexed to the FULL df (n_full rows)
+    X_full   = df[ML_FEATURES].values
+    oof_prob = clf.predict_proba(X_full)[:, 1]
+    oof_reg  = reg.predict(X_full)
+    # For graded rows, replace with the OOF estimates (unbiased, no leakage)
+    graded_idx = np.where(graded_mask)[0]
+    oof_prob[graded_idx] = oof_prob_tr
+    oof_reg[graded_idx]  = oof_reg_tr
 
     return clf, reg, cal, trust, oof_prob, oof_reg
 
@@ -497,12 +551,21 @@ def apply_v14_scoring(
         else ("OVER" if is_over[i] else "UNDER")
         for i in range(len(df))
     ]
-    results = [
-        "LEAN" if is_lean[i]
-        else ("WIN" if actual[i] > lines[i] else "LOSS") if is_over[i]
-        else ("WIN" if actual[i] <= lines[i] else "LOSS")
-        for i in range(len(df))
-    ]
+    # FIX: ungraded rows (no actual_pts) get result="" and delta=NaN — never WIN/LOSS/LEAN
+    graded_mask_sc = df["target_cls"].values >= 0   # graded rows in this df
+    results = []
+    for i in range(len(df)):
+        if not graded_mask_sc[i]:
+            results.append("")          # ungraded: no result yet
+        elif is_lean[i]:
+            results.append("LEAN")
+        elif is_over[i]:
+            results.append("WIN" if actual[i] > lines[i] else "LOSS")
+        else:
+            results.append("WIN" if actual[i] <= lines[i] else "LOSS")
+
+    # delta only meaningful for graded rows
+    delta_arr = np.where(graded_mask_sc, np.round(actual - lines, 1), float("nan"))
 
     df["direction"]    = dirs
     df["tierLabel"]    = tl_arr
@@ -513,8 +576,8 @@ def apply_v14_scoring(
     df["calProb"]      = np.round(cal_prob, 4)
     df["units"]        = units
     df["result"]       = results
-    df["actualPts"]    = actual
-    df["delta"]        = np.round(actual - lines, 1)
+    df["actualPts"]    = actual          # NaN for ungraded — _build_play handles this
+    df["delta"]        = delta_arr
     df["enginesAgree"] = engines_agree
     df["isLean"]       = is_lean
 
@@ -532,10 +595,19 @@ def apply_v14_scoring(
 def build_json_files(df: pd.DataFrame, recent_idx: dict, target_date=None) -> None:
     """
     Convert scored feature DataFrame into play dicts and write JSON files.
-    Mirrors V12's generate_season_json output structure, extended with V14 fields.
+
+    FIX — 2025-26 is MERGED not overwritten:
+    - season_2025_26.json is merged with the existing file using the same
+      immutability rules as batch_predict.append_season_json.
+      Graded plays (WIN/LOSS/DNP) are never overwritten.
+      Ungraded generate plays update ungraded batch_predict plays.
+      Plays in the existing file but NOT in df (e.g. from batch_predict for
+      future dates not yet in Excel) are preserved as-is.
+    - season_2024_25.json is still a full overwrite (all historical, complete).
+    - today.json is always overwritten — it's the live dashboard view.
     """
     DATA_DIR.mkdir(exist_ok=True)
-    plays_2526: list[dict] = []
+    plays_2526_new: list[dict] = []
     plays_2425: list[dict] = []
 
     total = len(df)
@@ -544,18 +616,46 @@ def build_json_files(df: pd.DataFrame, recent_idx: dict, target_date=None) -> No
             print(f"    {i}/{total}...")
         play = _build_play(df.iloc[i], recent_idx)
         if str(df["season"].iloc[i]).startswith("2025"):
-            plays_2526.append(play)
+            plays_2526_new.append(play)
         else:
             plays_2425.append(play)
 
     def _sort_key(p):
         return (p.get("tier", 9), -p.get("conf", 0))
 
-    plays_2526.sort(key=lambda p: (p["date"], _sort_key(p)))
+    plays_2526_new.sort(key=lambda p: (p["date"], _sort_key(p)))
     plays_2425.sort(key=lambda p: (p["date"], _sort_key(p)))
 
+    # ── Merge 2025-26 with existing season JSON (FIX: not a full overwrite) ──
+    existing_2526: list[dict] = []
+    if FILE_SEASON_2526.exists():
+        try:
+            with open(FILE_SEASON_2526) as f:
+                existing_2526 = json.load(f)
+        except Exception:
+            existing_2526 = []
+
+    def _key(p): return (p.get("player", ""), p.get("date", ""), str(p.get("line", "")))
+    ex_map = {_key(p): i for i, p in enumerate(existing_2526)}
+
+    # Apply new plays: respect immutability of graded plays
+    for p in plays_2526_new:
+        k = _key(p)
+        if k in ex_map:
+            old = existing_2526[ex_map[k]]
+            if old.get("result") in ("WIN", "LOSS", "DNP"):
+                continue   # immutable — never overwrite a graded play
+            existing_2526[ex_map[k]] = p   # update ungraded with fresh scoring
+        else:
+            existing_2526.append(p)   # new play not seen before
+
+    # Re-sort chronologically within 2025-26
+    existing_2526.sort(key=lambda p: (p.get("date", ""), _sort_key(p)))
+    plays_2526 = existing_2526
+
     _save(FILE_SEASON_2526, plays_2526)
-    print(f"  season_2025_26.json: {len(plays_2526):,} plays")
+    new_ct  = sum(1 for p in plays_2526_new if _key(p) not in {_key(e) for e in existing_2526 if e.get("result") in ("WIN","LOSS","DNP")})
+    print(f"  season_2025_26.json: {len(plays_2526):,} plays  (merged: {len(plays_2526_new):,} new/updated)")
     log_event("GEN", "SEASON_2526_GENERATED", FILE_SEASON_2526.name, rows_after=len(plays_2526))
 
     _save(FILE_SEASON_2425, plays_2425)
@@ -567,7 +667,7 @@ def build_json_files(df: pd.DataFrame, recent_idx: dict, target_date=None) -> No
     if target_date:
         today_plays = [p for p in all_plays if p["date"] == target_date]
     else:
-        # Find most recent date in 2025-26
+        # Most recent date that has any 2025-26 plays
         dates_2526 = sorted(set(p["date"] for p in plays_2526))
         best = dates_2526[-1] if dates_2526 else ""
         today_plays = [p for p in all_plays if p["date"] == best]
@@ -635,10 +735,10 @@ def _build_play(row: pd.Series, recent_idx: dict) -> dict:
         "seasonProgress":    float(row.get("season_progress", 0.5)),
         "earlySeasonW":      float(row.get("early_season_weight", 1.0)),
         "volRisk":           float(row.get("vol_risk", 0)),
-        # Grade
+        # Grade — actualPts and delta are None for ungraded (future) plays
         "result":    str(row.get("result", "")),
-        "actualPts": _s(float(row.get("actualPts", 0))),
-        "delta":     _s(float(row.get("delta", 0))),
+        "actualPts": _s(row.get("actual_pts")) if pd.isna(row.get("actual_pts", float("nan"))) else _s(float(row.get("actual_pts", 0))),
+        "delta":     None if pd.isna(row.get("delta", float("nan"))) else _s(float(row.get("delta", 0))),
         # Rolling display
         "l30": round(L30, 1), "l10": round(L10, 1),
         "l5":  round(L5,  1), "l3":  round(L3,  1),
