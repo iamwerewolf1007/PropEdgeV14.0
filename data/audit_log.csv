@@ -1,0 +1,4 @@
+ts,batch,event,file,rows_before,rows_after,detail
+2026-04-03 16:31:40 UK,B2,BATCH_START,,0,0,date=2026-04-03
+2026-04-03 16:31:52 UK,B2,PROPS_FETCHED,,0,0,102 props
+2026-04-03 16:31:53 UK,B2,PREDICTIONS,,0,0,"100 plays, skipped={'no_player': 2, 'no_history': 0, 'no_feats': 0}"
