@@ -116,7 +116,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Collin Gillespie scored 0pts vs 10.5 line (under by 10.5pts, called OVER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 20.2pts (error: 20.2pts, direction incorrect). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Collin Gillespie's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Derik Queen",
@@ -235,7 +240,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Derik Queen scored 0pts vs 8.5 line (under by 8.5pts, called OVER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 18.5pts (error: 18.5pts, direction incorrect). Player received 0 min vs expected 18 \u2014 usage was restricted. Monitor Derik Queen's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Olivier-Maxence Prosper",
@@ -3159,7 +3169,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Alex Caruso scored 0pts vs 4.5 line (under by 4.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.6pts (error: 10.6pts, direction incorrect). Player received 0 min vs expected 19 \u2014 usage was restricted. Monitor Alex Caruso's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Quentin Grimes",
@@ -4213,7 +4228,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Harrison Barnes scored 0pts vs 7.5 line (under by 7.5pts, called OVER). Despite 6/10 signals agreeing, 4 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.5pts (error: 10.5pts, direction incorrect). Player received 0 min vs expected 22 \u2014 usage was restricted. Monitor Harrison Barnes's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Tristan da Silva",
@@ -5080,7 +5100,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Devin Booker scored 0pts vs 25.5 line (under by 25.5pts, called OVER). Despite 6/10 signals agreeing, 4 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 32.5pts (error: 32.5pts, direction incorrect). Player received 0 min vs expected 33 \u2014 usage was restricted. Monitor Devin Booker's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jaylen Brown",
@@ -5760,7 +5785,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 LaMelo Ball scored 0pts vs 20.5 line (under by 20.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 25.0pts (error: 25.0pts, direction incorrect). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor LaMelo Ball's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Peyton Watson",
@@ -6066,7 +6096,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Dennis Schr\u00f6der scored 0pts vs 7.5 line (under by 7.5pts, called OVER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 12.2pts (error: 12.2pts, direction incorrect). Player received 0 min vs expected 19 \u2014 usage was restricted. Monitor Dennis Schr\u00f6der's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Brook Lopez",
@@ -6185,7 +6220,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Brook Lopez scored 0pts vs 10.5 line (under by 10.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 13.4pts (error: 13.4pts, direction incorrect). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Brook Lopez's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Draymond Green",
@@ -6491,7 +6531,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Luguentz Dort scored 0pts vs 6.5 line (under by 6.5pts, called OVER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 9.2pts (error: 9.2pts, direction incorrect). Player received 0 min vs expected 24 \u2014 usage was restricted. Monitor Luguentz Dort's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Victor Wembanyama",
@@ -6984,7 +7029,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Anthony Edwards scored 0pts vs 26.5 line (under by 26.5pts, called OVER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 32.9pts (error: 32.9pts, direction incorrect). Player received 0 min vs expected 34 \u2014 usage was restricted. Monitor Anthony Edwards's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Alperen Sengun",
@@ -8225,7 +8275,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Tobias Harris scored 0pts vs 14.5 line (under by 14.5pts, called OVER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 16.4pts (error: 16.4pts, direction incorrect). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Tobias Harris's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Ayo Dosunmu",
@@ -8344,7 +8399,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Ayo Dosunmu scored 0pts vs 15.5 line (under by 15.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 17.3pts (error: 17.3pts, direction incorrect). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Ayo Dosunmu's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Cam Spencer",
@@ -10333,7 +10393,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Trey Murphy III scored 0pts vs 19.5 line (under by 19.5pts, called OVER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 20.8pts (error: 20.8pts, direction incorrect). Player received 0 min vs expected 36 \u2014 usage was restricted. Monitor Trey Murphy III's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Dejounte Murray",
@@ -10452,7 +10517,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Dejounte Murray scored 0pts vs 16.5 line (under by 16.5pts, called OVER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 19.2pts (error: 19.2pts, direction incorrect). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Dejounte Murray's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Tre Johnson",
@@ -10758,7 +10828,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Saddiq Bey scored 0pts vs 17.5 line (under by 17.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 19.3pts (error: 19.3pts, direction incorrect). Player received 0 min vs expected 32 \u2014 usage was restricted. Monitor Saddiq Bey's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Kris Dunn",
@@ -10877,7 +10952,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Kris Dunn scored 0pts vs 4.5 line (under by 4.5pts, called OVER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 5.4pts (error: 5.4pts, direction incorrect). Player received 0 min vs expected 26 \u2014 usage was restricted. Monitor Kris Dunn's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Miles Bridges",
@@ -10996,7 +11076,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Miles Bridges scored 0pts vs 13.5 line (under by 13.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 14.3pts (error: 14.3pts, direction incorrect). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Miles Bridges's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Cason Wallace",
@@ -11115,7 +11200,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Cason Wallace scored 0pts vs 6.5 line (under by 6.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 8.0pts (error: 8.0pts, direction incorrect). Player received 0 min vs expected 24 \u2014 usage was restricted. Monitor Cason Wallace's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "James Harden",
@@ -11234,7 +11324,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 James Harden scored 0pts vs 19.5 line (under by 19.5pts, called OVER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 20.6pts (error: 20.6pts, direction incorrect). Player received 0 min vs expected 35 \u2014 usage was restricted. Monitor James Harden's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Paul Reed",
@@ -11353,7 +11448,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Paul Reed scored 0pts vs 7.5 line (under by 7.5pts, called LEAN OVER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 9.0pts (error: 9.0pts, direction incorrect). Player received 0 min vs expected 17 \u2014 usage was restricted. Monitor Paul Reed's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Julian Champagnie",
@@ -11472,7 +11572,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Julian Champagnie scored 0pts vs 9.5 line (under by 9.5pts, called LEAN OVER). Despite 6/10 signals agreeing, 4 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.8pts (error: 10.8pts, direction incorrect). Player received 0 min vs expected 27 \u2014 usage was restricted. Monitor Julian Champagnie's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Rudy Gobert",
@@ -11591,7 +11696,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Rudy Gobert scored 0pts vs 10.5 line (under by 10.5pts, called LEAN OVER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 12.0pts (error: 12.0pts, direction incorrect). Player received 0 min vs expected 31 \u2014 usage was restricted. Monitor Rudy Gobert's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Deni Avdija",
@@ -11710,7 +11820,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Deni Avdija scored 0pts vs 25.5 line (under by 25.5pts, called LEAN OVER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 28.4pts (error: 28.4pts, direction incorrect). Player received 0 min vs expected 32 \u2014 usage was restricted. Monitor Deni Avdija's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Derrick Jones Jr.",
@@ -11829,7 +11944,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Derrick Jones Jr. scored 0pts vs 9.5 line (under by 9.5pts, called LEAN OVER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 11.7pts (error: 11.7pts, direction incorrect). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Derrick Jones Jr.'s minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Stephon Castle",
@@ -11948,7 +12068,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Stephon Castle scored 0pts vs 15.5 line (under by 15.5pts, called LEAN OVER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 15.1pts (error: 15.1pts, direction incorrect). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Stephon Castle's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Grant Williams",
@@ -12067,7 +12192,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Grant Williams scored 0pts vs 5.5 line (under by 5.5pts, called OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.0pts (error: 6.0pts, direction incorrect). Player received 0 min vs expected 19 \u2014 usage was restricted. Monitor Grant Williams's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jake LaRavia",
@@ -12186,7 +12316,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jake LaRavia scored 0pts vs 6.5 line (under by 6.5pts, called OVER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.7pts (error: 6.7pts, direction incorrect). Player received 0 min vs expected 21 \u2014 usage was restricted. Monitor Jake LaRavia's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Gui Santos",
@@ -12305,7 +12440,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Gui Santos scored 0pts vs 12.5 line (under by 12.5pts, called LEAN UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 11.9pts (error: 11.9pts, direction correct). Player received 0 min vs expected 31 \u2014 usage was restricted. Monitor Gui Santos's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Toumani Camara",
@@ -12424,7 +12564,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Toumani Camara scored 0pts vs 14.5 line (under by 14.5pts, called LEAN UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 14.7pts (error: 14.7pts, direction correct). Player received 0 min vs expected 31 \u2014 usage was restricted. Monitor Toumani Camara's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Grayson Allen",
@@ -12543,7 +12688,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Grayson Allen scored 0pts vs 12.5 line (under by 12.5pts, called LEAN UNDER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 13.1pts (error: 13.1pts, direction correct). Player received 0 min vs expected 27 \u2014 usage was restricted. Monitor Grayson Allen's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jaxson Hayes",
@@ -12662,7 +12812,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jaxson Hayes scored 0pts vs 5.5 line (under by 5.5pts, called LEAN UNDER). Despite 7/10 signals agreeing, 3 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.0pts (error: 6.0pts, direction correct). Player received 0 min vs expected 21 \u2014 usage was restricted. Monitor Jaxson Hayes's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "De'Aaron Fox",
@@ -12781,7 +12936,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 De'Aaron Fox scored 0pts vs 18.5 line (under by 18.5pts, called LEAN UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 19.0pts (error: 19.0pts, direction correct). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor De'Aaron Fox's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Rui Hachimura",
@@ -12900,7 +13060,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Rui Hachimura scored 0pts vs 7.5 line (under by 7.5pts, called LEAN UNDER). Despite 6/10 signals agreeing, 4 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 8.4pts (error: 8.4pts, direction correct). Player received 0 min vs expected 24 \u2014 usage was restricted. Monitor Rui Hachimura's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Shai Gilgeous-Alexander",
@@ -13019,7 +13184,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Shai Gilgeous-Alexander scored 0pts vs 30.5 line (under by 30.5pts, called LEAN UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 29.2pts (error: 29.2pts, direction correct). Player received 0 min vs expected 34 \u2014 usage was restricted. Monitor Shai Gilgeous-Alexander's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Isaiah Hartenstein",
@@ -13138,7 +13308,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Isaiah Hartenstein scored 0pts vs 6.5 line (under by 6.5pts, called LEAN UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.5pts (error: 6.5pts, direction correct). Player received 0 min vs expected 22 \u2014 usage was restricted. Monitor Isaiah Hartenstein's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Ryan Kalkbrenner",
@@ -13257,7 +13432,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Ryan Kalkbrenner scored 0pts vs 5.5 line (under by 5.5pts, called LEAN UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.2pts (error: 6.2pts, direction correct). Player received 0 min vs expected 18 \u2014 usage was restricted. Monitor Ryan Kalkbrenner's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "John Collins",
@@ -13376,7 +13556,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 John Collins scored 0pts vs 12.5 line (under by 12.5pts, called LEAN UNDER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 12.6pts (error: 12.6pts, direction correct). Player received 0 min vs expected 26 \u2014 usage was restricted. Monitor John Collins's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Quenton Jackson",
@@ -13682,7 +13867,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Mark Williams scored 0pts vs 7.5 line (under by 7.5pts, called LEAN OVER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 7.6pts (error: 7.6pts, direction incorrect). Player received 0 min vs expected 21 \u2014 usage was restricted. Monitor Mark Williams's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Onyeka Okongwu",
@@ -14549,7 +14739,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Brandin Podziemski scored 0pts vs 14.5 line (under by 14.5pts, called LEAN UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 14.0pts (error: 14.0pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Brandin Podziemski's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "LeBron James",
@@ -14668,7 +14863,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 LeBron James scored 0pts vs 17.5 line (under by 17.5pts, called LEAN UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 16.9pts (error: 16.9pts, direction correct). Player received 0 min vs expected 35 \u2014 usage was restricted. Monitor LeBron James's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Nique Clifford",
@@ -15348,7 +15548,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jalen Williams scored 0pts vs 18.5 line (under by 18.5pts, called LEAN UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 19.0pts (error: 19.0pts, direction correct). Player received 0 min vs expected 25 \u2014 usage was restricted. Monitor Jalen Williams's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Dillon Brooks",
@@ -15467,7 +15672,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Dillon Brooks scored 0pts vs 15.5 line (under by 15.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 3.2pts (error: 3.2pts, direction correct). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Dillon Brooks's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Keldon Johnson",
@@ -15586,7 +15796,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Keldon Johnson scored 0pts vs 11.5 line (under by 11.5pts, called UNDER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.6pts (error: 10.6pts, direction correct). Player received 0 min vs expected 23 \u2014 usage was restricted. Monitor Keldon Johnson's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Matisse Thybulle",
@@ -15705,7 +15920,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Matisse Thybulle scored 0pts vs 6.5 line (under by 6.5pts, called LEAN UNDER). Despite 6/10 signals agreeing, 4 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.1pts (error: 6.1pts, direction correct). Player received 0 min vs expected 19 \u2014 usage was restricted. Monitor Matisse Thybulle's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Tyrese Maxey",
@@ -16385,7 +16605,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Donovan Mitchell scored 0pts vs 24.5 line (under by 24.5pts, called UNDER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 19.3pts (error: 19.3pts, direction correct). Player received 0 min vs expected 34 \u2014 usage was restricted. Monitor Donovan Mitchell's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jalen Suggs",
@@ -16878,7 +17103,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Ausar Thompson scored 0pts vs 9.5 line (under by 9.5pts, called UNDER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 9.0pts (error: 9.0pts, direction correct). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Ausar Thompson's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Keldon Johnson",
@@ -17184,7 +17414,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Kawhi Leonard scored 0pts vs 27.5 line (under by 27.5pts, called LEAN OVER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 27.9pts (error: 27.9pts, direction incorrect). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Kawhi Leonard's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Collin Sexton",
@@ -17490,7 +17725,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Naz Reid scored 0pts vs 12.5 line (under by 12.5pts, called UNDER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 4.7pts (error: 4.7pts, direction correct). Player received 0 min vs expected 26 \u2014 usage was restricted. Monitor Naz Reid's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Donovan Clingan",
@@ -17609,7 +17849,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Donovan Clingan scored 0pts vs 14.5 line (under by 14.5pts, called UNDER). Despite 8/10 signals agreeing, 2 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 12.3pts (error: 12.3pts, direction correct). Player received 0 min vs expected 26 \u2014 usage was restricted. Monitor Donovan Clingan's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Aaron Gordon",
@@ -17915,7 +18160,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Coby White scored 0pts vs 13.5 line (under by 13.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 12.2pts (error: 12.2pts, direction correct). Player received 0 min vs expected 21 \u2014 usage was restricted. Monitor Coby White's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Julian Champagnie",
@@ -18595,7 +18845,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Luka Don\u010di\u0107 scored 0pts vs 30.5 line (under by 30.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 23.2pts (error: 23.2pts, direction correct). Player received 0 min vs expected 38 \u2014 usage was restricted. Monitor Luka Don\u010di\u0107's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Josh Hart",
@@ -19088,7 +19343,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Darius Garland scored 0pts vs 19.5 line (under by 19.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 17.7pts (error: 17.7pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Darius Garland's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jarrett Allen",
@@ -19207,7 +19467,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jarrett Allen scored 0pts vs 13.5 line (under by 13.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 12.3pts (error: 12.3pts, direction correct). Player received 0 min vs expected 27 \u2014 usage was restricted. Monitor Jarrett Allen's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Scottie Barnes",
@@ -19513,7 +19778,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 De'Anthony Melton scored 0pts vs 12.5 line (under by 12.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.8pts (error: 10.8pts, direction correct). Player received 0 min vs expected 25 \u2014 usage was restricted. Monitor De'Anthony Melton's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Duncan Robinson",
@@ -19632,7 +19902,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Duncan Robinson scored 0pts vs 11.5 line (under by 11.5pts, called UNDER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.4pts (error: 10.4pts, direction correct). Player received 0 min vs expected 27 \u2014 usage was restricted. Monitor Duncan Robinson's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Victor Wembanyama",
@@ -19751,7 +20026,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Victor Wembanyama scored 0pts vs 24.5 line (under by 24.5pts, called UNDER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 22.7pts (error: 22.7pts, direction correct). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Victor Wembanyama's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Donte DiVincenzo",
@@ -19870,7 +20150,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Donte DiVincenzo scored 0pts vs 10.5 line (under by 10.5pts, called UNDER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 9.1pts (error: 9.1pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Donte DiVincenzo's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Bilal Coulibaly",
@@ -20176,7 +20461,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jalen Duren scored 0pts vs 22.5 line (under by 22.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 14.3pts (error: 14.3pts, direction correct). Player received 0 min vs expected 31 \u2014 usage was restricted. Monitor Jalen Duren's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Maxime Raynaud",
@@ -20482,7 +20772,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Kon Knueppel scored 0pts vs 16.5 line (under by 16.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 11.2pts (error: 11.2pts, direction correct). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Kon Knueppel's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Julius Randle",
@@ -20601,7 +20896,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Julius Randle scored 0pts vs 19.5 line (under by 19.5pts, called UNDER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 16.5pts (error: 16.5pts, direction correct). Player received 0 min vs expected 32 \u2014 usage was restricted. Monitor Julius Randle's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Kristaps Porzi\u0146\u0123is",
@@ -20720,7 +21020,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Kristaps Porzi\u0146\u0123is scored 0pts vs 19.5 line (under by 19.5pts, called UNDER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 16.3pts (error: 16.3pts, direction correct). Player received 0 min vs expected 24 \u2014 usage was restricted. Monitor Kristaps Porzi\u0146\u0123is's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jericho Sims",
@@ -21026,7 +21331,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Evan Mobley scored 0pts vs 16.5 line (under by 16.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 13.2pts (error: 13.2pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Evan Mobley's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Ja'Kobe Walter",
@@ -21332,7 +21642,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Brandon Miller scored 0pts vs 19.5 line (under by 19.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 13.3pts (error: 13.3pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Brandon Miller's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Amen Thompson",
@@ -22012,7 +22327,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Scoot Henderson scored 0pts vs 16.5 line (under by 16.5pts, called UNDER). Despite 7/10 signals agreeing, 3 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 11.5pts (error: 11.5pts, direction correct). Player received 0 min vs expected 24 \u2014 usage was restricted. Monitor Scoot Henderson's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Will Richard",
@@ -22318,7 +22638,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Bennedict Mathurin scored 0pts vs 16.5 line (under by 16.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.1pts (error: 10.1pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Bennedict Mathurin's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Max Strus",
@@ -22437,7 +22762,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Max Strus scored 0pts vs 9.5 line (under by 9.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 3.6pts (error: 3.6pts, direction correct). Player received 0 min vs expected 26 \u2014 usage was restricted. Monitor Max Strus's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Daniss Jenkins",
@@ -22556,7 +22886,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Daniss Jenkins scored 0pts vs 16.5 line (under by 16.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 15.4pts (error: 15.4pts, direction correct). Player received 0 min vs expected 33 \u2014 usage was restricted. Monitor Daniss Jenkins's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Ajay Mitchell",
@@ -22675,7 +23010,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Ajay Mitchell scored 0pts vs 12.5 line (under by 12.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 9.9pts (error: 9.9pts, direction correct). Player received 0 min vs expected 26 \u2014 usage was restricted. Monitor Ajay Mitchell's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Cedric Coward",
@@ -22981,7 +23321,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Sam Merrill scored 0pts vs 10.5 line (under by 10.5pts, called UNDER). Despite 1/10 signals agreeing, 9 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.4pts (error: 6.4pts, direction correct). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Sam Merrill's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jalen Green",
@@ -23100,7 +23445,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jalen Green scored 0pts vs 16.5 line (under by 16.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 15.1pts (error: 15.1pts, direction correct). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Jalen Green's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Zion Williamson",
@@ -23219,7 +23569,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Zion Williamson scored 0pts vs 20.5 line (under by 20.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 18.2pts (error: 18.2pts, direction correct). Player received 0 min vs expected 31 \u2014 usage was restricted. Monitor Zion Williamson's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Jrue Holiday",
@@ -23338,7 +23693,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jrue Holiday scored 0pts vs 17.5 line (under by 17.5pts, called UNDER). Despite 6/10 signals agreeing, 4 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 13.3pts (error: 13.3pts, direction correct). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Jrue Holiday's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Chet Holmgren",
@@ -23457,7 +23817,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Chet Holmgren scored 0pts vs 15.5 line (under by 15.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 13.0pts (error: 13.0pts, direction correct). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Chet Holmgren's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Royce O'Neale",
@@ -23576,7 +23941,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Royce O'Neale scored 0pts vs 7.5 line (under by 7.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 4.0pts (error: 4.0pts, direction correct). Player received 0 min vs expected 27 \u2014 usage was restricted. Monitor Royce O'Neale's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Deandre Ayton",
@@ -23695,7 +24065,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Deandre Ayton scored 0pts vs 9.5 line (under by 9.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 5.3pts (error: 5.3pts, direction correct). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Deandre Ayton's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Moussa Diabat\u00e9",
@@ -23814,7 +24189,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Moussa Diabat\u00e9 scored 0pts vs 7.5 line (under by 7.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 2.5pts (error: 2.5pts, direction correct). Player received 0 min vs expected 27 \u2014 usage was restricted. Monitor Moussa Diabat\u00e9's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Dylan Cardwell",
@@ -24120,7 +24500,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Dylan Harper scored 0pts vs 11.5 line (under by 11.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 8.3pts (error: 8.3pts, direction correct). Player received 0 min vs expected 24 \u2014 usage was restricted. Monitor Dylan Harper's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Austin Reaves",
@@ -24239,7 +24624,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Austin Reaves scored 0pts vs 19.5 line (under by 19.5pts, called UNDER). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 16.0pts (error: 16.0pts, direction correct). Player received 0 min vs expected 39 \u2014 usage was restricted. Monitor Austin Reaves's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Bones Hyland",
@@ -24358,7 +24748,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Bones Hyland scored 0pts vs 10.5 line (under by 10.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 7.1pts (error: 7.1pts, direction correct). Player received 0 min vs expected 22 \u2014 usage was restricted. Monitor Bones Hyland's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Devin Vassell",
@@ -24477,7 +24872,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Devin Vassell scored 0pts vs 12.5 line (under by 12.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 9.6pts (error: 9.6pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor Devin Vassell's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Draymond Green",
@@ -24596,7 +24996,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Draymond Green scored 0pts vs 9.5 line (under by 9.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.2pts (error: 6.2pts, direction correct). Player received 0 min vs expected 29 \u2014 usage was restricted. Monitor Draymond Green's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Kevin Huerter",
@@ -24715,7 +25120,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Kevin Huerter scored 0pts vs 7.5 line (under by 7.5pts, called UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 6.5pts (error: 6.5pts, direction correct). Player received 0 min vs expected 24 \u2014 usage was restricted. Monitor Kevin Huerter's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Robert Williams III",
@@ -24834,7 +25244,12 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Robert Williams III scored 0pts vs 6.5 line (under by 6.5pts, called UNDER). Despite 7/10 signals agreeing, 3 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 5.2pts (error: 5.2pts, direction correct). Player received 0 min vs expected 18 \u2014 usage was restricted. Monitor Robert Williams III's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Yves Missi",
@@ -24953,6 +25368,11 @@
         "batch": 4,
         "ts": "2026-04-02T22:30:02.806621+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Yves Missi scored 0pts vs 5.5 line (under by 5.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 3.4pts (error: 3.4pts, direction correct). Player received 0 min vs expected 22 \u2014 usage was restricted. Monitor Yves Missi's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   }
 ]
