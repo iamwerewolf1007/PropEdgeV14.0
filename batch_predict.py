@@ -33,7 +33,16 @@ from model_trainer import ML_FEATURES
 import requests
 
 
-BATCH = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+def _parse_batch() -> int:
+    """Parse batch number from argv — safe even when imported by run.py."""
+    if len(sys.argv) > 1:
+        try:
+            return int(sys.argv[1])
+        except ValueError:
+            pass
+    return 2
+
+BATCH = _parse_batch()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # NICKNAME NORMALISATION
