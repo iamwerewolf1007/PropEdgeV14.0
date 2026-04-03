@@ -75,12 +75,29 @@ def _parse_min(v) -> float:
         return 0.0
 
 
+# Browser-like headers required by stats.nba.com
+_NBA_HEADERS = {
+    "Host": "stats.nba.com",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/123.0.0.0 Safari/537.36",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "x-nba-stats-origin": "stats",
+    "x-nba-stats-token": "true",
+    "Referer": "https://www.nba.com/",
+    "Connection": "keep-alive",
+    "Origin": "https://www.nba.com",
+}
+
+
 def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
     """
     Fetch yesterday's box scores via nba_api.
     Returns (played_rows, players_in_box).
-    CRITICAL: Returns (None, None) if the API call fails entirely —
-    distinguishing from a legitimate 0-game day.
+    Returns (None, None) if the API call fails entirely.
+    Retries up to 3 times with browser-like headers to handle NBA API quirks.
     """
     from nba_api.stats.endpoints import scoreboardv3, boxscoretraditionalv3
     import time
@@ -89,23 +106,39 @@ def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
     played_rows: list[dict] = []
     players_in_box: set[str] = set()
 
-    # --- Step 1: Get game list ---
-    try:
-        sb = scoreboardv3.ScoreboardV3(
-            game_date=date_str, league_id="00"
-        ).get_normalized_dict()
-        games = sb.get("scoreboard", {}).get("games", [])
-    except Exception as e:
-        log_event("B0", "FETCH_FAILED", detail=f"ScoreboardV3 error: {e}")
-        print(f"  ⚠ ScoreboardV3 error: {e}")
-        # Return None to signal API failure (not 0 games)
+    # --- Step 1: Get game list with retries ---
+    games = []
+    last_err = None
+    for attempt in range(3):
+        try:
+            if attempt > 0:
+                time.sleep(3 * attempt)
+                print(f"  Retry {attempt}/2...")
+            sb = scoreboardv3.ScoreboardV3(
+                game_date=date_str,
+                league_id="00",
+                headers=_NBA_HEADERS,
+                timeout=45,
+            ).get_normalized_dict()
+            games = sb.get("scoreboard", {}).get("games", [])
+            last_err = None
+            break
+        except Exception as e:
+            last_err = e
+            print(f"  ⚠ ScoreboardV3 attempt {attempt+1} error: {e}")
+
+    if last_err is not None:
+        log_event("B0", "FETCH_FAILED", detail=f"ScoreboardV3 error after retries: {last_err}")
+        print(f"  ⚠ ScoreboardV3 failed after 3 attempts — aborting grade.")
         return None, None
 
     if not games:
-        log_event("B0", "FETCH_EMPTY_WARNING", detail="0 games on scoreboard")
-        print(f"  ⚠ 0 games found for {date_str} — possible off-day")
-        # Legitimate 0 games — return empty but NOT None
-        return [], set()
+        log_event("B0", "FETCH_EMPTY_WARNING", detail=f"0 games on scoreboard for {date_str}")
+        print(f"  ⚠ 0 games found for {date_str} — NBA off-day or API issue")
+        print(f"  ℹ  If this was NOT an off-day, try: python3 run.py grade --date {date_str}")
+        # Return None rather than empty to prevent false DNPs on API confusion
+        # User can retry manually
+        return None, None
 
     # --- Step 2: Get each box score ---
     for game in games:
@@ -115,7 +148,9 @@ def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
         try:
             time.sleep(0.6)
             bx = boxscoretraditionalv3.BoxScoreTraditionalV3(
-                game_id=gid
+                game_id=gid,
+                headers=_NBA_HEADERS,
+                timeout=45,
             ).get_normalized_dict()
 
             for team_key in ("homeTeam", "awayTeam"):

@@ -10,6 +10,7 @@ Usage:
   python3 run.py grade                — Manual Batch 0 (grade yesterday + retrain)
   python3 run.py grade --date DATE    — Grade a specific date e.g. 2026-04-02
   python3 run.py grade --no-retrain   — Grade only, skip model retraining
+  python3 run.py grade-csv --date DATE — Grade from game log CSV (NBA API bypass)
   python3 run.py predict [1-4]        — Manual prediction run (default: 2)
   python3 run.py retrain              — Retrain models only (no grading)
   python3 run.py dvp                  — Rebuild DVP rankings only
@@ -110,6 +111,99 @@ def cmd_grade():
     """Manual Batch 0. Passes --date and --no-retrain through to batch0_grade."""
     import batch0_grade
     batch0_grade.main()
+
+
+def cmd_grade_from_csv():
+    """
+    Grade plays for a specific date using the game log CSV instead of NBA API.
+    Use this when the NBA API returns 0 games but you have the game log updated.
+    
+    Usage: python3 run.py grade-csv --date 2026-04-02
+    """
+    import argparse, json
+    import pandas as pd
+    import numpy as np
+    from config import FILE_GL_2526, FILE_TODAY, FILE_SEASON_2526, clean_json
+    from reasoning_engine import generate_post_match_reason
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--date", required=True, help="Date to grade YYYY-MM-DD")
+    parser.add_argument("--no-retrain", action="store_true")
+    args, _ = parser.parse_known_args()
+    grade_date = args.date
+
+    print(f"\n  Grading {grade_date} from game log CSV...")
+
+    # Load game log
+    gl = pd.read_csv(FILE_GL_2526, parse_dates=["GAME_DATE"])
+    day_gl = gl[gl["GAME_DATE"].dt.strftime("%Y-%m-%d") == grade_date]
+    played = day_gl[(day_gl["DNP"].fillna(0) == 0) & (day_gl["MIN_NUM"].fillna(0) > 0)]
+
+    if len(played) == 0:
+        print(f"  ⚠ No played rows in game log for {grade_date}")
+        print(f"  Game log has dates: {sorted(gl['GAME_DATE'].dt.strftime('%Y-%m-%d').unique())[-5:]}")
+        print(f"  If results are missing, update your game log CSV first.")
+        return
+
+    results_map = {r["PLAYER_NAME"]: r.to_dict() for _, r in played.iterrows()}
+    players_in_box = set(played["PLAYER_NAME"].tolist())
+    print(f"  Found {len(played)} played rows, {len(players_in_box)} players")
+
+    wins = losses = dnps = 0
+    for path in (FILE_TODAY, FILE_SEASON_2526):
+        if not path.exists(): continue
+        with open(path) as f: data = json.load(f)
+        changed = False
+        for play in data:
+            if play.get("date") != grade_date: continue
+            if play.get("result") in ("WIN","LOSS","DNP"): continue
+
+            pname = play.get("player","")
+            line  = float(play.get("line", 20))
+            dr    = str(play.get("direction",""))
+            is_over  = "OVER"  in dr.upper() and "LEAN" not in dr.upper()
+            is_under = "UNDER" in dr.upper() and "LEAN" not in dr.upper()
+
+            box = results_map.get(pname)
+            if pname not in players_in_box or box is None:
+                play["result"]    = "DNP"
+                play["actualPts"] = None
+                play["actualMin"] = 0
+                post, lt = generate_post_match_reason(play)
+                play["postMatchReason"] = post
+                play["lossType"] = "DNP"
+                dnps += 1
+            else:
+                actual     = float(box.get("PTS", 0))
+                actual_min = float(box.get("MIN_NUM", 0))
+                play["actualPts"] = actual
+                play["actualMin"] = round(actual_min, 1)
+                play["delta"]     = round(actual - line, 1)
+                if is_over:    win = actual > line
+                elif is_under: win = actual <= line
+                else:          win = (actual > line and "OVER" in dr) or (actual <= line and "UNDER" in dr)
+                play["result"] = "WIN" if win else "LOSS"
+                if win: wins += 1
+                else:   losses += 1
+                post, lt = generate_post_match_reason(play)
+                play["postMatchReason"] = post
+                play["lossType"] = lt
+            changed = True
+        if changed:
+            with open(path, "w") as f:
+                json.dump(clean_json(data), f, indent=2)
+
+    print(f"  Graded from CSV: W:{wins} L:{losses} DNP:{dnps}")
+
+    if not args.no_retrain:
+        from model_trainer import train_and_save
+        from config import FILE_CLF, FILE_REG, FILE_CAL, FILE_TRUST
+        print("  Retraining models...")
+        train_and_save(FILE_CLF, FILE_REG, FILE_CAL, FILE_TRUST)
+
+    from batch_predict import git_push
+    git_push(f"B0-csv: grade {grade_date}")
+    print(f"  ✓ CSV grading complete for {grade_date}\n")
 
 
 def cmd_predict(batch_num: int = 2):
@@ -231,16 +325,17 @@ def main():
     print(f"\n  PropEdge {VERSION}  —  {cmd}")
 
     dispatch = {
-        "install":   cmd_install,
-        "uninstall": cmd_uninstall,
-        "status":    cmd_status,
-        "generate":  cmd_generate,
-        "grade":     cmd_grade,
-        "retrain":   cmd_retrain,
-        "dvp":       cmd_dvp,
-        "h2h":       cmd_h2h,
-        "weekend":   cmd_weekend,
-        "check":     cmd_check,
+        "install":    cmd_install,
+        "uninstall":  cmd_uninstall,
+        "status":     cmd_status,
+        "generate":   cmd_generate,
+        "grade":      cmd_grade,
+        "grade-csv":  cmd_grade_from_csv,
+        "retrain":    cmd_retrain,
+        "dvp":        cmd_dvp,
+        "h2h":        cmd_h2h,
+        "weekend":    cmd_weekend,
+        "check":      cmd_check,
     }
 
     if cmd == "predict":

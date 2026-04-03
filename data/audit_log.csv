@@ -6,3 +6,4 @@ ts,batch,event,file,rows_before,rows_after,detail
 2026-04-03 19:23:10 UK,B0,BATCH_START,,0,0,grading_date=2026-04-02
 2026-04-03 19:23:10 UK,B0,FETCH_EMPTY_WARNING,,0,0,0 games on scoreboard
 2026-04-03 19:23:11 UK,B0,BATCH_SUMMARY,,0,0,graded=0 wins=0 losses=0 dnp=0
+2026-04-03 19:25:08 UK,B0,BATCH_COMPLETE,,0,0,grade_date=2026-04-02
