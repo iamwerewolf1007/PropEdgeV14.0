@@ -411,8 +411,23 @@ def crosscheck_rolling_stats(
 # ─────────────────────────────────────────────────────────────────────────────
 
 def main():
-    yesterday_ts = datetime.now(get_uk()) - timedelta(days=1)
-    yesterday    = yesterday_ts.strftime("%Y-%m-%d")
+    import argparse
+    parser = argparse.ArgumentParser(description="PropEdge V14 Batch 0 — Grade + Retrain")
+    parser.add_argument("--date", type=str, default=None,
+                        help="Grade a specific date (YYYY-MM-DD). Default: yesterday.")
+    parser.add_argument("--no-retrain", action="store_true",
+                        help="Skip model retraining after grading.")
+    # Parse only known args so run.py can pass extra args safely
+    args, _ = parser.parse_known_args()
+
+    if args.date:
+        yesterday = args.date
+        print(f"  ⚠ Manual date override: grading {yesterday}")
+    else:
+        yesterday_ts = datetime.now(get_uk()) - timedelta(days=1)
+        yesterday    = yesterday_ts.strftime("%Y-%m-%d")
+
+    no_retrain = getattr(args, 'no_retrain', False)
 
     print(f"\n{'='*60}")
     print(f"  PropEdge {VERSION} — Batch 0 (Grade + Retrain)")
@@ -474,9 +489,12 @@ def main():
     # 7. Update DVP
     compute_and_save_dvp(FILE_GL_2526, FILE_DVP)
 
-    # 8. Retrain
-    print("  Retraining V14 models (~5-8 min)...")
-    train_and_save(FILE_CLF, FILE_REG, FILE_CAL, FILE_TRUST)
+    # 8. Retrain (skip if --no-retrain)
+    if no_retrain:
+        print("  --no-retrain: skipping model retraining.")
+    else:
+        print("  Retraining V14 models (~5-8 min)...")
+        train_and_save(FILE_CLF, FILE_REG, FILE_CAL, FILE_TRUST)
 
     # 9. Git push
     git_push(f"B0: grade {yesterday}")

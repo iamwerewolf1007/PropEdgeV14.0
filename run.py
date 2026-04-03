@@ -3,17 +3,19 @@ PropEdge V14.0 — run.py
 Master CLI. Install agents, generate season data, manual batch runs.
 
 Usage:
-  python3 run.py install        — Install launchd scheduler
-  python3 run.py uninstall      — Remove scheduler
-  python3 run.py status         — Show agent states + next run times
-  python3 run.py generate       — Train models + build season JSONs (first-time setup)
-  python3 run.py grade          — Manual Batch 0 (grade + retrain)
-  python3 run.py predict [1-4]  — Manual prediction run (default: 2)
-  python3 run.py retrain        — Retrain models only (no grading)
-  python3 run.py dvp            — Rebuild DVP rankings only
-  python3 run.py h2h            — Rebuild H2H database only
-  python3 run.py weekend        — Preview this weekend's schedule
-  python3 run.py check          — Run data integrity checks
+  python3 run.py install              — Install launchd scheduler
+  python3 run.py uninstall            — Remove scheduler
+  python3 run.py status               — Show agent states + next run times
+  python3 run.py generate             — Train models + build season JSONs (first-time setup)
+  python3 run.py grade                — Manual Batch 0 (grade yesterday + retrain)
+  python3 run.py grade --date DATE    — Grade a specific date e.g. 2026-04-02
+  python3 run.py grade --no-retrain   — Grade only, skip model retraining
+  python3 run.py predict [1-4]        — Manual prediction run (default: 2)
+  python3 run.py retrain              — Retrain models only (no grading)
+  python3 run.py dvp                  — Rebuild DVP rankings only
+  python3 run.py h2h                  — Rebuild H2H database only
+  python3 run.py weekend              — Preview this weekend's schedule
+  python3 run.py check                — Run data integrity checks
 """
 
 import sys
@@ -105,7 +107,7 @@ def cmd_generate():
 
 
 def cmd_grade():
-    """Manual Batch 0."""
+    """Manual Batch 0. Passes --date and --no-retrain through to batch0_grade."""
     import batch0_grade
     batch0_grade.main()
 
