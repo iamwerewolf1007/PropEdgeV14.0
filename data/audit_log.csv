@@ -15,3 +15,18 @@ ts,batch,event,file,rows_before,rows_after,detail
 2026-04-04 12:09:05 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
 2026-04-04 12:12:20 UK,B0,FETCH_FAILED,,0,0,"ScoreboardV3 error after retries: HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=60)"
 2026-04-04 12:12:21 UK,B0,GRADING_ABORTED,,0,0,API + CSV fallback both failed — grading skipped
+2026-04-04 12:50:04 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
+2026-04-04 12:53:20 UK,B0,FETCH_FAILED,,0,0,"ScoreboardV3 error after retries: HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=60)"
+2026-04-04 12:53:22 UK,B0,PGL_FALLBACK_USED,,0,0,0 rows for 2026-04-03
+2026-04-04 12:53:32 UK,B0,BATCH_SUMMARY,,0,0,graded=196 wins=0 losses=0 dnp=196
+2026-04-04 12:53:35 UK,B0,FILE_STATE_BEFORE_APPEND,nba_gamelogs_2025_26.csv,24808,24808,
+2026-04-04 12:54:27 UK,B0,INTEGRITY_OK,nba_gamelogs_2025_26.csv,24808,24906,
+2026-04-04 12:58:22 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
+2026-04-04 12:58:23 UK,B0,FETCH_EMPTY_WARNING,,0,0,0 games on scoreboard for 2026-04-03
+2026-04-04 12:58:23 UK,B0,GRADING_ABORTED,,0,0,API + CSV fallback both failed — grading skipped
+2026-04-04 12:58:52 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
+2026-04-04 12:58:54 UK,B0,FETCH_EMPTY_WARNING,,0,0,0 games on scoreboard for 2026-04-03
+2026-04-04 12:58:54 UK,B0,GRADING_ABORTED,,0,0,API + CSV fallback both failed — grading skipped
+2026-04-04 13:06:25 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
+2026-04-04 13:06:37 UK,B0,BOXSCORES_FETCHED,,0,0,"202 rows, 240 players"
+2026-04-04 13:06:38 UK,B0,BATCH_SUMMARY,,0,0,graded=0 wins=0 losses=0 dnp=0

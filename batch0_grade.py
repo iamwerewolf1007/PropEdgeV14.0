@@ -76,11 +76,17 @@ def _parse_min(v) -> float:
 
 
 # Browser-like headers required by stats.nba.com
+import random as _random
+_UA_POOL = [
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+]
 _NBA_HEADERS = {
     "Host": "stats.nba.com",
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/123.0.0.0 Safari/537.36",
+    "User-Agent": _random.choice(_UA_POOL),
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "en-US,en;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
@@ -90,6 +96,68 @@ _NBA_HEADERS = {
     "Connection": "keep-alive",
     "Origin": "https://www.nba.com",
 }
+
+
+def _fetch_from_playergamelog(date_str: str) -> tuple[list[dict], set[str]] | tuple[None, None]:
+    """
+    Secondary API fallback using LeagueGameLog endpoint — hits a different
+    stats.nba.com path than ScoreboardV3 and is often reachable when the
+    scoreboard endpoint is blocked/rate-limited from non-US IPs.
+    """
+    try:
+        import time
+        from nba_api.stats.endpoints import leaguegamelog
+        time.sleep(2)
+        lg = leaguegamelog.LeagueGameLog(
+            season="2025-26",
+            season_type_all_star="Regular Season",
+            date_from_nullable=date_str,
+            date_to_nullable=date_str,
+            timeout=45,
+        ).get_data_frames()[0]
+        if lg.empty:
+            print(f"  ℹ  LeagueGameLog: no rows for {date_str}")
+            return None, None
+        played_rows: list[dict] = []
+        players_in_box: set[str] = set()
+        for _, r in lg.iterrows():
+            pname = str(r.get("PLAYER_NAME", "")).strip()
+            if not pname:
+                continue
+            players_in_box.add(pname)
+            # MIN is stored as "MM:SS" string
+            min_str = str(r.get("MIN", "0"))
+            try:
+                parts = min_str.split(":")
+                mins = float(parts[0]) + float(parts[1]) / 60 if len(parts) == 2 else float(parts[0])
+            except Exception:
+                mins = 0.0
+            played_rows.append({
+                "PLAYER_NAME": pname,
+                "GAME_DATE":   date_str,
+                "PTS":  float(r.get("PTS", 0) or 0),
+                "MIN_NUM": round(mins, 2),
+                "FGA":  float(r.get("FGA", 0) or 0),
+                "FGM":  float(r.get("FGM", 0) or 0),
+                "FG3A": float(r.get("FG3A", 0) or 0),
+                "FG3M": float(r.get("FG3M", 0) or 0),
+                "FTA":  float(r.get("FTA", 0) or 0),
+                "FTM":  float(r.get("FTM", 0) or 0),
+                "REB":  float(r.get("REB", 0) or 0),
+                "AST":  float(r.get("AST", 0) or 0),
+                "STL":  float(r.get("STL", 0) or 0),
+                "BLK":  float(r.get("BLK", 0) or 0),
+                "TOV":  float(r.get("TOV", 0) or 0),
+                "PLUS_MINUS": float(r.get("PLUS_MINUS", 0) or 0),
+                "DNP":  0,
+                "OPPONENT": str(r.get("MATCHUP", "")).split()[-1].replace("@", "").replace("vs.", "").strip(),
+                "IS_HOME": 1 if "vs." in str(r.get("MATCHUP", "")) else 0,
+            })
+        log_event("B0", "PGL_FALLBACK_USED", detail=f"{len(played_rows)} rows for {date_str}")
+        return played_rows, players_in_box
+    except Exception as e:
+        print(f"  ⚠ LeagueGameLog fallback failed: {e}")
+        return None, None
 
 
 def _fetch_from_csv(date_str: str) -> tuple[list[dict], set[str]] | tuple[None, None]:
@@ -151,117 +219,204 @@ def _fetch_from_csv(date_str: str) -> tuple[list[dict], set[str]] | tuple[None, 
 
 def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
     """
-    Fetch yesterday's box scores via nba_api, with automatic CSV fallback.
-
-    Priority:
-      1. NBA API (nba_api ScoreboardV3 + BoxScoreTraditionalV3)
-         — 3 retries with increasing backoff (5s, 10s, 20s)
-      2. Game log CSV fallback — used automatically if the API fails
-         (timeout, rate-limit, network block from UK IP, etc.)
-         Requires that batch0_grade already appended the previous day.
-         NOTE: CSV fallback skips append_gamelogs (data already in CSV).
-
-    Returns (played_rows, players_in_box).
-    Returns (None, None) only if BOTH the API and the CSV have no data.
+    Fetch yesterday's box scores. Uses V12's proven approach:
+      - ScoreboardV3 → .game_header.get_data_frame()
+      - BoxScoreTraditionalV3 → .player_stats.get_data_frame()
+    Falls back to LeagueGameLog then CSV if API fails.
     """
-    from nba_api.stats.endpoints import scoreboardv3, boxscoretraditionalv3
+    from nba_api.stats.endpoints import ScoreboardV3, BoxScoreTraditionalV3
     import time
 
     print(f"  Fetching box scores for {date_str}...")
+    time.sleep(1)
+
+    # ── Step 1: ScoreboardV3 with V12's exact call pattern ──────────────────
     played_rows: list[dict] = []
     players_in_box: set[str] = set()
-
-    # --- Step 1: NBA API with retries and longer backoff ---
-    games = []
+    gh = None
     last_err = None
+
     for attempt in range(3):
         try:
             if attempt > 0:
-                wait = 5 * (2 ** (attempt - 1))   # 5s, 10s
+                wait = 3 * attempt
                 print(f"  Retry {attempt}/2 (waiting {wait}s)...")
                 time.sleep(wait)
-            sb = scoreboardv3.ScoreboardV3(
-                game_date=date_str,
-                league_id="00",
-                headers=_NBA_HEADERS,
-                timeout=60,
-            ).get_normalized_dict()
-            games = sb.get("scoreboard", {}).get("games", [])
+            sb  = ScoreboardV3(game_date=date_str, league_id='00')
+            gh  = sb.game_header.get_data_frame()
+            ls  = sb.line_score.get_data_frame()
             last_err = None
             break
         except Exception as e:
             last_err = e
             print(f"  ⚠ ScoreboardV3 attempt {attempt+1} error: {e}")
 
-    # --- Step 2: If API failed, try CSV fallback ---
+    # ── Step 2: API error → try LeagueGameLog then CSV ───────────────────────
     if last_err is not None:
-        log_event("B0", "FETCH_FAILED", detail=f"ScoreboardV3 error after retries: {last_err}")
-        print(f"  ⚠ NBA API failed — trying CSV fallback...")
+        log_event("B0", "FETCH_FAILED", detail=str(last_err))
+        print(f"  ⚠ ScoreboardV3 failed — trying LeagueGameLog...")
+        pgl_rows, pgl_players = _fetch_from_playergamelog(date_str)
+        if pgl_rows is not None:
+            print(f"  ✓ LeagueGameLog: {len(pgl_rows)} rows")
+            return pgl_rows, pgl_players
+        print(f"  ⚠ LeagueGameLog failed — trying CSV...")
         csv_rows, csv_players = _fetch_from_csv(date_str)
         if csv_rows is not None:
             return csv_rows, csv_players
-        print(f"  ⚠ CSV fallback also failed — aborting grade to prevent false DNPs.")
-        print(f"  ℹ  When CSV is updated, run: python3 run.py grade-csv --date {date_str}")
+        print(f"  ⚠ All sources failed — aborting to prevent false DNPs.")
+        print(f"  ℹ  Update CSV then run: python3 run.py grade-csv --date {date_str}")
         return None, None
 
-    if not games:
-        log_event("B0", "FETCH_EMPTY_WARNING", detail=f"0 games on scoreboard for {date_str}")
-        print(f"  ⚠ 0 games found for {date_str} — NBA off-day or API issue")
-        print(f"  ℹ  If this was NOT an off-day, try: python3 run.py grade --date {date_str}")
+    # ── Step 3: No games on scoreboard → try CSV ─────────────────────────────
+    if gh is None or gh.empty:
+        print(f"  ⚠ 0 games on scoreboard for {date_str} — trying CSV...")
+        csv_rows, csv_players = _fetch_from_csv(date_str)
+        if csv_rows is not None:
+            return csv_rows, csv_players
+        log_event("B0", "FETCH_EMPTY", detail=f"0 games for {date_str}")
+        print(f"  ⚠ No data available for {date_str}.")
+        print(f"  ℹ  Update CSV then run: python3 run.py grade-csv --date {date_str}")
         return None, None
 
-    # --- Step 2: Get each box score ---
-    for game in games:
-        gid = game.get("gameId") or game.get("id", "")
-        if not gid:
-            continue
+    gids = gh['gameId'].tolist()
+    print(f"  {len(gids)} games found")
+
+    # Build game context (team IDs, scores) from line_score
+    ctx: dict = {}
+    for g in gids:
+        r = ls[ls['gameId'] == g]
+        if len(r) >= 2:
+            ctx[str(g)] = {
+                'htid': r.iloc[0]['teamId'],
+                'ht':   r.iloc[0]['teamTricode'],
+                'at':   r.iloc[1]['teamTricode'],
+                'hs':   int(r.iloc[0].get('score') or 0),
+                'as_':  int(r.iloc[1].get('score') or 0),
+            }
+
+    # Bio cache from existing game log (for player metadata columns)
+    try:
+        df26 = pd.read_csv(FILE_GL_2526)
+        bio_cols = ['PLAYER_ID','PLAYER_NAME','PLAYER_POSITION','PLAYER_POSITION_FULL',
+                    'PLAYER_CURRENT_TEAM','GAME_TEAM_ABBREVIATION','GAME_TEAM_NAME',
+                    'PLAYER_HEIGHT','PLAYER_WEIGHT','PLAYER_EXPERIENCE','PLAYER_COUNTRY',
+                    'PLAYER_DRAFT_YEAR','PLAYER_DRAFT_ROUND','PLAYER_DRAFT_NUMBER']
+        bio_cols = [c for c in bio_cols if c in df26.columns]
+        bio: dict = {}
+        for _, r in df26.drop_duplicates('PLAYER_ID', keep='last')[bio_cols].iterrows():
+            bio[r['PLAYER_ID']] = r.to_dict()
+    except Exception:
+        bio = {}
+
+    # ── Step 4: BoxScoreTraditionalV3 per game ───────────────────────────────
+    for g in gids:
+        time.sleep(0.8)
         try:
-            time.sleep(0.6)
-            bx = boxscoretraditionalv3.BoxScoreTraditionalV3(
-                game_id=gid,
-                headers=_NBA_HEADERS,
-                timeout=45,
-            ).get_normalized_dict()
+            box = BoxScoreTraditionalV3(game_id=g)
+            ps  = box.player_stats.get_data_frame()
+            if ps.empty:
+                continue
 
-            for team_key in ("homeTeam", "awayTeam"):
-                team_data = bx.get(team_key, {})
-                opp_city = team_data.get("teamCity", "")
-                opp_abbr = _city_to_abbr(opp_city)
+            # Rename API columns to CSV schema
+            col_map = {
+                'personId':'PLAYER_ID','teamId':'TEAM_ID','teamTricode':'TEAM_ABBREVIATION',
+                'firstName':'FN','familyName':'LN','minutes':'MR',
+                'fieldGoalsMade':'FGM','fieldGoalsAttempted':'FGA',
+                'threePointersMade':'FG3M','threePointersAttempted':'FG3A',
+                'freeThrowsMade':'FTM','freeThrowsAttempted':'FTA',
+                'reboundsOffensive':'OREB','reboundsDefensive':'DREB','reboundsTotal':'REB',
+                'assists':'AST','steals':'STL','blocks':'BLK','turnovers':'TOV',
+                'foulsPersonal':'PF','points':'PTS','plusMinusPoints':'PLUS_MINUS',
+            }
+            ps = ps.rename(columns={k: v for k, v in col_map.items() if k in ps.columns})
+            if 'PLAYER_NAME' not in ps.columns and 'FN' in ps.columns:
+                ps['PLAYER_NAME'] = ps['FN'].fillna('') + ' ' + ps['LN'].fillna('')
 
-                for player in team_data.get("players", []):
-                    pname = str(player.get("name", "")).strip()
-                    if not pname:
-                        continue
+            c = ctx.get(str(g), {})
+
+            for _, row in ps.iterrows():
+                pname = str(row.get('PLAYER_NAME', '')).strip()
+                if pname:
                     players_in_box.add(pname)
-                    mins = _parse_min(
-                        player.get("statistics", {}).get("minutesCalculated", 0)
-                    )
-                    if mins <= 0:
-                        continue  # DNP-CD
-                    s = player.get("statistics", {})
-                    played_rows.append({
-                        "PLAYER_NAME":  pname,
-                        "GAME_DATE":    date_str,
-                        "PTS":          float(s.get("points", 0) or 0),
-                        "MIN_NUM":      round(mins, 2),
-                        "FGA":          float(s.get("fieldGoalsAttempted", 0) or 0),
-                        "FGM":          float(s.get("fieldGoalsMade", 0) or 0),
-                        "FG3A":         float(s.get("threePointersAttempted", 0) or 0),
-                        "FG3M":         float(s.get("threePointersMade", 0) or 0),
-                        "FTA":          float(s.get("freeThrowsAttempted", 0) or 0),
-                        "FTM":          float(s.get("freeThrowsMade", 0) or 0),
-                        "REB":          float(s.get("reboundsTotal", 0) or 0),
-                        "AST":          float(s.get("assists", 0) or 0),
-                        "STL":          float(s.get("steals", 0) or 0),
-                        "BLK":          float(s.get("blocks", 0) or 0),
-                        "TOV":          float(s.get("turnovers", 0) or 0),
-                        "PLUS_MINUS":   float(s.get("plusMinusPoints", 0) or 0),
-                        "DNP":          0,
-                        "OPPONENT":     opp_abbr,   # ← abbreviation, not city name
-                        "IS_HOME":      1 if team_key == "homeTeam" else 0,
-                    })
+
+                mn = _parse_min(row.get('MR', 0))
+                if mn <= 0:
+                    continue  # DNP — tracked in players_in_box but not a played row
+
+                pid  = int(row.get('PLAYER_ID', 0) or 0)
+                tid  = int(row.get('TEAM_ID', 0) or 0)
+                ta   = str(row.get('TEAM_ABBREVIATION', ''))
+                ih   = 1 if tid == c.get('htid') else 0
+                opp_rows = ps[ps['TEAM_ID'] != tid]['TEAM_ABBREVIATION']
+                opp  = opp_rows.iloc[0] if len(opp_rows) > 0 else 'UNK'
+                mu   = f"{ta} vs. {opp}" if ih else f"{ta} @ {opp}"
+                wl   = ('W' if c.get('hs', 0) > c.get('as_', 0) else 'L') if ih \
+                       else ('W' if c.get('as_', 0) > c.get('hs', 0) else 'L')
+
+                pts  = int(row.get('PTS', 0) or 0)
+                fgm  = int(row.get('FGM', 0) or 0); fga  = int(row.get('FGA', 0) or 0)
+                fg3m = int(row.get('FG3M', 0) or 0); fg3a = int(row.get('FG3A', 0) or 0)
+                ftm  = int(row.get('FTM', 0) or 0);  fta  = int(row.get('FTA', 0) or 0)
+                oreb = int(row.get('OREB', 0) or 0); dreb = int(row.get('DREB', 0) or 0)
+                reb  = int(row.get('REB', 0) or 0);  ast  = int(row.get('AST', 0) or 0)
+                stl  = int(row.get('STL', 0) or 0);  blk  = int(row.get('BLK', 0) or 0)
+                tov  = int(row.get('TOV', 0) or 0);  pf   = int(row.get('PF', 0) or 0)
+                pm   = int(row.get('PLUS_MINUS', 0) or 0)
+
+                fgp  = fgm / fga if fga > 0 else 0.0
+                f3p  = fg3m / fg3a if fg3a > 0 else 0.0
+                ftp  = ftm / fta if fta > 0 else 0.0
+                efg  = (fgm + 0.5 * fg3m) / fga if fga > 0 else 0.0
+                tsa  = 2 * (fga + 0.44 * fta)
+                ts   = pts / tsa if tsa > 0 else 0.0
+                usg  = (fga + 0.44 * fta + tov) / (mn / 5) if mn > 0 else 0.0
+                pra  = pts + reb + ast
+                ddc  = sum(1 for x in [pts, reb, ast, stl, blk] if x >= 10)
+                dd   = 1 if ddc >= 2 else 0
+                td   = 1 if ddc >= 3 else 0
+                fp   = pts + 1.25*reb + 1.5*ast + 2*stl + 2*blk - 0.5*tov + 0.5*fg3m + 1.5*dd + 3*td
+                b    = bio.get(pid, {})
+
+                played_rows.append({
+                    'PLAYER_ID': pid,
+                    'PLAYER_NAME': pname or b.get('PLAYER_NAME', ''),
+                    'SEASON': '2025-26', 'SEASON_TYPE': 'Regular Season',
+                    'PLAYER_POSITION': b.get('PLAYER_POSITION', ''),
+                    'PLAYER_POSITION_FULL': b.get('PLAYER_POSITION_FULL', ''),
+                    'PLAYER_CURRENT_TEAM': b.get('PLAYER_CURRENT_TEAM', ta),
+                    'GAME_TEAM_ABBREVIATION': ta,
+                    'GAME_TEAM_NAME': b.get('GAME_TEAM_NAME', ''),
+                    'PLAYER_HEIGHT': b.get('PLAYER_HEIGHT', ''),
+                    'PLAYER_WEIGHT': b.get('PLAYER_WEIGHT', 0),
+                    'PLAYER_EXPERIENCE': b.get('PLAYER_EXPERIENCE', 0),
+                    'PLAYER_COUNTRY': b.get('PLAYER_COUNTRY', ''),
+                    'PLAYER_DRAFT_YEAR': b.get('PLAYER_DRAFT_YEAR', 0),
+                    'PLAYER_DRAFT_ROUND': b.get('PLAYER_DRAFT_ROUND', 0),
+                    'PLAYER_DRAFT_NUMBER': b.get('PLAYER_DRAFT_NUMBER', 0),
+                    'GAME_ID': int(g), 'GAME_DATE': date_str,
+                    'MATCHUP': mu, 'OPPONENT': opp,
+                    'IS_HOME': ih, 'WL': wl,
+                    'WL_WIN': 1 if wl == 'W' else 0,
+                    'WL_LOSS': 1 if wl == 'L' else 0,
+                    'GAMES_PLAYED_SEASON_RUNNING': 0,
+                    'MIN': int(round(mn)), 'MIN_NUM': round(mn, 1),
+                    'FGM': fgm, 'FGA': fga, 'FG_PCT': round(fgp, 4),
+                    'FG3M': fg3m, 'FG3A': fg3a, 'FG3_PCT': round(f3p, 4),
+                    'FTM': ftm, 'FTA': fta, 'FT_PCT': round(ftp, 4),
+                    'OREB': oreb, 'DREB': dreb, 'REB': reb, 'AST': ast,
+                    'STL': stl, 'BLK': blk, 'TOV': tov, 'PF': pf,
+                    'PTS': pts, 'PLUS_MINUS': pm, 'VIDEO_AVAILABLE': 1,
+                    'EFF_FG_PCT': round(efg, 4),
+                    'TRUE_SHOOTING_PCT': round(ts, 4),
+                    'USAGE_APPROX': round(usg, 2),
+                    'PTS_REB_AST': pra, 'PTS_REB': pts+reb, 'PTS_AST': pts+ast,
+                    'REB_AST': reb+ast,
+                    'DOUBLE_DOUBLE': dd, 'TRIPLE_DOUBLE': td,
+                    'FANTASY_PTS': round(fp, 2),
+                    'SEASON_ID': 22025, 'DNP': 0,
+                })
         except Exception as e:
-            print(f"  ⚠ BoxScore error game {gid}: {e}")
+            print(f"  ⚠ BoxScore error game {g}: {e}")
 
     log_event("B0", "BOXSCORES_FETCHED",
               detail=f"{len(played_rows)} rows, {len(players_in_box)} players")
