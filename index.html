@@ -112,8 +112,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--S);-webkit-font-smoo
 @keyframes glow{0%,100%{box-shadow:0 0 4px rgba(245,158,11,.2)}50%{box-shadow:0 0 12px rgba(245,158,11,.4)}}
 /* ── NEW V14 SUMMARY BOXES ── */
 .sum-row{display:grid;gap:3px;margin-bottom:8px}
-.sum-pre{grid-template-columns:0.9fr 2fr 1.25fr 1.25fr}
-.sum-done{grid-template-columns:0.9fr 1fr 2fr 1.3fr 1.3fr 0.7fr}
+.sum-pre{grid-template-columns:0.85fr 2fr 1.1fr 1.1fr 1.1fr}
+.sum-done{grid-template-columns:0.75fr 0.9fr 2fr 1.1fr 1.1fr 1.1fr 0.65fr}
 .sb2{background:var(--bg1);border-radius:9px;padding:6px 4px 6px;text-align:center;border:1px solid rgba(255,255,255,.03);cursor:pointer;transition:.15s}
 .sb2:active{transform:scale(.97)}
 .sb2.sb2-on{box-shadow:0 0 0 1.5px var(--bl);background:rgba(56,189,248,.04)}
@@ -602,21 +602,29 @@ function renderDaily(DS,dates,curDate) {
   const _prem =valid.filter(p=>p.tierLabel==='T1_PREMIUM'&&!isLean(p));
   const _t1   =valid.filter(p=>p.tierLabel==='T1'&&!isLean(p)&&p.tier===1);
   const _t2   =valid.filter(p=>p.tier===2&&!isLean(p));
+  const _t3   =valid.filter(p=>p.tier===3&&!isLean(p));
   const _gradedHR=dayGraded.length?(dayWins/dayGraded.length*100).toFixed(0)+'%':'—';
   const _gradedHRc=dayGraded.length?(dayWins/dayGraded.length>=.55?'var(--gr)':dayWins/dayGraded.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
   const _uG=_ultra.filter(p=>p.result==='WIN'||p.result==='LOSS'),_uW=_uG.filter(p=>p.result==='WIN').length;
   const _pG=_prem.filter(p=>p.result==='WIN'||p.result==='LOSS'),_pW=_pG.filter(p=>p.result==='WIN').length;
   const _tG=_t1.filter(p=>p.result==='WIN'||p.result==='LOSS'),_tW=_tG.filter(p=>p.result==='WIN').length;
   const _t2G=_t2.filter(p=>p.result==='WIN'||p.result==='LOSS'),_t2W=_t2G.filter(p=>p.result==='WIN').length;
+  const _t3G=_t3.filter(p=>p.result==='WIN'||p.result==='LOSS'),_t3W=_t3G.filter(p=>p.result==='WIN').length;
   const _t1total=dayGraded.filter(p=>p.tier===1),_t1W=_t1total.filter(p=>p.result==='WIN').length;
   const _t1HR=_t1total.length?(_t1W/_t1total.length*100).toFixed(0)+'%':'—';
   const _t1HRc=_t1total.length?(_t1W/_t1total.length>=.55?'var(--gr)':_t1W/_t1total.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
   const _t2HR=_t2G.length?(_t2W/_t2G.length*100).toFixed(0)+'%':'—';
   const _t2HRc=_t2G.length?(_t2W/_t2G.length>=.55?'var(--gr)':_t2W/_t2G.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
+  const _t3HR=_t3G.length?(_t3W/_t3G.length*100).toFixed(0)+'%':'—';
+  const _t3HRc=_t3G.length?(_t3W/_t3G.length>=.55?'var(--gr)':_t3W/_t3G.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
   const _t2oG=_t2G.filter(p=>p.dir==='OVER'),_t2oW=_t2oG.filter(p=>p.result==='WIN').length;
   const _t2uG=_t2G.filter(p=>p.dir==='UNDER'),_t2uW=_t2uG.filter(p=>p.result==='WIN').length;
   const _t2oHR=_t2oG.length?(_t2oW/_t2oG.length*100).toFixed(0)+'%':'—';
   const _t2uHR=_t2uG.length?(_t2uW/_t2uG.length*100).toFixed(0)+'%':'—';
+  const _t3oG=_t3G.filter(p=>p.dir==='OVER'),_t3oW=_t3oG.filter(p=>p.result==='WIN').length;
+  const _t3uG=_t3G.filter(p=>p.dir==='UNDER'),_t3uW=_t3uG.filter(p=>p.result==='WIN').length;
+  const _t3oHR=_t3oG.length?(_t3oW/_t3oG.length*100).toFixed(0)+'%':'—';
+  const _t3uHR=_t3uG.length?(_t3uW/_t3uG.length*100).toFixed(0)+'%':'—';
   const _loG=leanGraded.filter(p=>p.dir==='LEAN OVER'),_loW=_loG.filter(p=>p.result==='WIN').length;
   const _luG=leanGraded.filter(p=>p.dir==='LEAN UNDER'),_luW=_luG.filter(p=>p.result==='WIN').length;
   const _loHR=_loG.length?(_loW/_loG.length*100).toFixed(0)+'%':'—';
@@ -627,6 +635,7 @@ function renderDaily(DS,dates,curDate) {
   const _pO=_prem.filter(p=>p.dir==='OVER'||p.dir==='LEAN OVER').length,_pU=_prem.filter(p=>p.dir==='UNDER'||p.dir==='LEAN UNDER').length;
   const _tO=_t1.filter(p=>p.dir==='OVER'||p.dir==='LEAN OVER').length,_tU=_t1.filter(p=>p.dir==='UNDER'||p.dir==='LEAN UNDER').length;
   const _t2O=_t2.filter(p=>p.dir==='OVER').length,_t2U=_t2.filter(p=>p.dir==='UNDER').length;
+  const _t3O=_t3.filter(p=>p.dir==='OVER').length,_t3U=_t3.filter(p=>p.dir==='UNDER').length;
   const _lnO=dayLean.filter(p=>p.dir==='LEAN OVER').length,_lnU=dayLean.filter(p=>p.dir==='LEAN UNDER').length;
 
   function _hrC(w,t){return t&&w/t>=.55?'var(--gr)':t&&w/t<.5?'var(--rd)':'var(--yl)';}
@@ -659,6 +668,9 @@ function renderDaily(DS,dates,curDate) {
     h+='<div class="sb2'+(fTier==='2'?' sb2-on':'')+'" style="cursor:pointer" onclick="fTier=fTier===\'2\'?\'all\':\'2\';render()">';
     h+='<div class="sb2-v" style="color:var(--tier2)">'+_t2.length+'</div><div class="sb2-l">Tier 2</div><div class="sb2-sep"></div>';
     h+='<div class="sb2-ou"><div style="color:var(--ov)">O &middot; '+_t2O+'</div><div style="color:var(--un)">U &middot; '+_t2U+'</div></div></div>';
+    h+='<div class="sb2'+(fTier==='3'?' sb2-on':'')+'" style="cursor:pointer" onclick="fTier=fTier===\'3\'?\'all\':\'3\';render()">';
+    h+='<div class="sb2-v" style="color:var(--tier3)">'+_t3.length+'</div><div class="sb2-l">Tier 3</div><div class="sb2-sep"></div>';
+    h+='<div class="sb2-ou"><div style="color:var(--ov)">O &middot; '+_t3O+'</div><div style="color:var(--un)">U &middot; '+_t3U+'</div></div></div>';
     h+='<div class="sb2'+(fDir==='lean'?' sb2-on':'')+'" style="cursor:pointer" onclick="fDir=fDir===\'lean\'?\'all\':\'lean\';render()">';
     h+='<div class="sb2-v" style="color:var(--tx3)">'+dayLean.length+'</div><div class="sb2-l">Lean</div><div class="sb2-sep"></div>';
     h+='<div class="sb2-ou"><div style="color:var(--ov)">O &middot; '+_lnO+'</div><div style="color:var(--un)">U &middot; '+_lnU+'</div></div></div>';
@@ -679,6 +691,11 @@ function renderDaily(DS,dates,curDate) {
     h+='<div class="sb2-hr" style="color:'+_t2HRc+'">'+_t2HR+'</div><div class="sb2-wl">'+_t2W+'W / '+(_t2G.length-_t2W)+'L</div><div class="sb2-sep"></div>';
     h+='<div class="sb2-ou"><div style="color:var(--ov)">O '+_t2oHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_t2oW+'/'+_t2oG.length+'</span></div>';
     h+='<div style="color:var(--un)">U '+_t2uHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_t2uW+'/'+_t2uG.length+'</span></div></div></div>';
+    h+='<div class="sb2'+(fTier==='3'?' sb2-on':'')+'" style="cursor:pointer" onclick="fTier=fTier===\'3\'?\'all\':\'3\';render()">';
+    h+='<div class="sb2-v" style="color:var(--tier3)">'+_t3G.length+'</div><div class="sb2-l">Tier 3</div>';
+    h+='<div class="sb2-hr" style="color:'+_t3HRc+'">'+_t3HR+'</div><div class="sb2-wl">'+_t3W+'W / '+(_t3G.length-_t3W)+'L</div><div class="sb2-sep"></div>';
+    h+='<div class="sb2-ou"><div style="color:var(--ov)">O '+_t3oHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_t3oW+'/'+_t3oG.length+'</span></div>';
+    h+='<div style="color:var(--un)">U '+_t3uHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_t3uW+'/'+_t3uG.length+'</span></div></div></div>';
     h+='<div class="sb2'+(fDir==='lean'?' sb2-on':'')+'" style="cursor:pointer" onclick="fDir=fDir===\'lean\'?\'all\':\'lean\';render()">';
     h+='<div class="sb2-v" style="color:var(--tx3)">'+dayLean.length+'</div><div class="sb2-l">Lean</div>';
     h+='<div class="sb2-hr" style="color:'+_leanHRc+'">'+_leanHRtot+'</div><div class="sb2-wl">'+leanWins+'W / '+(leanGraded.length-leanWins)+'L</div><div class="sb2-sep"></div>';
