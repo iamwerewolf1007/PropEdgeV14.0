@@ -339,8 +339,9 @@ function mergeSeasonWithToday(seasonData, todayData) {
   // (DNP from season.json for today's date get superseded by today.json)
   const kept = seasonData.filter(p => {
     if (!todayDates.has(p.date)) return true;
-    // For today's dates: only keep definitively graded WIN/LOSS from season
-    return p.result === 'WIN' || p.result === 'LOSS';
+    // For today's dates: keep graded WIN/LOSS/LEAN from season JSON.
+    // Ungraded ("" or null) season plays get superseded by fresh today.json scoring.
+    return p.result === 'WIN' || p.result === 'LOSS' || p.result === 'LEAN';
   });
   // Add today.json plays that aren't already covered as WIN/LOSS in kept
   const keptKeys = new Set(kept.filter(p => todayDates.has(p.date)).map(p => p.player+'_'+p.date+'_'+p.line));
@@ -352,19 +353,25 @@ function mergeSeasonWithToday(seasonData, todayData) {
 function computeSeasonStats() {
   const byDate = {};
   P.forEach(p => {
-    if (!byDate[p.date]) byDate[p.date] = {date:p.date,plays:0,graded:0,wins:0,losses:0,t1:0,t1w:0,t2:0,t2w:0,t3:0,t3w:0,games:new Set()};
+    if (!byDate[p.date]) byDate[p.date] = {date:p.date,plays:0,graded:0,wins:0,losses:0,t1:0,t1w:0,t2:0,t2w:0,t3:0,t3w:0,leanG:0,leanW:0,games:new Set()};
     const d = byDate[p.date];
     d.plays++;
     if (p.match) d.games.add(p.match);
+    const lean = isLean(p);
     if (p.result==='WIN'||p.result==='LOSS') {
-      d.graded++;
-      if (p.result==='WIN') d.wins++; else d.losses++;
-      if (p.tier===1){d.t1++;if(p.result==='WIN')d.t1w++;}
-      else if(p.tier===2){d.t2++;if(p.result==='WIN')d.t2w++;}
-      else{d.t3++;if(p.result==='WIN')d.t3w++;}
+      if (lean) {
+        // Track LEAN accuracy separately — excluded from tier/overall counts
+        d.leanG++; if (p.result==='WIN') d.leanW++;
+      } else {
+        d.graded++;
+        if (p.result==='WIN') d.wins++; else d.losses++;
+        if (p.tier===1){d.t1++;if(p.result==='WIN')d.t1w++;}
+        else if(p.tier===2){d.t2++;if(p.result==='WIN')d.t2w++;}
+        else{d.t3++;if(p.result==='WIN')d.t3w++;}
+      }
     }
   });
-  return Object.values(byDate).map(d=>({...d,games:d.games.size,hr:d.graded?+(d.wins/d.graded*100).toFixed(1):0})).sort((a,b)=>a.date.localeCompare(b.date));
+  return Object.values(byDate).map(d=>({...d,games:d.games.size,hr:d.graded?+(d.wins/d.graded*100).toFixed(1):0,leanHR:d.leanG?+(d.leanW/d.leanG*100).toFixed(1):null})).sort((a,b)=>a.date.localeCompare(b.date));
 }
 
 // ─── SPARKLINE ───
@@ -400,9 +407,10 @@ function render() {
   const DS=computeSeasonStats(), dates=allDates();
   if(di<0) di=0; if(di>=dates.length) di=dates.length-1;
   const curDate=dates[di]||'';
-  let totalPlays=0,totalGraded=0,totalWins=0,totalT1=0,totalT1W=0,totalT2=0,totalT2W=0,totalT3=0,totalT3W=0;
-  DS.forEach(d=>{totalPlays+=d.plays;totalGraded+=d.graded;totalWins+=d.wins;totalT1+=d.t1;totalT1W+=d.t1w;totalT2+=d.t2;totalT2W+=d.t2w;totalT3+=d.t3;totalT3W+=d.t3w;});
+  let totalPlays=0,totalGraded=0,totalWins=0,totalT1=0,totalT1W=0,totalT2=0,totalT2W=0,totalT3=0,totalT3W=0,totalLeanG=0,totalLeanW=0;
+  DS.forEach(d=>{totalPlays+=d.plays;totalGraded+=d.graded;totalWins+=d.wins;totalT1+=d.t1;totalT1W+=d.t1w;totalT2+=d.t2;totalT2W+=d.t2w;totalT3+=d.t3;totalT3W+=d.t3w;totalLeanG+=(d.leanG||0);totalLeanW+=(d.leanW||0);});
   const seasonHR=totalGraded?(totalWins/totalGraded*100).toFixed(1):'0.0';
+  const leanHR=totalLeanG?(totalLeanW/totalLeanG*100).toFixed(1):null;
   const _cdAll=P.filter(p=>p.date===curDate);
   const _cdGraded=_cdAll.filter(p=>p.result==='WIN'||p.result==='LOSS').length;
   const _cdActive=_cdAll.filter(p=>!isVoid(p)).length;
@@ -432,17 +440,19 @@ function render() {
   </div>`;
   h+=`<div class="tabs">${['daily','season','leaders','stats'].map(t=>`<div class="tb ${tab===t?'on':''}" onclick="tab='${t}';render()">${t[0].toUpperCase()+t.slice(1)}</div>`).join('')}</div>`;
 
-  // STRIP — V12 format + ULTRA replacing T2 HR (V14 improvement)
-  const ultraG=P.filter(p=>p.tierLabel==='T1_ULTRA'&&(p.result==='WIN'||p.result==='LOSS'));
+  // STRIP — excludes LEAN from HR/T1/T2, shows Lean separately
+  const ultraG=P.filter(p=>p.tierLabel==='T1_ULTRA'&&(p.result==='WIN'||p.result==='LOSS')&&!isLean(p));
   const ultraW=ultraG.filter(p=>p.result==='WIN').length;
+  const leanStrip=leanHR!=null?leanHR+'%':'—';
   h+=`<div class="strip">${[
     ['Plays',totalPlays.toLocaleString()],
     ['Graded',totalGraded.toLocaleString()],
     ['W/L',totalWins+'/'+(totalGraded-totalWins)],
     ['HR',seasonHR+'%'],
     ['T1 HR',totalT1?(totalT1W/totalT1*100).toFixed(1)+'%':'—'],
-    ['ULTRA',ultraG.length?(ultraW/ultraG.length*100).toFixed(0)+'%':'—']
-  ].map((s,i,a)=>`<div class="si"><div class="si-v">${s[1]}</div><div class="si-l">${s[0]}</div></div>${i<a.length-1?'<div class="sdiv"></div>':''}`).join('')}</div>`;
+    ['T2 HR',totalT2?(totalT2W/totalT2*100).toFixed(1)+'%':'—'],
+    ['Lean',leanStrip]
+  ].map((s,i,a)=>`<div class="si"><div class="si-v" style="${s[0]==='Lean'?'color:var(--tx3);font-size:12px':''}">${s[1]}</div><div class="si-l">${s[0]}</div></div>${i<a.length-1?'<div class="sdiv"></div>':''}`).join('')}</div>`;
 
   if(tab==='daily')   h+=renderDaily(DS,dates,curDate);
   else if(tab==='season')  h+=renderSeason(DS);
@@ -508,36 +518,47 @@ function renderDaily(DS,dates,curDate) {
   const _searchFiltered=_searchLower?valid.filter(p=>p.player.toLowerCase().includes(_searchLower)||(p.match||'').toLowerCase().includes(_searchLower)):valid;
   const filtBase=fMatch==='all'?_searchFiltered:_searchFiltered.filter(p=>p.match===fMatch);
   const fbGraded=filtBase.filter(p=>(p.result==='WIN'||p.result==='LOSS')&&!isDNP(p));
-  const fbWins=fbGraded.filter(p=>p.result==='WIN').length;
-  const fbHR=fbGraded.length?(fbWins/fbGraded.length*100).toFixed(1):null;
+  // Split graded into non-lean and lean — all accuracy shown separately
+  const fbGradedCore = fbGraded.filter(p => !isLean(p));
+  const fbGradedLean = fbGraded.filter(p => isLean(p));
+  const fbWinsCore   = fbGradedCore.filter(p => p.result==='WIN').length;
+  const fbHRCore     = fbGradedCore.length ? (fbWinsCore/fbGradedCore.length*100).toFixed(1) : null;
+  const fbLeanW      = fbGradedLean.filter(p => p.result==='WIN').length;
+  const fbLeanHR     = fbGradedLean.length ? (fbLeanW/fbGradedLean.length*100).toFixed(1) : null;
 
-  if(fbGraded.length) {
-    const hrC=+fbHR>=55?'var(--gr)':+fbHR<50?'var(--rd)':'var(--yl)';
-    const fbOverG=fbGraded.filter(p=>p.dir==='OVER'||p.dir==='LEAN OVER');
-    const fbOverW=fbOverG.filter(p=>p.result==='WIN').length;
-    const fbUnderG=fbGraded.filter(p=>p.dir==='UNDER'||p.dir==='LEAN UNDER');
-    const fbUnderW=fbUnderG.filter(p=>p.result==='WIN').length;
-    const fbT1=fbGraded.filter(p=>p.tier===1),fbT1W=fbT1.filter(p=>p.result==='WIN').length;
-    const fbT2=fbGraded.filter(p=>p.tier===2),fbT2W=fbT2.filter(p=>p.result==='WIN').length;
-    const fbT3=fbGraded.filter(p=>p.tier===3),fbT3W=fbT3.filter(p=>p.result==='WIN').length;
-    const ovHR=fbOverG.length?(fbOverW/fbOverG.length*100).toFixed(0)+'%':'—';
-    const unHR=fbUnderG.length?(fbUnderW/fbUnderG.length*100).toFixed(0)+'%':'—';
+  if(fbGradedCore.length || fbGradedLean.length) {
+    const hrC = fbHRCore!=null ? (+fbHRCore>=55?'var(--gr)':+fbHRCore<50?'var(--rd)':'var(--yl)') : 'var(--tx3)';
+    const fbOverG  = fbGradedCore.filter(p=>p.dir==='OVER');
+    const fbOverW2 = fbOverG.filter(p=>p.result==='WIN').length;
+    const fbUnderG = fbGradedCore.filter(p=>p.dir==='UNDER');
+    const fbUnderW2= fbUnderG.filter(p=>p.result==='WIN').length;
+    const fbT1=fbGradedCore.filter(p=>p.tier===1),fbT1W=fbT1.filter(p=>p.result==='WIN').length;
+    const fbT2=fbGradedCore.filter(p=>p.tier===2),fbT2W=fbT2.filter(p=>p.result==='WIN').length;
+    const fbT3=fbGradedCore.filter(p=>p.tier===3),fbT3W=fbT3.filter(p=>p.result==='WIN').length;
+    const ovHR=fbOverG.length?(fbOverW2/fbOverG.length*100).toFixed(0)+'%':'—';
+    const unHR=fbUnderG.length?(fbUnderW2/fbUnderG.length*100).toFixed(0)+'%':'—';
     const t1HR=fbT1.length?(fbT1W/fbT1.length*100).toFixed(0)+'%':'—';
     const t2HR=fbT2.length?(fbT2W/fbT2.length*100).toFixed(0)+'%':'—';
     const t3HR=fbT3.length?(fbT3W/fbT3.length*100).toFixed(0)+'%':'—';
     h+=`<div style="background:var(--bg1);border-radius:10px;padding:8px 11px;margin-bottom:8px;border:1px solid var(--bg2)">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-        <span style="font:700 11px var(--M);color:var(--tx2)">${fbWins}W / ${fbGraded.length-fbWins}L</span>
-        <span style="font:800 12px var(--M);color:${hrC}">${fbHR}% HR</span>
-        <span style="font:400 8px var(--S);color:var(--tx3)">${fbGraded.length} graded</span>
+        <span style="font:700 11px var(--M);color:var(--tx2)">${fbWinsCore}W / ${fbGradedCore.length-fbWinsCore}L</span>
+        <span style="font:800 12px var(--M);color:${hrC}">${fbHRCore!=null?fbHRCore+'%':'—'} HR</span>
+        <span style="font:400 8px var(--S);color:var(--tx3)">${fbGradedCore.length} graded (excl. lean)</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px">
-        ${[['Over',fbOverW,fbOverG.length,ovHR,'var(--ov)','var(--ovA)'],['Under',fbUnderW,fbUnderG.length,unHR,'var(--un)','var(--unA)'],['T1',fbT1W,fbT1.length,t1HR,'var(--gr)','var(--grA)'],['T2',fbT2W,fbT2.length,t2HR,'var(--yl)','var(--ylA)'],['T3',fbT3W,fbT3.length,t3HR,'var(--tx2)','rgba(148,163,184,.07)']].map(([lbl,w,t,hr,c,bg])=>`
+        ${[['Over',fbOverW2,fbOverG.length,ovHR,'var(--ov)','var(--ovA)'],['Under',fbUnderW2,fbUnderG.length,unHR,'var(--un)','var(--unA)'],['T1',fbT1W,fbT1.length,t1HR,'var(--gr)','var(--grA)'],['T2',fbT2W,fbT2.length,t2HR,'var(--yl)','var(--ylA)'],['T3',fbT3W,fbT3.length,t3HR,'var(--tx2)','rgba(148,163,184,.07)']].map(([lbl,w,t,hr,c,bg])=>`
           <div style="text-align:center;background:${bg};border-radius:6px;padding:5px 2px">
             <div style="font:700 11px var(--M);color:${c}">${hr}</div>
             <div style="font:600 6px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">${lbl} ${w}/${t}</div>
           </div>`).join('')}
       </div>
+      ${fbGradedLean.length?`<div style="display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:6px;border-top:1px solid var(--bg2)">
+        <span style="font:600 7px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.8px">Lean</span>
+        <span style="font:700 10px var(--M);color:var(--tx3)">${fbLeanHR}%</span>
+        <span style="font:400 8px var(--S);color:var(--tx4)">${fbLeanW}W/${fbGradedLean.length-fbLeanW}L (${fbGradedLean.length} plays)</span>
+        <span style="font:400 7px var(--S);color:var(--tx4);margin-left:auto">tracked separately</span>
+      </div>`:''}
     </div>`;
   }
 
@@ -889,7 +910,7 @@ function renderSeason(DS) {
         ['W/L',mw+'W/'+(mg-mw)+'L','var(--tx)'],
         ['T1 HR',mt1?(mt1w/mt1*100).toFixed(1)+'%':'—','var(--yl)'],
         ['T2 HR',mt2?(mt2w/mt2*100).toFixed(1)+'%':'—','var(--tier2)'],
-        ['T3 HR',mt3?(mt3w/mt3*100).toFixed(1)+'%':'—','var(--tier3)']
+        ['Lean HR',(()=>{const mlg=mDs.reduce((s,d)=>s+(d.leanG||0),0),mlw=mDs.reduce((s,d)=>s+(d.leanW||0),0);return mlg?(mlw/mlg*100).toFixed(0)+'%':'—';})(),'var(--tx3)']
       ].map(([l,v,c])=>`<div class="kv"><div class="kv-l">${l}</div><div class="kv-v" style="color:${c};font-size:12px">${v}</div></div>`).join('')}</div>
       <div style="font:600 7px var(--M);color:var(--tx4);letter-spacing:.8px;text-transform:uppercase;margin-bottom:5px">Daily Heatmap — tap day to view</div>
       <div class="hmap">${mDs.map(d=>{
@@ -967,13 +988,23 @@ function renderLeaderDrill(l) {
 function renderStats(DS,totalPlays,totalGraded,totalWins,totalT1,totalT1W,totalT2,totalT2W,totalT3,totalT3W) {
   let h='';
   const seasonHR=totalGraded?(totalWins/totalGraded*100).toFixed(1):'0.0';
-  const ultraG=P.filter(p=>p.tierLabel==='T1_ULTRA'&&(p.result==='WIN'||p.result==='LOSS'));
+  // ULTRA/PREM/tier breakdown — all exclude LEAN
+  const ultraG=P.filter(p=>p.tierLabel==='T1_ULTRA'&&(p.result==='WIN'||p.result==='LOSS')&&!isLean(p));
   const ultraW=ultraG.filter(p=>p.result==='WIN').length;
-  const premG=P.filter(p=>p.tierLabel==='T1_PREMIUM'&&(p.result==='WIN'||p.result==='LOSS'));
+  const premG=P.filter(p=>p.tierLabel==='T1_PREMIUM'&&(p.result==='WIN'||p.result==='LOSS')&&!isLean(p));
   const premW=premG.filter(p=>p.result==='WIN').length;
+  // LEAN — tracked separately
+  const leanAllG=P.filter(p=>isLean(p)&&(p.result==='WIN'||p.result==='LOSS'));
+  const leanAllW=leanAllG.filter(p=>p.result==='WIN').length;
+  const leanOverG=leanAllG.filter(p=>p.dir==='LEAN OVER');
+  const leanOverW=leanOverG.filter(p=>p.result==='WIN').length;
+  const leanUnderG=leanAllG.filter(p=>p.dir==='LEAN UNDER');
+  const leanUnderW=leanUnderG.filter(p=>p.result==='WIN').length;
+  const leanHRs=leanAllG.length?(leanAllW/leanAllG.length*100).toFixed(1):'—';
+  const leanHRc=leanAllG.length?(+leanHRs>=55?'var(--gr)':+leanHRs<50?'var(--rd)':'var(--yl)'):'var(--tx3)';
 
   h+=`<div class="stat-card">
-    <div style="font:600 8px var(--M);color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Season Overview — ${curSeason}</div>
+    <div style="font:600 8px var(--M);color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Season Overview — ${curSeason} <span style="color:var(--tx4);font-size:6px;letter-spacing:.3px">(LEAN excluded)</span></div>
     <div class="g4">
       <div class="kv"><div class="kv-l">Total Plays</div><div class="kv-v" style="font-size:13px">${totalPlays.toLocaleString()}</div></div>
       <div class="kv"><div class="kv-l">Graded</div><div class="kv-v" style="font-size:13px">${totalGraded.toLocaleString()}</div></div>
@@ -984,13 +1015,13 @@ function renderStats(DS,totalPlays,totalGraded,totalWins,totalT1,totalT1W,totalT
   </div>`;
 
   h+=`<div class="stat-card">
-    <div style="font:600 8px var(--M);color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Tier Breakdown</div>
+    <div style="font:600 8px var(--M);color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Tier Breakdown <span style="color:var(--tx4);font-size:6px;letter-spacing:.3px">(LEAN excluded)</span></div>
     ${[
-      ['T1 (ULTRA)',   ultraG.length, ultraW,  ultraG.length?(ultraW/ultraG.length*100).toFixed(1):'0.0', 'var(--yl)'],
-      ['T1 (PREMIUM)', premG.length,  premW,   premG.length?(premW/premG.length*100).toFixed(1):'0.0',  'var(--yl)'],
-      ['T1 (All)',     totalT1,       totalT1W, totalT1?(totalT1W/totalT1*100).toFixed(1):'0.0',       'var(--yl)'],
-      ['T2 (Standard)',totalT2,       totalT2W, totalT2?(totalT2W/totalT2*100).toFixed(1):'0.0',       'var(--tier2)'],
-      ['T3 (Speculative)',totalT3,    totalT3W, totalT3?(totalT3W/totalT3*100).toFixed(1):'0.0',       'var(--tier3)']
+      ['T1 (ULTRA)',      ultraG.length, ultraW,  ultraG.length?(ultraW/ultraG.length*100).toFixed(1):'0.0', 'var(--yl)'],
+      ['T1 (PREMIUM)',    premG.length,  premW,   premG.length?(premW/premG.length*100).toFixed(1):'0.0',  'var(--yl)'],
+      ['T1 (All)',        totalT1,       totalT1W, totalT1?(totalT1W/totalT1*100).toFixed(1):'0.0',       'var(--yl)'],
+      ['T2 (Standard)',   totalT2,       totalT2W, totalT2?(totalT2W/totalT2*100).toFixed(1):'0.0',       'var(--tier2)'],
+      ['T3 (Speculative)',totalT3,       totalT3W, totalT3?(totalT3W/totalT3*100).toFixed(1):'0.0',       'var(--tier3)']
     ].map(([label,total,wins,hr,c])=>`
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span style="font:500 10px var(--S);color:${c}">${label}</span>
@@ -998,6 +1029,29 @@ function renderStats(DS,totalPlays,totalGraded,totalWins,totalT1,totalT1W,totalT
         <span style="font:700 10px var(--M);color:${c}">${hr}%</span>
       </div>
       <div class="stat-bar" style="margin-bottom:8px"><div class="stat-fill" style="width:${hr}%;background:${c}"></div></div>`).join('')}
+  </div>`;
+
+  h+=`<div class="stat-card" style="border:1px solid rgba(100,116,139,.25);background:rgba(100,116,139,.04)">
+    <div style="font:600 8px var(--M);color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">⟳ Lean Accuracy — Tracked Separately</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font:400 9px var(--S);color:var(--tx3)">${leanAllG.length} graded lean plays</span>
+      <span style="font:700 13px var(--M);color:${leanHRc}">${leanHRs}${leanAllG.length?'%':''}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+      <div style="text-align:center;background:var(--ovA);border-radius:6px;padding:6px 4px">
+        <div style="font:700 11px var(--M);color:var(--ov)">${leanOverG.length?(leanOverW/leanOverG.length*100).toFixed(0)+'%':'—'}</div>
+        <div style="font:600 6px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Lean ↗ ${leanOverW}/${leanOverG.length}</div>
+      </div>
+      <div style="text-align:center;background:var(--unA);border-radius:6px;padding:6px 4px">
+        <div style="font:700 11px var(--M);color:var(--un)">${leanUnderG.length?(leanUnderW/leanUnderG.length*100).toFixed(0)+'%':'—'}</div>
+        <div style="font:600 6px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Lean ↘ ${leanUnderW}/${leanUnderG.length}</div>
+      </div>
+      <div style="text-align:center;background:rgba(100,116,139,.07);border-radius:6px;padding:6px 4px">
+        <div style="font:700 11px var(--M);color:var(--tx3)">${leanHRs}${leanAllG.length?'%':''}</div>
+        <div style="font:600 6px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">All Lean ${leanAllW}/${leanAllG.length}</div>
+      </div>
+    </div>
+    <div style="font:400 8px var(--S);color:var(--tx4);margin-top:7px">Lean plays are engine-conflict calls. Excluded from all tier, HR, and P&L calculations above.</div>
   </div>`;
 
   const months=[...new Set(DS.map(d=>d.date.slice(0,7)))].sort();
@@ -1065,7 +1119,7 @@ function renderStats(DS,totalPlays,totalGraded,totalWins,totalT1,totalT1W,totalT
       <div class="kv"><div class="kv-l">Agree HR</div><div class="kv-v" style="color:var(--gr);font-size:13px">${agrG.length?(agrW/agrG.length*100).toFixed(1)+'%':'—'}</div><div style="font:400 7px var(--M);color:var(--tx4);margin-top:2px">${agrG.length}p</div></div>
       <div class="kv"><div class="kv-l">Split HR</div><div class="kv-v" style="color:var(--rd);font-size:13px">${splG.length?(splW/splG.length*100).toFixed(1)+'%':'—'}</div><div style="font:400 7px var(--M);color:var(--tx4);margin-top:2px">${splG.length}p</div></div>
       <div class="kv"><div class="kv-l">ULTRA HR</div><div class="kv-v" style="color:var(--yl);font-size:13px">${ultraG.length?(ultraW/ultraG.length*100).toFixed(1)+'%':'—'}</div><div style="font:400 7px var(--M);color:var(--tx4);margin-top:2px">${ultraG.length}p</div></div>
-      <div class="kv"><div class="kv-l">LEAN</div><div class="kv-v" style="color:var(--tx3);font-size:13px">${P.filter(p=>p.tierLabel==='T3_LEAN').length}</div><div style="font:400 7px var(--M);color:var(--tx4);margin-top:2px">0u plays</div></div>
+      <div class="kv"><div class="kv-l">Lean HR</div><div class="kv-v" style="color:var(--tx3);font-size:13px">${leanAllG.length?(leanAllW/leanAllG.length*100).toFixed(0)+'%':'—'}</div><div style="font:400 7px var(--M);color:var(--tx4);margin-top:2px">${leanAllG.length} graded</div></div>
     </div>
   </div>`;
 

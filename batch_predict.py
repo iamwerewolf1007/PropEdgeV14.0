@@ -398,8 +398,10 @@ def save_today(plays: list[dict]) -> None:
 
     def key(p): return (p.get("player",""), p.get("date",""), str(p.get("line","")))
 
-    # Only keep graded plays from TODAY's date (WIN/LOSS only — not DNP from today,
-    # those come from the live game and will be re-graded properly in batch0)
+    # Preserve graded plays from TODAY — WIN/LOSS regardless of direction (inc. LEAN props).
+    # DNP excluded: those come from the live game and will be re-graded by batch0.
+    # LEAN (direction only, not result) plays with result="" are NOT preserved here
+    # because they are ungraded — batch_predict will re-score them with fresh models.
     graded = {
         key(p): p for p in existing
         if p.get("result") in ("WIN", "LOSS")
@@ -495,6 +497,32 @@ def git_push(message: str) -> None:
         print("  ⚠ Git push timed out — local files are correct.")
     except Exception as e:
         print(f"  ⚠ Git push error: {e}")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RECENT20 BUILDER  (sparkline + score pills with home/away flags)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _build_recent20(prior: pd.DataFrame, line: float) -> list[dict]:
+    """
+    Extract last 20 played games from prior history for dashboard sparkline.
+    Returns list of {date, pts, home, opponent, overLine} objects, oldest first.
+    Matches the format written by generate_season_json._build_play().
+    """
+    if prior is None or len(prior) == 0:
+        return []
+    tail = prior.tail(20)
+    result = []
+    for _, r in tail.iterrows():
+        pts = float(r.get("PTS", 0) or 0)
+        result.append({
+            "date":     pd.Timestamp(r["GAME_DATE"]).strftime("%Y-%m-%d"),
+            "pts":      pts,
+            "home":     bool(int(r.get("IS_HOME", 0) or 0)),
+            "opponent": str(r.get("OPPONENT", "") or ""),
+            "overLine": pts > line,
+        })
+    return result
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -668,6 +696,8 @@ def main():
             "min_l30":      round(feats.get("min_l30", 0), 1),
             "fga_l10":      round(feats.get("fga_l10", 0), 1),
             "vol_risk":     round(feats.get("vol_risk", 0), 3),
+            # Recent 20 scores — needed by dashboard for sparkline + score pills with home/away flags
+            "recent20": _build_recent20(prior, line),
         }
 
         play["preMatchReason"] = generate_pre_match_reason(play)

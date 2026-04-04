@@ -92,12 +92,70 @@ _NBA_HEADERS = {
 }
 
 
+def _fetch_from_csv(date_str: str) -> tuple[list[dict], set[str]] | tuple[None, None]:
+    """
+    Fallback: read box scores for date_str directly from the game log CSV.
+    Used when the NBA API is unavailable (timeout, rate-limit, etc.).
+    Returns (played_rows, players_in_box) if data found, else (None, None).
+    """
+    try:
+        gl = pd.read_csv(FILE_GL_2526, parse_dates=["GAME_DATE"])
+        day = gl[gl["GAME_DATE"].dt.strftime("%Y-%m-%d") == date_str]
+        played = day[(day["DNP"].fillna(0) == 0) & (day["MIN_NUM"].fillna(0) > 0)]
+        if len(played) == 0:
+            latest = gl["GAME_DATE"].max().date() if len(gl) else "unknown"
+            print(f"  ℹ  CSV fallback: no played rows for {date_str} (CSV latest: {latest})")
+            return None, None
+        played_rows: list[dict] = []
+        players_in_box: set[str] = set()
+        for _, r in played.iterrows():
+            pname = str(r.get("PLAYER_NAME", "")).strip()
+            if not pname:
+                continue
+            players_in_box.add(pname)
+            played_rows.append({
+                "PLAYER_NAME":  pname,
+                "GAME_DATE":    date_str,
+                "PTS":          float(r.get("PTS", 0) or 0),
+                "MIN_NUM":      float(r.get("MIN_NUM", 0) or 0),
+                "FGA":          float(r.get("FGA", 0) or 0),
+                "FGM":          float(r.get("FGM", 0) or 0),
+                "FG3A":         float(r.get("FG3A", 0) or 0),
+                "FG3M":         float(r.get("FG3M", 0) or 0),
+                "FTA":          float(r.get("FTA", 0) or 0),
+                "FTM":          float(r.get("FTM", 0) or 0),
+                "REB":          float(r.get("REB", 0) or 0),
+                "AST":          float(r.get("AST", 0) or 0),
+                "STL":          float(r.get("STL", 0) or 0),
+                "BLK":          float(r.get("BLK", 0) or 0),
+                "TOV":          float(r.get("TOV", 0) or 0),
+                "PLUS_MINUS":   float(r.get("PLUS_MINUS", 0) or 0),
+                "DNP":          0,
+                "OPPONENT":     str(r.get("OPPONENT", "") or ""),
+                "IS_HOME":      int(r.get("IS_HOME", 0) or 0),
+            })
+        print(f"  CSV fallback: {len(played_rows)} played rows, {len(players_in_box)} players")
+        log_event("B0", "CSV_FALLBACK_USED", detail=f"{len(played_rows)} rows for {date_str}")
+        return played_rows, players_in_box
+    except Exception as e:
+        print(f"  ⚠ CSV fallback failed: {e}")
+        return None, None
+
+
 def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
     """
-    Fetch yesterday's box scores via nba_api.
+    Fetch yesterday's box scores via nba_api, with automatic CSV fallback.
+
+    Priority:
+      1. NBA API (nba_api ScoreboardV3 + BoxScoreTraditionalV3)
+         — 3 retries with increasing backoff (5s, 10s, 20s)
+      2. Game log CSV fallback — used automatically if the API fails
+         (timeout, rate-limit, network block from UK IP, etc.)
+         Requires that batch0_grade already appended the previous day.
+         NOTE: CSV fallback skips append_gamelogs (data already in CSV).
+
     Returns (played_rows, players_in_box).
-    Returns (None, None) if the API call fails entirely.
-    Retries up to 3 times with browser-like headers to handle NBA API quirks.
+    Returns (None, None) only if BOTH the API and the CSV have no data.
     """
     from nba_api.stats.endpoints import scoreboardv3, boxscoretraditionalv3
     import time
@@ -106,19 +164,20 @@ def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
     played_rows: list[dict] = []
     players_in_box: set[str] = set()
 
-    # --- Step 1: Get game list with retries ---
+    # --- Step 1: NBA API with retries and longer backoff ---
     games = []
     last_err = None
     for attempt in range(3):
         try:
             if attempt > 0:
-                time.sleep(3 * attempt)
-                print(f"  Retry {attempt}/2...")
+                wait = 5 * (2 ** (attempt - 1))   # 5s, 10s
+                print(f"  Retry {attempt}/2 (waiting {wait}s)...")
+                time.sleep(wait)
             sb = scoreboardv3.ScoreboardV3(
                 game_date=date_str,
                 league_id="00",
                 headers=_NBA_HEADERS,
-                timeout=45,
+                timeout=60,
             ).get_normalized_dict()
             games = sb.get("scoreboard", {}).get("games", [])
             last_err = None
@@ -127,17 +186,21 @@ def fetch_boxscores(date_str: str) -> tuple[list[dict], set[str]]:
             last_err = e
             print(f"  ⚠ ScoreboardV3 attempt {attempt+1} error: {e}")
 
+    # --- Step 2: If API failed, try CSV fallback ---
     if last_err is not None:
         log_event("B0", "FETCH_FAILED", detail=f"ScoreboardV3 error after retries: {last_err}")
-        print(f"  ⚠ ScoreboardV3 failed after 3 attempts — aborting grade.")
+        print(f"  ⚠ NBA API failed — trying CSV fallback...")
+        csv_rows, csv_players = _fetch_from_csv(date_str)
+        if csv_rows is not None:
+            return csv_rows, csv_players
+        print(f"  ⚠ CSV fallback also failed — aborting grade to prevent false DNPs.")
+        print(f"  ℹ  When CSV is updated, run: python3 run.py grade-csv --date {date_str}")
         return None, None
 
     if not games:
         log_event("B0", "FETCH_EMPTY_WARNING", detail=f"0 games on scoreboard for {date_str}")
         print(f"  ⚠ 0 games found for {date_str} — NBA off-day or API issue")
         print(f"  ℹ  If this was NOT an off-day, try: python3 run.py grade --date {date_str}")
-        # Return None rather than empty to prevent false DNPs on API confusion
-        # User can retry manually
         return None, None
 
     # --- Step 2: Get each box score ---
@@ -470,15 +533,16 @@ def main():
     print(f"{'='*60}")
     log_event("B0", "BATCH_START", detail=f"grading_date={yesterday}")
 
-    # 1. Fetch box scores — None signals API failure
+    # 1. Fetch box scores — NBA API with automatic CSV fallback
     played_rows, players_in_box = fetch_boxscores(yesterday)
 
     if played_rows is None:
-        # API failure — abort grading to prevent mass DNP
+        # Both NBA API and CSV fallback failed — nothing to grade
         log_event("B0", "GRADING_ABORTED",
-                  detail="API failure — grading skipped to prevent false DNPs")
-        print("  ⚠ GRADING ABORTED: API failure. "
-              "Plays remain ungraded. Will retry tomorrow.")
+                  detail="API + CSV fallback both failed — grading skipped")
+        print("  ⚠ GRADING ABORTED: NBA API timed out and CSV has no data yet.")
+        print(f"  ℹ  Once the game log CSV is updated, run:")
+        print(f"       python3 run.py grade-csv --date {yesterday}")
         return
 
     # 2. Grade plays
@@ -486,8 +550,12 @@ def main():
         yesterday, played_rows, players_in_box
     )
 
-    # 3. Append game logs
-    if played_rows or dnp_names:
+    # 3. Append game logs — skip if date already in CSV (CSV fallback case)
+    existing_gl = pd.read_csv(FILE_GL_2526, parse_dates=["GAME_DATE"])
+    already_in_csv = (existing_gl["GAME_DATE"].dt.strftime("%Y-%m-%d") == yesterday).any()
+    if already_in_csv:
+        print(f"  Game log already has rows for {yesterday} — skipping append (CSV fallback used)")
+    elif played_rows or dnp_names:
         append_gamelogs(played_rows, dnp_names, yesterday)
 
     # 3b. Post-game rolling refresh
