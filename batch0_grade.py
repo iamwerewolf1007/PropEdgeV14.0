@@ -102,12 +102,19 @@ def _fetch_from_csv(date_str: str) -> tuple[list[dict], set[str]] | tuple[None, 
         gl = pd.read_csv(FILE_GL_2526, parse_dates=["GAME_DATE"])
         day = gl[gl["GAME_DATE"].dt.strftime("%Y-%m-%d") == date_str]
         played = day[(day["DNP"].fillna(0) == 0) & (day["MIN_NUM"].fillna(0) > 0)]
+        dnp_stubs = day[(day["DNP"].fillna(0) == 1)]
         if len(played) == 0:
             latest = gl["GAME_DATE"].max().date() if len(gl) else "unknown"
             print(f"  ℹ  CSV fallback: no played rows for {date_str} (CSV latest: {latest})")
             return None, None
         played_rows: list[dict] = []
         players_in_box: set[str] = set()
+        # Include DNP stub names in players_in_box so they are NOT falsely tagged as DNP
+        # (they are in the CSV as confirmed DNP, not absent from the box entirely)
+        for _, r in dnp_stubs.iterrows():
+            pname = str(r.get("PLAYER_NAME", "")).strip()
+            if pname:
+                players_in_box.add(pname)
         for _, r in played.iterrows():
             pname = str(r.get("PLAYER_NAME", "")).strip()
             if not pname:

@@ -432,7 +432,7 @@ function render() {
   let h='';
   h+=`<div class="hdr"><div>
     <div class="hdr-t">PropEdge V14.0</div>
-    <div class="hdr-s">${totalGraded.toLocaleString()} graded &middot; <span style="color:${hrc(+seasonHR)}">${seasonHR}% HR</span> &middot; ${curSeason} &middot; <span style="color:${_cdStatusC}">${_cdStatus}</span></div>
+    <div class="hdr-s">${totalGraded.toLocaleString()} graded &middot; <span style="color:${hrc(+seasonHR)}">${seasonHR}% HR</span> &middot; ${totalLeanG?totalLeanG+' lean &middot; ':''}${curSeason} &middot; <span style="color:${_cdStatusC}">${_cdStatus}</span></div>
   </div><div class="logo">PE</div></div>`;
   h+=`<div class="season-toggle">
     <div class="season-btn ${curSeason==='2024-25'?'active':''}" onclick="loadSeason('2024-25')">2024-25</div>
@@ -492,25 +492,42 @@ function renderDaily(DS,dates,curDate) {
   const dayAll=P.filter(p=>p.date===curDate);
   const voids=dayAll.filter(p=>isVoid(p));
   const valid=dayAll.filter(p=>!isVoid(p));
-  const graded=valid.filter(p=>p.result==='WIN'||p.result==='LOSS');
-  const wins=graded.filter(p=>p.result==='WIN').length;
-  const t1=valid.filter(p=>p.tier===1&&!isDNP(p)).length;
-  const t2=valid.filter(p=>p.tier===2&&!isDNP(p)).length;
-  const gm=[...new Set(valid.map(p=>p.match))];
-  const isPreGame=graded.length===0&&valid.length>0;
 
-  // SUMMARY BOXES — V12 format: Props | Games | T1 | T2
+  // Accounting model: Total = Graded + Lean + DNP + Pending
+  // Graded = WIN/LOSS and NOT lean direction → ties with T1+T2+T3
+  // Lean   = direction is LEAN (graded or pending)
+  // DNP    = confirmed did not play
+  // Pending = no result, not lean, not DNP
+  const dayDNP     = valid.filter(p=>isDNP(p));
+  const dayLean    = valid.filter(p=>isLean(p)&&!isDNP(p));
+  const dayGraded  = valid.filter(p=>(p.result==='WIN'||p.result==='LOSS')&&!isLean(p)&&!isDNP(p));
+  const dayPending = valid.filter(p=>!isDNP(p)&&!isLean(p)&&p.result!=='WIN'&&p.result!=='LOSS');
+  const dayWins    = dayGraded.filter(p=>p.result==='WIN').length;
+  const leanGraded = dayLean.filter(p=>p.result==='WIN'||p.result==='LOSS');
+  const leanWins   = leanGraded.filter(p=>p.result==='WIN').length;
+  const gm=[...new Set(valid.map(p=>p.match))];
+  const isPreGame  = dayGraded.length===0&&valid.length>0;
+
+  // 4 SUMMARY BOXES: Total | Graded | Lean | DNP
   const sbActive='box-shadow:0 0 0 1.5px var(--bl);';
+  const dayHR=dayGraded.length?(dayWins/dayGraded.length*100).toFixed(0)+'%':'—';
+  const dayHRc=dayGraded.length?(+dayWins/dayGraded.length>=.55?'var(--gr)':+dayWins/dayGraded.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
   h+=`<div class="sum4">
     <div class="sb" style="cursor:pointer;${fTier==='all'&&fDir==='all'&&fRes==='all'?sbActive:''}" onclick="fTier='all';fDir='all';fRes='all';fMatch='all';render()">
-      <div class="sb-v">${valid.length}</div><div class="sb-l">Props${voids.length?'<br><span style="color:var(--tx4);font-size:6px">+'+voids.length+' void</span>':(valid.filter(p=>isDNP(p)).length?'<br><span style="color:var(--tx4);font-size:6px">+'+valid.filter(p=>isDNP(p)).length+' DNP</span>':'')}</div>
+      <div class="sb-v">${valid.length}</div>
+      <div class="sb-l">Props<br><span style="color:var(--tx4);font-size:6px">${dayPending.length?dayPending.length+' pending':gm.length+' games'}</span></div>
     </div>
-    <div class="sb"><div class="sb-v">${gm.length}</div><div class="sb-l">Games</div></div>
-    <div class="sb" style="cursor:pointer;${fTier==='1'?sbActive:''}" onclick="fTier=fTier==='1'?'all':'1';render()">
-      <div class="sb-v" style="color:var(--yl)">${t1}</div><div class="sb-l">Tier 1</div>
+    <div class="sb" style="cursor:pointer;${fRes==='graded'&&fDir==='all'?sbActive:''}" onclick="fRes=fRes==='graded'?'all':'graded';fDir='all';render()">
+      <div class="sb-v" style="color:${dayHRc}">${dayGraded.length}</div>
+      <div class="sb-l">Graded<br><span style="color:${dayHRc};font-size:9px">${dayHR}</span></div>
     </div>
-    <div class="sb" style="cursor:pointer;${fTier==='2'?sbActive:''}" onclick="fTier=fTier==='2'?'all':'2';render()">
-      <div class="sb-v" style="color:var(--tier2)">${t2}</div><div class="sb-l">Tier 2</div>
+    <div class="sb" style="cursor:pointer;${fDir==='lean'?sbActive:''}" onclick="fDir=fDir==='lean'?'all':'lean';render()">
+      <div class="sb-v" style="color:var(--tx3)">${dayLean.length}</div>
+      <div class="sb-l">Lean<br><span style="color:var(--tx3);font-size:9px">${leanGraded.length?leanWins+'W/'+leanGraded.length:'—'}</span></div>
+    </div>
+    <div class="sb" style="cursor:pointer;${fRes==='dnp'?sbActive:''}" onclick="fRes=fRes==='dnp'?'all':'dnp';render()">
+      <div class="sb-v" style="color:var(--yl)">${dayDNP.length}</div>
+      <div class="sb-l">DNP<br><span style="color:var(--tx4);font-size:9px">${voids.length?'+'+voids.length+' void':''}</span></div>
     </div>
   </div>`;
 
@@ -520,7 +537,7 @@ function renderDaily(DS,dates,curDate) {
   const fbGraded=filtBase.filter(p=>(p.result==='WIN'||p.result==='LOSS')&&!isDNP(p));
   // Split graded into non-lean and lean — all accuracy shown separately
   const fbGradedCore = fbGraded.filter(p => !isLean(p));
-  const fbGradedLean = fbGraded.filter(p => isLean(p));
+  const fbGradedLean = filtBase.filter(p=>isLean(p)&&!isDNP(p)&&(p.result==='WIN'||p.result==='LOSS'));
   const fbWinsCore   = fbGradedCore.filter(p => p.result==='WIN').length;
   const fbHRCore     = fbGradedCore.length ? (fbWinsCore/fbGradedCore.length*100).toFixed(1) : null;
   const fbLeanW      = fbGradedLean.filter(p => p.result==='WIN').length;
@@ -610,7 +627,7 @@ function renderDaily(DS,dates,curDate) {
   if(fDir==='lean')  fl=fl.filter(p=>isLean(p));
   if(fRes==='w')     fl=fl.filter(p=>p.result==='WIN');
   if(fRes==='l')     fl=fl.filter(p=>p.result==='LOSS');
-  if(fRes==='graded')fl=fl.filter(p=>p.result==='WIN'||p.result==='LOSS');
+  if(fRes==='graded')fl=fl.filter(p=>(p.result==='WIN'||p.result==='LOSS')&&!isLean(p));
   if(fTier==='ultra')fl=fl.filter(p=>p.tierLabel==='T1_ULTRA');
   else if(fTier==='prem')fl=fl.filter(p=>p.tierLabel==='T1_PREMIUM');
   else if(fTier==='1')fl=fl.filter(p=>p.tier===1);
@@ -630,7 +647,11 @@ function renderDaily(DS,dates,curDate) {
   else fl.sort((a,b)=>(b.date||'').localeCompare(a.date||'')||a.tier-b.tier||b.conf-a.conf);
 
   const dLbl=curDate?new Date(curDate+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
-  h+=`<div class="pcount">${fl.length} plays${isPreGame?' · Pre-game':''} · ${dLbl} · Tap card to expand</div>`;
+  const _fcLean=fl.filter(p=>isLean(p)&&!isDNP(p)).length;
+  const _fcDNP2=fl.filter(p=>isDNP(p)).length;
+  const _fcCore=fl.filter(p=>(p.result==='WIN'||p.result==='LOSS')&&!isLean(p)&&!isDNP(p)).length;
+  const _fcPend=fl.filter(p=>!isDNP(p)&&!isLean(p)&&p.result!=='WIN'&&p.result!=='LOSS').length;
+  h+=`<div class="pcount">${fl.length} shown · ${_fcCore} graded · ${_fcLean} lean · ${_fcDNP2} DNP${_fcPend?' · '+_fcPend+' pending':''}${isPreGame?' · <span style="color:var(--bl)">Pre-game</span>':''} · Tap to expand</div>`;
   if(!fl.length) h+=`<div class="ld">No plays match filters</div>`;
   else fl.forEach(p=>{h+=card(p);});
   return h;
