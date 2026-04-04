@@ -9,3 +9,9 @@ ts,batch,event,file,rows_before,rows_after,detail
 2026-04-04 08:14:34 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
 2026-04-04 08:32:48 UK,B0,FETCH_FAILED,,0,0,"ScoreboardV3 error after retries: HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=60)"
 2026-04-04 08:32:58 UK,B0,GRADING_ABORTED,,0,0,API + CSV fallback both failed — grading skipped
+2026-04-04 11:59:24 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
+2026-04-04 12:02:40 UK,B0,FETCH_FAILED,,0,0,"ScoreboardV3 error after retries: HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=60)"
+2026-04-04 12:02:41 UK,B0,GRADING_ABORTED,,0,0,API + CSV fallback both failed — grading skipped
+2026-04-04 12:09:05 UK,B0,BATCH_START,,0,0,grading_date=2026-04-03
+2026-04-04 12:12:20 UK,B0,FETCH_FAILED,,0,0,"ScoreboardV3 error after retries: HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=60)"
+2026-04-04 12:12:21 UK,B0,GRADING_ABORTED,,0,0,API + CSV fallback both failed — grading skipped

@@ -696,6 +696,22 @@ def main():
             "min_l30":      round(feats.get("min_l30", 0), 1),
             "fga_l10":      round(feats.get("fga_l10", 0), 1),
             "vol_risk":     round(feats.get("vol_risk", 0), 3),
+            # Decision signal fields (for dashboard signals + trends)
+            "usage_l10":      round(feats.get("usage_l10", 0), 2),
+            "usage_l30":      round(feats.get("usage_l30", 0), 2),
+            "min_cv":         round(feats.get("min_cv", 0), 3),
+            "fta_l10":        round(feats.get("fta_l10", 0), 1),
+            "ft_rate":        round(feats.get("ft_rate", 0), 3),
+            "fg3a_l10":       round(feats.get("fg3a_l10", 0), 1),
+            "pts_per_min":    round(feats.get("pts_per_min", 0), 3),
+            "home_away_split": round(feats.get("home_away_split", 0), 1),
+            "level_ewm":      round(feats.get("level_ewm", 0), 1),
+            "line_vs_l30":    round(feats.get("line_vs_l30", 0), 1),
+            "extreme_hot":    int(feats.get("extreme_hot", 0) or 0),
+            "extreme_cold":   int(feats.get("extreme_cold", 0) or 0),
+            "is_long_rest":   int(feats.get("is_long_rest", 0) or 0),
+            "recent_min_trend": round(feats.get("recent_min_trend", 0), 1),
+            "h2h_trend":      round(feats.get("h2h_trend", 0), 1),
             # Recent 20 scores — needed by dashboard for sparkline + score pills with home/away flags
             "recent20": _build_recent20(prior, line),
         }

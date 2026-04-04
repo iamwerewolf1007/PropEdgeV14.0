@@ -188,6 +188,8 @@ let fDir = 'all', fRes = 'all', fTier = 'all', fMatch = 'all', fConf = 0, srt = 
 let exp = new Set();
 let _lastTap = '', _lastTapTime = 0;
 let leaderExp = new Set();
+// Per-card sparkline state: key → {win:'L10', venue:'all', line:'prop', customMin:null}
+let expSpk = {};
 let leaderShowAll = new Set();
 
 // ─── V14 FIELD NORMALISER ───
@@ -298,6 +300,26 @@ function normalisePlay(p) {
   // Home/away scoring (V14 has home_l10, away_l10 from rolling engine)
   p.homeAvgPts = p.homeAvgPts ?? p.home_l10 ?? null;
   p.awayAvgPts = p.awayAvgPts ?? p.away_l10 ?? null;
+
+  // Decision signal aliases — map snake_case JSON keys → dashboard camelCase
+  p.usage_l10       = p.usage_l10       ?? null;
+  p.usage_l30       = p.usage_l30       ?? null;
+  p.min_cv          = p.min_cv          ?? null;
+  p.fta_l10         = p.fta_l10         ?? null;
+  p.ft_rate         = p.ft_rate         ?? null;
+  p.fg3a_l10        = p.fg3a_l10        ?? null;
+  p.pts_per_min     = p.pts_per_min     ?? null;
+  p.home_away_split = p.home_away_split ?? null;
+  p.level_ewm       = p.level_ewm       ?? null;
+  p.line_vs_l30     = p.line_vs_l30     ?? null;
+  p.extreme_hot     = p.extreme_hot     ?? null;
+  p.extreme_cold    = p.extreme_cold    ?? null;
+  p.is_long_rest    = p.is_long_rest    ?? null;
+  p.recent_min_trend= p.recent_min_trend?? null;
+  p.h2h_trend       = p.h2h_trend       ?? null;
+  // min_line / max_line from prop data
+  p.min_line = p.min_line ?? null;
+  p.max_line = p.max_line ?? null;
 
   // V14-specific
   p.enginesAgree      = p.enginesAgree      !== undefined ? p.enginesAgree : true;
@@ -441,8 +463,10 @@ function computeSeasonStats() {
 // ─── SPARKLINE ───
 function spark(d,ln,homes,w,h=40) {
   if(!d||d.length<2) return '';
-  const W=w||213, ds=d.slice(-20), hs=homes?homes.slice(-20):[];
-  const n=ds.length,pad=5,top=4,bot=4, cw=W-pad*2,ch=h-top-bot;
+  const W=w||'100%', isFullW=(w==null);
+  const fixW=isFullW?340:W;
+  const ds=d.slice(-20), hs=homes?homes.slice(-20):[];
+  const n=ds.length,pad=5,top=4,bot=4, cw=fixW-pad*2,ch=h-top-bot;
   const mn=Math.min(...ds,ln)-1,mx=Math.max(...ds,ln)+1,rn=mx-mn||1;
   const x=i=>pad+(n<2?cw/2:(i/(n-1))*cw), y=v=>top+(1-(v-mn)/rn)*ch;
   const ly=y(ln), HIT='#2dd4bf',MISS='#e879f9',HITR='45,212,191',MISSR='232,121,249',LINE='#fbbf24',HOMEC='#60a5fa';
@@ -463,7 +487,8 @@ function spark(d,ln,homes,w,h=40) {
     else{p.push(`<circle cx="${cx}" cy="${cy}" r="${hit?2.8:2.2}" fill="${fill}" opacity="${hit?.88:.65}"/>`);}
     if(isHome&&!isMost) p.push(`<circle cx="${cx}" cy="${cy}" r="4.2" fill="none" stroke="${HOMEC}" stroke-width=".8" opacity=".38"/>`);
   });
-  return `<svg width="${W}" height="${h}" style="display:block">${p.join('')}</svg>`;
+  const svgW=isFullW?'100%':W;
+  return `<svg width="${svgW}" height="${h}" ${isFullW?'viewBox="0 0 340 '+h+'" preserveAspectRatio="none"':''} style="display:block">${p.join('')}</svg>`;
 }
 
 // ─── MAIN RENDER ───
@@ -887,53 +912,81 @@ function card(p) {
       </div>`;
     }
 
-    // ── SPARKLINE WINDOW PICKER ──
-    h+='<div class="sec">Scoring Sparkline</div>';
-    h+='<div class="spark-row">';
-    h+='<span class="sp" onclick="event.stopPropagation()">L3</span>';
-    h+='<span class="sp" onclick="event.stopPropagation()">L5</span>';
-    h+='<span class="sp sp-on" onclick="event.stopPropagation()">L10</span>';
-    h+='<span class="sp" onclick="event.stopPropagation()">L20</span>';
-    h+='<span class="sp" onclick="event.stopPropagation()">L30</span>';
-    h+='<span class="sp" onclick="event.stopPropagation()">L100</span>';
-    h+='<span class="sp" onclick="event.stopPropagation()">L200</span>';
-    h+='<span class="sp sp-vi" onclick="event.stopPropagation()">H2H</span>';
-    h+='<span class="sp-div"></span>';
-    h+='<span class="sp sp-on" onclick="event.stopPropagation()">All</span>';
-    h+='<span class="sp" onclick="event.stopPropagation()">&#127968;</span>';
-    h+='<span class="sp" onclick="event.stopPropagation()">&#9992;&#65039;</span>';
-    h+='<span class="sp-div"></span>';
-    h+='<span class="sp sp-on" onclick="event.stopPropagation()">Prop</span>';
-    h+='<span class="sp sp-vi" onclick="event.stopPropagation()">Min</span>';
-    h+='</div>';
-    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;font:400 8px var(--S);color:var(--tx3)" onclick="event.stopPropagation()">';
-    h+='<span>Custom min line:</span>';
-    h+='<input type="number" step="0.5" placeholder="'+(p.min_line||'—')+'" style="width:52px;font:500 9px var(--M);padding:3px 5px;border-radius:5px;border:1px solid var(--bg2);background:var(--bg1);color:var(--tx2);outline:none">';
-    if(p.min_line!=null) h+='<span style="color:var(--tx4)">Book min: '+p.min_line+(p.max_line!=null?' &middot; max: '+p.max_line:'')+'</span>';
-    h+='</div>';
-    h+=spark(p.recent20||[],p.line,p.recent20homes||[]);
-    if(p.min_line!=null&&Array.isArray(p.recent20)&&p.recent20.length){
-      const _beatMin=p.recent20.filter(v=>v>p.min_line).length,_beatProp=p.recent20.filter(v=>v>p.line).length,_tot=p.recent20.length;
-      const _bmC=_beatMin/_tot>=.6?'var(--gr)':_beatMin/_tot<.5?'var(--rd)':'var(--yl)';
-      const _bpC=_beatProp/_tot>=.6?'var(--gr)':_beatProp/_tot<.5?'var(--rd)':'var(--yl)';
-      h+='<div style="display:flex;gap:8px;padding:4px 8px;background:var(--bg);border-radius:6px;border:1px solid var(--bg2);align-items:center;flex-wrap:wrap;margin-top:3px;margin-bottom:5px;font:400 8px var(--S);color:var(--tx3)">Beat min '+p.min_line+': <span style="font:700 9px var(--M);color:'+_bmC+'">'+_beatMin+'/'+_tot+' ('+(_beatMin/_tot*100).toFixed(0)+'%)</span> vs prop line: <span style="font:700 9px var(--M);color:'+_bpC+'">'+_beatProp+'/'+_tot+' ('+(_beatProp/_tot*100).toFixed(0)+'%)</span></div>';
+    // ── SPARKLINE — FULLY INTERACTIVE ──
+    {
+      const _sk = expSpk[k] || {win:'L10',venue:'all',line:'prop',customMin:null};
+      const _esc = k.replace(/'/g,"\\'");
+      const _wins = ['L3','L5','L10','L20','L30','L100','L200','H2H'];
+      const _venues = ['all','home','away'];
+      const _lines = ['prop','min'];
+      // Filter recent20 by venue
+      let _raw = Array.isArray(p.recent20) ? p.recent20.slice() : [];
+      let _homes = p.recent20homes ? p.recent20homes.slice() : [];
+      let _dates = p.recent20dates ? p.recent20dates.slice() : [];
+      if(_sk.venue==='home'){const idx=_homes.map((_,i)=>i).filter(i=>_homes[i]===true);_raw=idx.map(i=>_raw[i]);_homes=idx.map(i=>_homes[i]);_dates=idx.map(i=>_dates[i]);}
+      if(_sk.venue==='away'){const idx=_homes.map((_,i)=>i).filter(i=>_homes[i]===false);_raw=idx.map(i=>_raw[i]);_homes=idx.map(i=>_homes[i]);_dates=idx.map(i=>_dates[i]);}
+      // Slice to window
+      const _winN={'L3':3,'L5':5,'L10':10,'L20':20,'L30':30,'L100':100,'L200':200,'H2H':50};
+      const _n = _winN[_sk.win]||10;
+      _raw=_raw.slice(-_n); _homes=_homes.slice(-_n); _dates=_dates.slice(-_n);
+      // Comparison line
+      const _cmpLine = (_sk.line==='min'&&(_sk.customMin!=null||p.min_line!=null)) ? (_sk.customMin!=null?_sk.customMin:p.min_line) : (_sk.customMin!=null?_sk.customMin:p.line);
+      // beat stats
+      const _beatChosen=_raw.filter(v=>v>_cmpLine).length,_beatProp2=_raw.filter(v=>v>p.line).length,_tot2=_raw.length;
+
+      h+='<div class="sec">Scoring Sparkline</div>';
+      // window toggle
+      h+='<div class="spark-row">';
+      _wins.forEach(function(w){h+='<span class="sp'+(w===_sk.win?' sp-on':''+(w==='H2H'?' sp-vi':''))+'" onclick="event.stopPropagation();setSpk(\''+_esc+'\',\'win\',\''+w+'\')">'+w+'</span>';});
+      h+='<span class="sp-div"></span>';
+      // venue toggle
+      ['all','&#127968;','&#9992;'].forEach(function(v,i){const vk=_venues[i];h+='<span class="sp'+(vk===_sk.venue?' sp-on':'')+'" onclick="event.stopPropagation();setSpk(\''+_esc+'\',\'venue\',\''+vk+'\')">'+v+'</span>';});
+      h+='<span class="sp-div"></span>';
+      // line toggle
+      h+='<span class="sp'+(_sk.line==='prop'?' sp-on':'')+'" onclick="event.stopPropagation();setSpk(\''+_esc+'\',\'line\',\'prop\')">Prop '+p.line+'</span>';
+      h+='<span class="sp'+(_sk.line==='min'?' sp-vi':'')+'" onclick="event.stopPropagation();setSpk(\''+_esc+'\',\'line\',\'min\')">Min '+(_sk.customMin!=null?_sk.customMin:p.min_line!=null?p.min_line:'—')+'</span>';
+      h+='</div>';
+      // custom min input
+      h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;font:400 8px var(--S);color:var(--tx3)" onclick="event.stopPropagation()">';
+      h+='<span>Custom min:</span>';
+      h+='<input type="number" step="0.5" value="'+(_sk.customMin!=null?_sk.customMin:p.min_line||'')+'" placeholder="'+( p.min_line||'set line')+'" onchange="event.stopPropagation();setSpkMin(\''+_esc+'\',this.value)" style="width:56px;font:500 9px var(--M);padding:3px 5px;border-radius:5px;border:1px solid var(--bg2);background:var(--bg1);color:var(--tx);outline:none">';
+      if(p.min_line!=null) h+='<span style="color:var(--tx4)">Book: '+p.min_line+(p.max_line!=null?' – '+p.max_line:'')+'</span>';
+      h+='</div>';
+      // full-width sparkline
+      h+=spark(_raw,_cmpLine,_homes,null,52);
+      // x-axis date labels
+      if(_dates.length>=2){
+        h+='<div style="display:flex;justify-content:space-between;font:400 6px var(--M);color:var(--tx4);margin-top:1px;margin-bottom:3px">';
+        h+='<span>'+_fmtD(_dates[0])+'</span>';
+        if(_dates.length>2)h+='<span>'+_fmtD(_dates[Math.floor(_dates.length/2)])+'</span>';
+        h+='<span style="color:var(--bl)">'+_fmtD(_dates[_dates.length-1])+'</span></div>';
+      }
+      // beat stats row
+      if(_tot2>0){
+        const _bmC=_beatChosen/_tot2>=.6?'var(--gr)':_beatChosen/_tot2<.5?'var(--rd)':'var(--yl)';
+        const _bpC=_beatProp2/_tot2>=.6?'var(--gr)':_beatProp2/_tot2<.5?'var(--rd)':'var(--yl)';
+        h+='<div style="display:flex;gap:8px;padding:4px 8px;background:var(--bg);border-radius:6px;border:1px solid var(--bg2);align-items:center;flex-wrap:wrap;margin-bottom:5px;font:400 8px var(--S);color:var(--tx3)">';
+        h+='Beat '+_cmpLine+': <span style="font:700 9px var(--M);color:'+_bmC+'">'+_beatChosen+'/'+_tot2+' ('+(_beatChosen/_tot2*100).toFixed(0)+'%)</span>';
+        if(_cmpLine!==p.line)h+=' &nbsp;vs prop '+p.line+': <span style="font:700 9px var(--M);color:'+_bpC+'">'+_beatProp2+'/'+_tot2+' ('+(_beatProp2/_tot2*100).toFixed(0)+'%)</span>';
+        h+='</div>';
+      }
     }
 
     // ── DECISION SIGNALS (10) ──
     h+='<div class="sec">Decision Signals</div><div class="dsig">';
     const _ds=[
-      [p.usage_l10!=null&&p.usage_l30!=null,(p.usage_l10||0)>(p.usage_l30||0)?'var(--gr)':'var(--rd)','Usage L5 '+((p.usage_l10||0)>(p.usage_l30||0)?'&#9650;':'&#9660;')],
-      [p.min_cv!=null,(p.min_cv||0)>0.2?'var(--yl)':'var(--gr)','Min CV '+(p.min_cv!=null?p.min_cv.toFixed(2):'—')],
-      [p.fta_l10!=null,(p.fta_l10||0)>5?'var(--gr)':'var(--tx3)','FTA L5 '+(p.fta_l10!=null?p.fta_l10.toFixed(1):'—')],
+      [p.usage_l10!=null,(p.usage_l10||0)>(p.usage_l30||0)?'var(--gr)':'var(--rd)','Usage '+((p.usage_l10||0)*100).toFixed(0)+'% '+((p.usage_l10||0)>(p.usage_l30||0)?'&#9650;':'&#9660;')+'L10'],
+      [p.min_cv!=null,(p.min_cv||0)>0.2?'var(--yl)':'var(--gr)','Min CV '+(p.min_cv!=null?p.min_cv.toFixed(2):'—')+((p.min_cv||0)>0.2?' volatile':'')],
+      [p.fta_l10!=null,(p.fta_l10||0)>5?'var(--gr)':'var(--tx3)','FTA L10 '+(p.fta_l10!=null?p.fta_l10.toFixed(1):'—')],
       [p.line_vs_l30!=null,(p.line_vs_l30||0)>1?'var(--rd)':(p.line_vs_l30||0)<-1?'var(--gr)':'var(--tx3)','Line vs L30 '+((p.line_vs_l30||0)>0?'+':'')+(p.line_vs_l30!=null?p.line_vs_l30.toFixed(1):'—')],
-      [p.level_ewm!=null&&p.l10!=null,(p.level_ewm||0)>(p.l10||0)?'var(--gr)':'var(--rd)','EWM '+(p.level_ewm!=null?p.level_ewm.toFixed(1):'—')+' vs L10'],
-      [p.home_away_split!=null,(p.home_away_split||0)>1?'var(--gr)':(p.home_away_split||0)<-1?'var(--rd)':'var(--tx3)','Home split '+((p.home_away_split||0)>0?'+':'')+(p.home_away_split!=null?p.home_away_split.toFixed(1):'—')],
-      [p.is_long_rest!=null,p.is_long_rest?'var(--yl)':'var(--tx3)','Long rest: '+(p.is_long_rest?'yes':'no')],
+      [p.level_ewm!=null,(p.level_ewm||0)>(p.l10||0)?'var(--gr)':'var(--rd)','EWM '+(p.level_ewm!=null?p.level_ewm.toFixed(1):'—')+' vs L10 '+((p.level_ewm||0)>(p.l10||0)?'&#9650;':'&#9660;')],
+      [p.home_away_split!=null,(p.home_away_split||0)>1?'var(--gr)':(p.home_away_split||0)<-1?'var(--rd)':'var(--tx3)','Home '+(p.homeAvgPts!=null?p.homeAvgPts.toFixed(1):'—')+' Away '+(p.awayAvgPts!=null?p.awayAvgPts.toFixed(1):'—')],
+      [p.is_long_rest!=null,p.is_long_rest?'var(--yl)':'var(--tx3)','Long rest: '+(p.is_long_rest?'yes':'no')+(p.rest_days!=null?' ('+p.rest_days+'d)':'')],
       [p.pts_per_min!=null,(p.pts_per_min||0)>0.75?'var(--gr)':'var(--tx3)','Pts/min '+(p.pts_per_min!=null?p.pts_per_min.toFixed(2):'—')],
-      [p.extreme_hot!=null||p.extreme_cold!=null,p.extreme_hot?'var(--rd)':p.extreme_cold?'var(--bl)':'var(--tx3)',p.extreme_hot?'Extreme hot &#8629;rev':'Extreme cold &#8627;rev'],
+      [p.extreme_hot||p.extreme_cold,p.extreme_hot?'var(--rd)':p.extreme_cold?'var(--bl)':'var(--tx3)',p.extreme_hot?'&#9650; Extreme hot – rev risk':p.extreme_cold?'&#9660; Extreme cold':'—'],
       [p.h2h_trend!=null,(p.h2h_trend||0)>0?'var(--gr)':(p.h2h_trend||0)<0?'var(--rd)':'var(--tx3)','H2H trend '+((p.h2h_trend||0)>0?'&#8599; +':'&#8600; ')+(p.h2h_trend!=null?Math.abs(p.h2h_trend).toFixed(1):'—')],
     ];
-    _ds.forEach(function(d){if(d[0]!==false){var c=d[1],lbl=d[2];h+='<span class="ds" style="background:'+c+'30;color:'+c+';border-color:'+c+'60">'+lbl+'</span>';}});
+    _ds.forEach(function(d){if(d[0]){var c=d[1],lbl=d[2];h+='<span class="ds" style="background:'+c+'22;color:'+c+';border-color:'+c+'50">'+lbl+'</span>';}});
     h+='</div>';
 
     // ── SEASON STATS ──
@@ -1052,24 +1105,53 @@ function card(p) {
       ['HR L30',p.hr30Pct!=null?p.hr30Pct+'%':'—',hrc(p.hr30Pct||0)]
     ].map(([k,v,c])=>`<div class="kv"><div class="kv-l">${k}</div><div class="kv-v" style="color:${c};font-size:12px">${v}</div></div>`).join('')}</div>`;
 
-    // SHOOTING & VOLUME — V12 layout preserved, show what V14 has
+    // SHOOTING & VOLUME — use fields that actually exist in V14 JSON
     h+=`<div class="sec">Shooting &amp; Volume</div><div class="g4">${[
       ['FGA L10', p.fga10!=null?p.fga10.toFixed(1):'—'],
-      ['FGA L30', p.fga30!=null?p.fga30.toFixed(1):'—'],
-      ['FG L10',  p.fgL10!=null?p.fgL10+'%':'—'],
-      ['FG L30',  p.fgL30!=null?p.fgL30+'%':'—']
+      ['3PA L10', p.fg3a_l10!=null?p.fg3a_l10.toFixed(1):'—'],
+      ['FTA L10', p.fta_l10!=null?p.fta_l10.toFixed(1):'—'],
+      ['FT Rate', p.ft_rate!=null?(p.ft_rate*100).toFixed(0)+'%':'—']
     ].map(([k,v])=>`<div class="kv"><div class="kv-l">${k}</div><div class="kv-v" style="color:var(--tx);font-size:12px">${v}</div></div>`).join('')}</div>`;
     h+=`<div class="g4">${[
       ['MIN L10', p.minL10!=null?p.minL10.toFixed(0):'—'],
       ['MIN L30', p.minL30!=null?p.minL30.toFixed(0):'—'],
-      ['Rest',    p.rest_days!=null?p.rest_days+'d':'—'],
-      ['B2B',     p.is_b2b?'Yes':'No']
+      ['Usage L10', p.usage_l10!=null?(p.usage_l10*100).toFixed(0)+'%':'—'],
+      ['Pts/Min', p.pts_per_min!=null?p.pts_per_min.toFixed(2):'—']
+    ].map(([k,v])=>`<div class="kv"><div class="kv-l">${k}</div><div class="kv-v" style="color:var(--tx);font-size:12px">${v}</div></div>`).join('')}</div>`;
+    h+=`<div class="g4">${[
+      ['Rest', p.rest_days!=null?p.rest_days+'d':'—'],
+      ['B2B', p.is_b2b?'Yes':'No'],
+      ['Home avg', p.homeAvgPts!=null?p.homeAvgPts.toFixed(1):'—'],
+      ['Away avg', p.awayAvgPts!=null?p.awayAvgPts.toFixed(1):'—']
     ].map(([k,v])=>`<div class="kv"><div class="kv-l">${k}</div><div class="kv-v" style="color:var(--tx);font-size:12px">${v}</div></div>`).join('')}</div>`;
 
-    // GAME CONTEXT (home/away/b2b averages from V14 rolling fields)
+    // TRENDS — L5 as recent vs L10/L20 as baseline
+    h+='<div class="sec">Trends</div>';
+    h+='<div style="background:var(--bg);border-radius:7px;padding:5px 8px;margin-bottom:5px;border:1px solid var(--bg2)">';
+    const _trows=[
+      {lbl:'Min',win:'L5 vs L10',v:p.recent_min_trend,fmt:v=>(v>0?'+':'')+v.toFixed(1)+' min',up:v=>v>0.5,dn:v=>v<-0.5},
+      {lbl:'FG3A',win:'L5 vs L20',v:p.fg3a_l10,ref:p.l30,fmt:v=>v!=null?v.toFixed(1)+' att':'—',up:null,dn:null},
+      {lbl:'FTA',win:'L5 vs L10',v:p.fta_l10,ref:null,fmt:v=>v!=null?v.toFixed(1)+' att':'—',up:v=>v>5,dn:v=>v<3},
+      {lbl:'FT rate',win:'L5 vs L10',v:p.ft_rate,ref:null,fmt:v=>v!=null?(v*100).toFixed(0)+'%':'—',up:v=>v>0.35,dn:v=>v<0.2},
+      {lbl:'Usage',win:'L5 vs L10',v:p.usage_l10,ref:p.usage_l30,fmt:v=>v!=null?(v*100).toFixed(0)+'%':'—',up:v=>p.usage_l30!=null&&v>p.usage_l30,dn:v=>p.usage_l30!=null&&v<p.usage_l30},
+      {lbl:'EWM pts',win:'EWM vs L10',v:p.level_ewm,ref:p.l10,fmt:v=>v!=null?v.toFixed(1):'—',up:v=>p.l10!=null&&v>p.l10,dn:v=>p.l10!=null&&v<p.l10},
+    ];
+    _trows.forEach(function(t){
+      if(t.v==null)return;
+      const _isUp=t.up?t.up(t.v):false,_isDn=t.dn?t.dn(t.v):false;
+      const _tc=_isUp?'var(--gr)':_isDn?'var(--rd)':'var(--bl)';
+      const _arr=_isUp?'&#9650;':_isDn?'&#9660;':'&#8594;';
+      const _ref=t.ref!=null?' <span style="color:var(--tx4);font-size:7px">vs '+(typeof t.ref==='number'?(t.ref*100<2?t.ref.toFixed(1):((t.ref*100).toFixed(0)+'%')):'')+'</span>':'';
+      h+='<div class="trend-row" style="background:'+_tc+'0d;margin-bottom:2px">';
+      h+='<span style="color:var(--tx2)">'+t.lbl+'</span>';
+      h+='<span style="color:var(--tx4);font-size:7px">'+t.win+'</span>';
+      h+='<span style="color:'+_tc+';font-weight:700">'+_arr+' '+t.fmt(t.v)+_ref+'</span>';
+      h+='</div>';
+    });
+    h+='</div>';
+
+    // GAME CONTEXT — B2B and special flags only
     h+=`<div class="ctx">`;
-    if(p.homeAvgPts!=null)h+=`<span>Home avg: ${p.homeAvgPts.toFixed(1)}</span>`;
-    if(p.awayAvgPts!=null)h+=`<span>Away avg: ${p.awayAvgPts.toFixed(1)}</span>`;
     if(p.is_b2b)h+=`<span style="color:var(--yl)">⚡ Back-to-back</span>`;
     if(p.earlySeasonW!=null&&p.earlySeasonW<0.6)h+=`<span style="color:var(--yl)">⚠ Early season (${(p.earlySeasonW*100).toFixed(0)}% weight)</span>`;
     if(p.meanReversionRisk>=1)h+=`<span style="color:var(--rd)">↩ Reversion risk</span>`;
@@ -1360,6 +1442,8 @@ function renderStats(DS,totalPlays,totalGraded,totalWins,totalT1,totalT1W,totalT
 function jumpToMonth(m){const dates=allDates();const md=dates.filter(d=>d.startsWith(m));if(md.length)di=dates.indexOf(md[md.length-1]);}
 function tgl(k){const now=Date.now();const isDouble=(k===_lastTap)&&(now-_lastTapTime<400);_lastTap=k;_lastTapTime=now;if(isDouble){if(exp.has(k))exp.delete(k);else exp.add(k);}else{if(exp.has(k)){exp.delete(k);}else{exp.clear();exp.add(k);}}render();}
 function toggleLeader(name){if(leaderExp.has(name)){leaderExp.delete(name);leaderShowAll.delete(name);}else{leaderExp.clear();leaderShowAll.clear();leaderExp.add(name);}render();}
+function setSpk(k,prop,val){if(!expSpk[k])expSpk[k]={win:'L10',venue:'all',line:'prop',customMin:null};expSpk[k][prop]=val;render();}
+function setSpkMin(k,v){if(!expSpk[k])expSpk[k]={win:'L10',venue:'all',line:'prop',customMin:null};expSpk[k].customMin=v?parseFloat(v):null;render();}
 
 // ─── BOOT ───
 loadSeason('2025-26');
