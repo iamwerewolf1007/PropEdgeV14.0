@@ -110,6 +110,69 @@ body{background:var(--bg);color:var(--tx);font-family:var(--S);-webkit-font-smoo
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 @keyframes glow{0%,100%{box-shadow:0 0 4px rgba(245,158,11,.2)}50%{box-shadow:0 0 12px rgba(245,158,11,.4)}}
+/* ── NEW V14 SUMMARY BOXES ── */
+.sum-row{display:grid;gap:3px;margin-bottom:8px}
+.sum-pre{grid-template-columns:0.9fr 2fr 1.25fr 1.25fr}
+.sum-done{grid-template-columns:0.9fr 1fr 2fr 1.3fr 1.3fr 0.7fr}
+.sb2{background:var(--bg1);border-radius:9px;padding:6px 4px 6px;text-align:center;border:1px solid rgba(255,255,255,.03);cursor:pointer;transition:.15s}
+.sb2:active{transform:scale(.97)}
+.sb2.sb2-on{box-shadow:0 0 0 1.5px var(--bl);background:rgba(56,189,248,.04)}
+.sb2-v{font:700 14px var(--M);line-height:1;color:var(--tx)}
+.sb2-l{font:600 6px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+.sb2-hr{font:700 9px var(--M);margin-top:3px}
+.sb2-wl{font:500 6px var(--M);color:var(--tx3);margin-top:1px}
+.sb2-sep{height:1px;background:var(--bg2);margin:3px 5px}
+.sb2-ou{font:600 7px var(--M);text-align:center;line-height:1.75}
+.t1box{background:var(--bg1);border-radius:9px;border:1px solid rgba(245,158,11,.12);cursor:pointer;padding:6px 5px 5px;text-align:center;transition:.15s}
+.t1box.t1-on{box-shadow:0 0 0 1.5px var(--yl);background:rgba(245,158,11,.03)}
+.t1box-v{font:700 14px var(--M);color:var(--yl);line-height:1}
+.t1box-l{font:600 6px var(--M);color:#a16207;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.t1tbl{width:100%;border-collapse:collapse;margin-top:4px;table-layout:fixed}
+.t1tbl td{font:700 7px var(--M);padding:2px 0;text-align:center;vertical-align:middle;white-space:nowrap;overflow:hidden}
+.t1tbl tr{border-top:1px solid rgba(255,255,255,.04)}
+.t1tbl tr:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.t1tbl .tc0{width:36%}.t1tbl .tc1{width:32%}.t1tbl .tc2{width:32%}
+.chip-u{background:rgba(245,158,11,.18);color:var(--yl);border:1px solid rgba(245,158,11,.3);border-radius:3px;padding:1px 4px;font:700 6px var(--M);display:inline-block;white-space:nowrap}
+.chip-p{background:rgba(245,158,11,.1);color:#d97706;border:1px solid rgba(245,158,11,.2);border-radius:3px;padding:1px 4px;font:700 6px var(--M);display:inline-block;white-space:nowrap}
+.chip-t{background:rgba(245,158,11,.05);color:#92400e;border:1px solid rgba(245,158,11,.12);border-radius:3px;padding:1px 4px;font:700 6px var(--M);display:inline-block;white-space:nowrap}
+/* score pills scrollable */
+.pills-row{display:flex;gap:3px;overflow-x:auto;padding:2px 0 3px;scrollbar-width:none;align-items:flex-end;flex-wrap:nowrap}
+.pills-row::-webkit-scrollbar{display:none}
+.pill-item{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0}
+.pill-dt{font:400 6px var(--M);color:var(--tx4);white-space:nowrap}
+.pill-vn{font-size:8px;line-height:1.2}
+.pill-v{font:700 8px var(--M);padding:2px 4px;border-radius:3px}
+.pill-o{background:rgba(45,212,191,.12);color:#2dd4bf}
+.pill-u{background:rgba(232,121,249,.1);color:#e879f9}
+/* sparkline window picker — single scrollable row */
+.spark-row{display:flex;gap:3px;overflow-x:auto;padding:2px 0;margin-bottom:4px;scrollbar-width:none;flex-wrap:nowrap;align-items:center}
+.spark-row::-webkit-scrollbar{display:none}
+.sp{font:700 7px var(--M);padding:3px 6px;border-radius:5px;cursor:pointer;border:1px solid var(--bg2);background:var(--bg1);color:var(--tx3);white-space:nowrap;flex-shrink:0;transition:.12s}
+.sp.sp-on{background:var(--blA);border-color:rgba(56,189,248,.35);color:var(--bl)}
+.sp.sp-vi{background:var(--viA);border-color:rgba(167,139,250,.3);color:var(--vi)}
+.sp-div{width:1px;height:14px;background:var(--bg2);flex-shrink:0;margin:0 1px}
+/* season stats grid */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:5px}
+.sgb{background:var(--bg);border-radius:6px;padding:5px 3px;text-align:center;border:1px solid var(--bg2)}
+.sgl{font:500 6px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.4px}
+.sgv{font:700 11px var(--M);margin-top:2px}
+/* decision signals */
+.dsig{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
+.ds{font:700 7px var(--M);padding:2px 6px;border-radius:5px;border:1px solid}
+/* trends rows */
+.trend-row{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;border-radius:5px;margin-bottom:3px;font:500 8px var(--M)}
+/* leaderboard split */
+.lb-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:8px}
+.lb-col{background:var(--bg1);border-radius:10px;border:1px solid var(--bg2);overflow:hidden}
+.lb-hdr{font:700 7px var(--M);letter-spacing:.8px;text-transform:uppercase;padding:6px 9px;border-bottom:1px solid var(--bg2)}
+.lb-row{display:flex;justify-content:space-between;align-items:center;padding:5px 9px;border-bottom:1px solid var(--bg);font:400 9px var(--S)}
+.lb-v{font:700 10px var(--M)}
+.lb-ct{font:400 7px var(--M);color:var(--tx4);margin-left:2px}
+/* last game tag */
+.last-tag{font:700 7px var(--M);padding:2px 6px;border-radius:5px}
+.last-ok{background:rgba(34,197,94,.08);color:var(--gr);border:1px solid rgba(34,197,94,.2)}
+.last-dnp{background:rgba(245,158,11,.08);color:var(--yl);border:1px solid rgba(245,158,11,.2)}
+.last-inj{background:rgba(239,68,68,.08);color:var(--rd);border:1px solid rgba(239,68,68,.2)}
 </style>
 </head>
 <body>
@@ -198,6 +261,7 @@ function normalisePlay(p) {
   // Safe to convert now.
   if (p.recent20 && p.recent20.length && typeof p.recent20[0] === 'object') {
     p.recent20homes = p.recent20.map(r => r.home === true);
+    p.recent20dates = p.recent20.map(r => r.date || '');
     p.recent20 = p.recent20.map(r => r.pts);
   }
 
@@ -508,28 +572,98 @@ function renderDaily(DS,dates,curDate) {
   const gm=[...new Set(valid.map(p=>p.match))];
   const isPreGame  = dayGraded.length===0&&valid.length>0;
 
-  // 4 SUMMARY BOXES: Total | Graded | Lean | DNP
-  const sbActive='box-shadow:0 0 0 1.5px var(--bl);';
-  const dayHR=dayGraded.length?(dayWins/dayGraded.length*100).toFixed(0)+'%':'—';
-  const dayHRc=dayGraded.length?(+dayWins/dayGraded.length>=.55?'var(--gr)':+dayWins/dayGraded.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
-  h+=`<div class="sum4">
-    <div class="sb" style="cursor:pointer;${fTier==='all'&&fDir==='all'&&fRes==='all'?sbActive:''}" onclick="fTier='all';fDir='all';fRes='all';fMatch='all';render()">
-      <div class="sb-v">${valid.length}</div>
-      <div class="sb-l">Props<br><span style="color:var(--tx4);font-size:6px">${dayPending.length?dayPending.length+' pending':gm.length+' games'}</span></div>
-    </div>
-    <div class="sb" style="cursor:pointer;${fRes==='graded'&&fDir==='all'?sbActive:''}" onclick="fRes=fRes==='graded'?'all':'graded';fDir='all';render()">
-      <div class="sb-v" style="color:${dayHRc}">${dayGraded.length}</div>
-      <div class="sb-l">Graded<br><span style="color:${dayHRc};font-size:9px">${dayHR}</span></div>
-    </div>
-    <div class="sb" style="cursor:pointer;${fDir==='lean'?sbActive:''}" onclick="fDir=fDir==='lean'?'all':'lean';render()">
-      <div class="sb-v" style="color:var(--tx3)">${dayLean.length}</div>
-      <div class="sb-l">Lean<br><span style="color:var(--tx3);font-size:9px">${leanGraded.length?leanWins+'W/'+leanGraded.length:'—'}</span></div>
-    </div>
-    <div class="sb" style="cursor:pointer;${fRes==='dnp'?sbActive:''}" onclick="fRes=fRes==='dnp'?'all':'dnp';render()">
-      <div class="sb-v" style="color:var(--yl)">${dayDNP.length}</div>
-      <div class="sb-l">DNP<br><span style="color:var(--tx4);font-size:9px">${voids.length?'+'+voids.length+' void':''}</span></div>
-    </div>
-  </div>`;
+  // ── SUMMARY BOXES ──
+  const _ultra=valid.filter(p=>p.tierLabel==='T1_ULTRA'&&!isLean(p));
+  const _prem =valid.filter(p=>p.tierLabel==='T1_PREMIUM'&&!isLean(p));
+  const _t1   =valid.filter(p=>p.tierLabel==='T1'&&!isLean(p)&&p.tier===1);
+  const _t2   =valid.filter(p=>p.tier===2&&!isLean(p));
+  const _gradedHR=dayGraded.length?(dayWins/dayGraded.length*100).toFixed(0)+'%':'—';
+  const _gradedHRc=dayGraded.length?(dayWins/dayGraded.length>=.55?'var(--gr)':dayWins/dayGraded.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
+  const _uG=_ultra.filter(p=>p.result==='WIN'||p.result==='LOSS'),_uW=_uG.filter(p=>p.result==='WIN').length;
+  const _pG=_prem.filter(p=>p.result==='WIN'||p.result==='LOSS'),_pW=_pG.filter(p=>p.result==='WIN').length;
+  const _tG=_t1.filter(p=>p.result==='WIN'||p.result==='LOSS'),_tW=_tG.filter(p=>p.result==='WIN').length;
+  const _t2G=_t2.filter(p=>p.result==='WIN'||p.result==='LOSS'),_t2W=_t2G.filter(p=>p.result==='WIN').length;
+  const _t1total=dayGraded.filter(p=>p.tier===1),_t1W=_t1total.filter(p=>p.result==='WIN').length;
+  const _t1HR=_t1total.length?(_t1W/_t1total.length*100).toFixed(0)+'%':'—';
+  const _t1HRc=_t1total.length?(_t1W/_t1total.length>=.55?'var(--gr)':_t1W/_t1total.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
+  const _t2HR=_t2G.length?(_t2W/_t2G.length*100).toFixed(0)+'%':'—';
+  const _t2HRc=_t2G.length?(_t2W/_t2G.length>=.55?'var(--gr)':_t2W/_t2G.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
+  const _t2oG=_t2G.filter(p=>p.dir==='OVER'),_t2oW=_t2oG.filter(p=>p.result==='WIN').length;
+  const _t2uG=_t2G.filter(p=>p.dir==='UNDER'),_t2uW=_t2uG.filter(p=>p.result==='WIN').length;
+  const _t2oHR=_t2oG.length?(_t2oW/_t2oG.length*100).toFixed(0)+'%':'—';
+  const _t2uHR=_t2uG.length?(_t2uW/_t2uG.length*100).toFixed(0)+'%':'—';
+  const _loG=leanGraded.filter(p=>p.dir==='LEAN OVER'),_loW=_loG.filter(p=>p.result==='WIN').length;
+  const _luG=leanGraded.filter(p=>p.dir==='LEAN UNDER'),_luW=_luG.filter(p=>p.result==='WIN').length;
+  const _loHR=_loG.length?(_loW/_loG.length*100).toFixed(0)+'%':'—';
+  const _luHR=_luG.length?(_luW/_luG.length*100).toFixed(0)+'%':'—';
+  const _leanHRtot=leanGraded.length?(leanWins/leanGraded.length*100).toFixed(0)+'%':'—';
+  const _leanHRc=leanGraded.length?(leanWins/leanGraded.length>=.55?'var(--gr)':leanWins/leanGraded.length<.5?'var(--rd)':'var(--yl)'):'var(--tx3)';
+  const _uO=_ultra.filter(p=>p.dir==='OVER'||p.dir==='LEAN OVER').length,_uU=_ultra.filter(p=>p.dir==='UNDER'||p.dir==='LEAN UNDER').length;
+  const _pO=_prem.filter(p=>p.dir==='OVER'||p.dir==='LEAN OVER').length,_pU=_prem.filter(p=>p.dir==='UNDER'||p.dir==='LEAN UNDER').length;
+  const _tO=_t1.filter(p=>p.dir==='OVER'||p.dir==='LEAN OVER').length,_tU=_t1.filter(p=>p.dir==='UNDER'||p.dir==='LEAN UNDER').length;
+  const _t2O=_t2.filter(p=>p.dir==='OVER').length,_t2U=_t2.filter(p=>p.dir==='UNDER').length;
+  const _lnO=dayLean.filter(p=>p.dir==='LEAN OVER').length,_lnU=dayLean.filter(p=>p.dir==='LEAN UNDER').length;
+
+  function _hrC(w,t){return t&&w/t>=.55?'var(--gr)':t&&w/t<.5?'var(--rd)':'var(--yl)';}
+  function _t1TablePre(){
+    var s='<table class="t1tbl">';
+    s+='<tr><td class="tc0"></td><td class="tc1" style="color:var(--ov);font-size:6px;font-weight:600">OVER</td><td class="tc2" style="color:var(--un);font-size:6px;font-weight:600">UNDER</td></tr>';
+    s+='<tr onclick="event.stopPropagation();fTier=\'ultra\';render()"><td class="tc0"><span class="chip-u">Ultra</span></td><td class="tc1" style="color:var(--ov)">'+_uO+'</td><td class="tc2" style="color:var(--un)">'+_uU+'</td></tr>';
+    s+='<tr onclick="event.stopPropagation();fTier=\'prem\';render()"><td class="tc0"><span class="chip-p">Prem</span></td><td class="tc1" style="color:var(--ov)">'+_pO+'</td><td class="tc2" style="color:var(--un)">'+_pU+'</td></tr>';
+    s+='<tr onclick="event.stopPropagation();fTier=\'1\';render()"><td class="tc0"><span class="chip-t">T1</span></td><td class="tc1" style="color:var(--ov)">'+_tO+'</td><td class="tc2" style="color:var(--un)">'+_tU+'</td></tr>';
+    s+='</table>';return s;
+  }
+  function _t1TableDone(){
+    var uHR=_uG.length?(_uW/_uG.length*100).toFixed(0)+'%':'—';
+    var pHR=_pG.length?(_pW/_pG.length*100).toFixed(0)+'%':'—';
+    var tHR=_tG.length?(_tW/_tG.length*100).toFixed(0)+'%':'—';
+    var s='<table class="t1tbl">';
+    s+='<tr><td class="tc0"></td><td class="tc1" style="color:var(--tx4);font-size:6px;font-weight:600">HR</td><td class="tc2" style="color:var(--tx4);font-size:6px;font-weight:600">W / L</td></tr>';
+    s+='<tr onclick="event.stopPropagation();fTier=\'ultra\';render()"><td class="tc0"><span class="chip-u">Ultra</span></td><td class="tc1" style="color:'+_hrC(_uW,_uG.length)+'">'+uHR+'</td><td class="tc2" style="color:var(--tx3)">'+_uW+' / '+(_uG.length-_uW)+'</td></tr>';
+    s+='<tr onclick="event.stopPropagation();fTier=\'prem\';render()"><td class="tc0"><span class="chip-p">Prem</span></td><td class="tc1" style="color:'+_hrC(_pW,_pG.length)+'">'+pHR+'</td><td class="tc2" style="color:var(--tx3)">'+_pW+' / '+(_pG.length-_pW)+'</td></tr>';
+    s+='<tr onclick="event.stopPropagation();fTier=\'1\';render()"><td class="tc0"><span class="chip-t">T1</span></td><td class="tc1" style="color:'+_hrC(_tW,_tG.length)+'">'+tHR+'</td><td class="tc2" style="color:var(--tx3)">'+_tW+' / '+(_tG.length-_tW)+'</td></tr>';
+    s+='</table>';return s;
+  }
+
+  if(isPreGame){
+    h+='<div class="sum-row sum-pre">';
+    h+='<div class="sb2'+(fTier==='all'&&fDir==='all'&&fRes==='all'?' sb2-on':'')+'" style="cursor:pointer" onclick="fTier=\'all\';fDir=\'all\';fRes=\'all\';fMatch=\'all\';render()">';
+    h+='<div class="sb2-v">'+valid.length+'</div><div class="sb2-l">Props</div><div class="sb2-wl">'+gm.length+' games</div></div>';
+    h+='<div class="t1box'+(fTier==='ultra'||fTier==='prem'||fTier==='1'?' t1-on':'')+'" onclick="fTier=fTier===\'all\'?\'1\':\'all\';render()">';
+    h+='<div class="t1box-v">'+(_ultra.length+_prem.length+_t1.length)+'</div><div class="t1box-l">Tier 1</div>'+_t1TablePre()+'</div>';
+    h+='<div class="sb2'+(fTier==='2'?' sb2-on':'')+'" style="cursor:pointer" onclick="fTier=fTier===\'2\'?\'all\':\'2\';render()">';
+    h+='<div class="sb2-v" style="color:var(--tier2)">'+_t2.length+'</div><div class="sb2-l">Tier 2</div><div class="sb2-sep"></div>';
+    h+='<div class="sb2-ou"><div style="color:var(--ov)">O &middot; '+_t2O+'</div><div style="color:var(--un)">U &middot; '+_t2U+'</div></div></div>';
+    h+='<div class="sb2'+(fDir==='lean'?' sb2-on':'')+'" style="cursor:pointer" onclick="fDir=fDir===\'lean\'?\'all\':\'lean\';render()">';
+    h+='<div class="sb2-v" style="color:var(--tx3)">'+dayLean.length+'</div><div class="sb2-l">Lean</div><div class="sb2-sep"></div>';
+    h+='<div class="sb2-ou"><div style="color:var(--ov)">O &middot; '+_lnO+'</div><div style="color:var(--un)">U &middot; '+_lnU+'</div></div></div>';
+    h+='</div>';
+  } else {
+    h+='<div class="sum-row sum-done">';
+    h+='<div class="sb2'+(fTier==='all'&&fDir==='all'&&fRes==='all'?' sb2-on':'')+'" style="cursor:pointer" onclick="fTier=\'all\';fDir=\'all\';fRes=\'all\';fMatch=\'all\';render()">';
+    h+='<div class="sb2-v">'+valid.length+'</div><div class="sb2-l">Props</div><div class="sb2-wl">'+gm.length+' games</div></div>';
+    h+='<div class="sb2'+(fRes==='graded'&&fDir==='all'?' sb2-on':'')+'" style="cursor:pointer" onclick="fRes=fRes===\'graded\'?\'all\':\'graded\';fDir=\'all\';render()">';
+    h+='<div class="sb2-v" style="color:'+_gradedHRc+'">'+dayGraded.length+'</div><div class="sb2-l">Graded</div>';
+    h+='<div class="sb2-hr" style="color:'+_gradedHRc+'">'+_gradedHR+'</div><div class="sb2-wl">'+dayWins+'W / '+(dayGraded.length-dayWins)+'L</div></div>';
+    h+='<div class="t1box'+(fTier==='ultra'||fTier==='prem'||fTier==='1'?' t1-on':'')+'" onclick="fTier=fTier===\'all\'?\'1\':\'all\';render()">';
+    h+='<div class="t1box-v">'+_t1total.length+'</div>';
+    h+='<div class="t1box-l">T1 &nbsp;&middot;&nbsp; <span style="color:var(--yl)">'+_t1HR+'</span> &nbsp;&middot;&nbsp; <span style="color:var(--tx3)">'+_t1W+' / '+(_t1total.length-_t1W)+'</span></div>';
+    h+=_t1TableDone()+'</div>';
+    h+='<div class="sb2'+(fTier==='2'?' sb2-on':'')+'" style="cursor:pointer" onclick="fTier=fTier===\'2\'?\'all\':\'2\';render()">';
+    h+='<div class="sb2-v" style="color:var(--tier2)">'+_t2G.length+'</div><div class="sb2-l">Tier 2</div>';
+    h+='<div class="sb2-hr" style="color:'+_t2HRc+'">'+_t2HR+'</div><div class="sb2-wl">'+_t2W+'W / '+(_t2G.length-_t2W)+'L</div><div class="sb2-sep"></div>';
+    h+='<div class="sb2-ou"><div style="color:var(--ov)">O '+_t2oHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_t2oW+'/'+_t2oG.length+'</span></div>';
+    h+='<div style="color:var(--un)">U '+_t2uHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_t2uW+'/'+_t2uG.length+'</span></div></div></div>';
+    h+='<div class="sb2'+(fDir==='lean'?' sb2-on':'')+'" style="cursor:pointer" onclick="fDir=fDir===\'lean\'?\'all\':\'lean\';render()">';
+    h+='<div class="sb2-v" style="color:var(--tx3)">'+dayLean.length+'</div><div class="sb2-l">Lean</div>';
+    h+='<div class="sb2-hr" style="color:'+_leanHRc+'">'+_leanHRtot+'</div><div class="sb2-wl">'+leanWins+'W / '+(leanGraded.length-leanWins)+'L</div><div class="sb2-sep"></div>';
+    h+='<div class="sb2-ou"><div style="color:var(--ov)">O '+_loHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_loW+'/'+_loG.length+'</span></div>';
+    h+='<div style="color:var(--un)">U '+_luHR+' <span style="font:400 6px var(--M);color:var(--tx4)">'+_luW+'/'+_luG.length+'</span></div></div></div>';
+    h+='<div class="sb2'+(fRes==='dnp'?' sb2-on':'')+'" style="cursor:pointer" onclick="fRes=fRes===\'dnp\'?\'all\':\'dnp\';render()">';
+    h+='<div class="sb2-v" style="color:var(--yl)">'+dayDNP.length+'</div><div class="sb2-l">DNP</div></div>';
+    h+='</div>';
+  }
+
 
   const _searchLower=fSearch.trim().toLowerCase();
   const _searchFiltered=_searchLower?valid.filter(p=>p.player.toLowerCase().includes(_searchLower)||(p.match||'').toLowerCase().includes(_searchLower)):valid;
@@ -543,41 +677,7 @@ function renderDaily(DS,dates,curDate) {
   const fbLeanW      = fbGradedLean.filter(p => p.result==='WIN').length;
   const fbLeanHR     = fbGradedLean.length ? (fbLeanW/fbGradedLean.length*100).toFixed(1) : null;
 
-  if(fbGradedCore.length || fbGradedLean.length) {
-    const hrC = fbHRCore!=null ? (+fbHRCore>=55?'var(--gr)':+fbHRCore<50?'var(--rd)':'var(--yl)') : 'var(--tx3)';
-    const fbOverG  = fbGradedCore.filter(p=>p.dir==='OVER');
-    const fbOverW2 = fbOverG.filter(p=>p.result==='WIN').length;
-    const fbUnderG = fbGradedCore.filter(p=>p.dir==='UNDER');
-    const fbUnderW2= fbUnderG.filter(p=>p.result==='WIN').length;
-    const fbT1=fbGradedCore.filter(p=>p.tier===1),fbT1W=fbT1.filter(p=>p.result==='WIN').length;
-    const fbT2=fbGradedCore.filter(p=>p.tier===2),fbT2W=fbT2.filter(p=>p.result==='WIN').length;
-    const fbT3=fbGradedCore.filter(p=>p.tier===3),fbT3W=fbT3.filter(p=>p.result==='WIN').length;
-    const ovHR=fbOverG.length?(fbOverW2/fbOverG.length*100).toFixed(0)+'%':'—';
-    const unHR=fbUnderG.length?(fbUnderW2/fbUnderG.length*100).toFixed(0)+'%':'—';
-    const t1HR=fbT1.length?(fbT1W/fbT1.length*100).toFixed(0)+'%':'—';
-    const t2HR=fbT2.length?(fbT2W/fbT2.length*100).toFixed(0)+'%':'—';
-    const t3HR=fbT3.length?(fbT3W/fbT3.length*100).toFixed(0)+'%':'—';
-    h+=`<div style="background:var(--bg1);border-radius:10px;padding:8px 11px;margin-bottom:8px;border:1px solid var(--bg2)">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-        <span style="font:700 11px var(--M);color:var(--tx2)">${fbWinsCore}W / ${fbGradedCore.length-fbWinsCore}L</span>
-        <span style="font:800 12px var(--M);color:${hrC}">${fbHRCore!=null?fbHRCore+'%':'—'} HR</span>
-        <span style="font:400 8px var(--S);color:var(--tx3)">${fbGradedCore.length} graded (excl. lean)</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px">
-        ${[['Over',fbOverW2,fbOverG.length,ovHR,'var(--ov)','var(--ovA)'],['Under',fbUnderW2,fbUnderG.length,unHR,'var(--un)','var(--unA)'],['T1',fbT1W,fbT1.length,t1HR,'var(--gr)','var(--grA)'],['T2',fbT2W,fbT2.length,t2HR,'var(--yl)','var(--ylA)'],['T3',fbT3W,fbT3.length,t3HR,'var(--tx2)','rgba(148,163,184,.07)']].map(([lbl,w,t,hr,c,bg])=>`
-          <div style="text-align:center;background:${bg};border-radius:6px;padding:5px 2px">
-            <div style="font:700 11px var(--M);color:${c}">${hr}</div>
-            <div style="font:600 6px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">${lbl} ${w}/${t}</div>
-          </div>`).join('')}
-      </div>
-      ${fbGradedLean.length?`<div style="display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:6px;border-top:1px solid var(--bg2)">
-        <span style="font:600 7px var(--M);color:var(--tx4);text-transform:uppercase;letter-spacing:.8px">Lean</span>
-        <span style="font:700 10px var(--M);color:var(--tx3)">${fbLeanHR}%</span>
-        <span style="font:400 8px var(--S);color:var(--tx4)">${fbLeanW}W/${fbGradedLean.length-fbLeanW}L (${fbGradedLean.length} plays)</span>
-        <span style="font:400 7px var(--S);color:var(--tx4);margin-left:auto">tracked separately</span>
-      </div>`:''}
-    </div>`;
-  }
+  // Accuracy panel removed — all detail in summary boxes above
 
   // GAME DROPDOWN — sorted by game_time
   const matchMap={};
@@ -615,8 +715,9 @@ function renderDaily(DS,dates,curDate) {
       <option value="pred"   ${srt==='pred'  ?'selected':''}>Pred Gap ↓</option>
       <option value="time"   ${srt==='time'  ?'selected':''}>Game Time</option>
       <option value="name"   ${srt==='name'  ?'selected':''}>Player A-Z</option>
-      <option value="line"   ${srt==='line'  ?'selected':''}>Line ↓</option>
+      <option value="line"   ${srt==='line'  ?'selected':''}>Prop Line ↓</option>
       <option value="result" ${srt==='result'?'selected':''}>Result</option>
+      <option value="odds"   ${srt==='odds'  ?'selected':''}>Odds (Dec) ↓</option>
     </select>
   </div></div>`;
 
@@ -644,6 +745,7 @@ function renderDaily(DS,dates,curDate) {
   else if(srt==='name')   fl.sort((a,b)=>a.player.localeCompare(b.player));
   else if(srt==='line')   fl.sort((a,b)=>(b.line||0)-(a.line||0));
   else if(srt==='result') fl.sort((a,b)=>{const ro={WIN:0,LOSS:1};return(ro[a.result]??2)-(ro[b.result]??2)||b.conf-a.conf;});
+  else if(srt==='odds'){fl.sort((a,b)=>{const ao=parseFloat((a.dir==='OVER'||a.dir==='LEAN OVER'?a.overOdds:a.underOdds)||0),bo=parseFloat((b.dir==='OVER'||b.dir==='LEAN OVER'?b.overOdds:b.underOdds)||0);return bo-ao;});}
   else fl.sort((a,b)=>(b.date||'').localeCompare(a.date||'')||a.tier-b.tier||b.conf-a.conf);
 
   const dLbl=curDate?new Date(curDate+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
@@ -690,6 +792,14 @@ function card(p) {
         <span style="font:700 8px var(--M);padding:2px 5px;border-radius:4px;background:rgba(56,189,248,.07);color:${flagC}">${p.flagsStr||'—'}</span>
         ${engBadge}
         ${p.avail&&p.avail!=='OK'?`<span style="font:600 7px var(--M);padding:2px 5px;border-radius:4px;background:var(--rdA);color:var(--rd)">${p.avail}</span>`:''}
+        ${(()=>{
+          if(!Array.isArray(p.recent20)||!p.recent20dates||!p.recent20dates.length) return '';
+          const lastD=p.recent20dates[p.recent20dates.length-1];
+          if(!lastD) return '';
+          const fmtD2=d=>{try{const dt=new Date(d+'T12:00:00');return dt.getDate().toString().padStart(2,'0')+' '+dt.toLocaleString('en-GB',{month:'short'});}catch(e){return d.slice(5)||'';}};
+          if(isDNP(p)) return `<span class="last-tag last-dnp">DNP ${fmtD2(lastD)}</span>`;
+          return `<span class="last-tag last-ok">▶ Played ${fmtD2(lastD)}</span>`;
+        })()}
       </div>
       <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px">
         <span style="font:400 9px var(--S);color:var(--tx2)">${p.match}${p.gameTime?' &middot; '+p.gameTime:''}</span>
@@ -709,12 +819,16 @@ function card(p) {
   if(p.actualPts!=null)h+=`<span style="font:400 9px var(--M);color:var(--tx2)">${Math.round(p.actualPts)} pts</span>`;
   h+=`</div></div>`;
 
-  // STATS + SPARKLINE ROW
+  // STATS + SPARKLINE ROW — Odds as decimal
   const lhArr=p.lineHistory;
+  const _amToDec=am=>{const n=parseFloat(am);if(!n||isNaN(n))return null;return n>0?(+(n/100+1).toFixed(2)):(+(100/Math.abs(n)+1).toFixed(2));};
+  const _rawOdds=dirOver?p.overOdds:p.underOdds;
+  const _decOdds=_amToDec(_rawOdds);
+  const _oddsDisp=_decOdds!=null?_decOdds.toFixed(2):(_rawOdds||'—');
   h+=`<div style="display:flex;align-items:center;gap:7px;margin-top:7px">
     ${[['Line',p.line,'var(--tx)'],['L3',p.l3,clr(p.l3,p.line)],['L5',p.l5,clr(p.l5,p.line)],['L10',p.l10,clr(p.l10,p.line)]].map(([k,v,c])=>`<div class="kv"><div class="kv-l">${k}</div><div class="kv-v" style="color:${c}">${v??'—'}</div></div>`).join('')}
     ${lhArr&&lhArr.length>=2?(()=>{const first=lhArr[0].line,last=lhArr[lhArr.length-1].line;if(first===last)return'';const arrow=last>first?'↑':'↓',clrLH=last>first?'var(--rd)':'var(--gr)';return'<span style="font:600 8px var(--M);padding:2px 5px;border-radius:4px;background:rgba(148,163,184,.1);color:'+clrLH+'">'+first+'→'+last+' '+arrow+'</span>';})():''}
-    <div class="kv"><div class="kv-l">Odds</div><div class="kv-v" style="font-size:11px">${dirOver?(p.overOdds||'—'):(p.underOdds||'—')}</div></div>
+    <div class="kv"><div class="kv-l">Odds</div><div class="kv-v" style="font-size:11px;color:var(--tx2)">${_oddsDisp}</div></div>
     <div style="margin-left:auto;flex-shrink:0">${spark(p.recent20||[],p.line,p.recent20homes||[])}</div>
   </div>`;
 
@@ -729,22 +843,25 @@ function card(p) {
     <span style="font:700 9px var(--M);color:${cfC};min-width:28px;text-align:right">${Math.round(p.conf*100)}%</span>
   </div>`;
 
-  // RECENT 20 SCORES
+  // RECENT SCORES — single scrollable row, DD-MMM dates, no wrap
   const scRaw=(Array.isArray(p.recent20)?p.recent20:[]).slice(0,20);
   const scHRaw=p.recent20homes||[];
-  const sc=[...scRaw].reverse(), scH=[...scHRaw].reverse();
+  const scDRaw=p.recent20dates||[];
+  const sc=[...scRaw].reverse(), scH=[...scHRaw].reverse(), scD=[...scDRaw].reverse();
+  function _fmtD(ds){if(!ds)return'';try{const d=new Date(ds+'T12:00:00');return d.getDate().toString().padStart(2,'0')+' '+d.toLocaleString('en-GB',{month:'short'});}catch(e){return ds.slice(5)||'';}}
   if(sc.length){
-    const tags=sc.map((v,i)=>{
+    const pills=sc.map((v,i)=>{
       const venue=i<scH.length?(scH[i]===true?'🏠':'✈️'):'';
-      const bg=v>p.line?'rgba(52,211,153,.12)':'rgba(248,113,113,.1)';
-      const clrv=v>p.line?'var(--gr)':'var(--rd)';
-      return`<div style="display:flex;flex-direction:column;align-items:center;gap:1px">${venue?'<span style="font-size:8px;line-height:1;opacity:.7">'+venue+'</span>':'<span style="font-size:8px;line-height:1;opacity:.3">·</span>'}<span style="font:600 9px var(--M);padding:1px 3px;border-radius:3px;background:${bg};color:${clrv}">${v}</span></div>`;
+      const dt=i<scD.length?_fmtD(scD[i]):'';
+      const bg=v>p.line?'rgba(45,212,191,.12)':'rgba(232,121,249,.1)';
+      const clrv=v>p.line?'#2dd4bf':'#e879f9';
+      return`<div class="pill-item"><div class="pill-dt">${dt}</div><div class="pill-vn">${venue||'·'}</div><div class="pill-v" style="background:${bg};color:${clrv}">${v}</div></div>`;
     }).join('');
-    h+=`<div style="display:flex;gap:4px;margin-top:5px;align-items:flex-end;flex-wrap:wrap">
-      <span style="font:400 6px var(--M);color:var(--tx4);align-self:flex-end;margin-right:-2px">NEW</span>
-      ${tags}
-      <span style="font:400 6px var(--M);color:var(--tx4);align-self:flex-end;margin-left:-2px">OLD</span>
-      <span style="font:400 8px var(--M);color:var(--tx3);margin-left:3px;align-self:flex-end">${p.recentOver||0}↑ ${p.recentUnder??0}↓</span>
+    h+=`<div style="display:flex;align-items:flex-end;gap:3px;margin-top:6px">
+      <span style="font:400 6px var(--M);color:var(--tx4);flex-shrink:0;align-self:flex-end;margin-bottom:2px">NEW</span>
+      <div class="pills-row">${pills}</div>
+      <span style="font:400 6px var(--M);color:var(--tx4);flex-shrink:0;align-self:flex-end;margin-bottom:2px">OLD</span>
+      <span style="font:400 8px var(--M);color:var(--tx3);flex-shrink:0;align-self:flex-end;margin-bottom:2px;margin-left:2px">${p.recentOver||0}↑ ${p.recentUnder??0}↓</span>
     </div>`;
   }
 
@@ -770,6 +887,69 @@ function card(p) {
       </div>`;
     }
 
+    // ── SPARKLINE WINDOW PICKER ──
+    h+='<div class="sec">Scoring Sparkline</div>';
+    h+='<div class="spark-row">';
+    h+='<span class="sp" onclick="event.stopPropagation()">L3</span>';
+    h+='<span class="sp" onclick="event.stopPropagation()">L5</span>';
+    h+='<span class="sp sp-on" onclick="event.stopPropagation()">L10</span>';
+    h+='<span class="sp" onclick="event.stopPropagation()">L20</span>';
+    h+='<span class="sp" onclick="event.stopPropagation()">L30</span>';
+    h+='<span class="sp" onclick="event.stopPropagation()">L100</span>';
+    h+='<span class="sp" onclick="event.stopPropagation()">L200</span>';
+    h+='<span class="sp sp-vi" onclick="event.stopPropagation()">H2H</span>';
+    h+='<span class="sp-div"></span>';
+    h+='<span class="sp sp-on" onclick="event.stopPropagation()">All</span>';
+    h+='<span class="sp" onclick="event.stopPropagation()">&#127968;</span>';
+    h+='<span class="sp" onclick="event.stopPropagation()">&#9992;&#65039;</span>';
+    h+='<span class="sp-div"></span>';
+    h+='<span class="sp sp-on" onclick="event.stopPropagation()">Prop</span>';
+    h+='<span class="sp sp-vi" onclick="event.stopPropagation()">Min</span>';
+    h+='</div>';
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;font:400 8px var(--S);color:var(--tx3)" onclick="event.stopPropagation()">';
+    h+='<span>Custom min line:</span>';
+    h+='<input type="number" step="0.5" placeholder="'+(p.min_line||'—')+'" style="width:52px;font:500 9px var(--M);padding:3px 5px;border-radius:5px;border:1px solid var(--bg2);background:var(--bg1);color:var(--tx2);outline:none">';
+    if(p.min_line!=null) h+='<span style="color:var(--tx4)">Book min: '+p.min_line+(p.max_line!=null?' &middot; max: '+p.max_line:'')+'</span>';
+    h+='</div>';
+    h+=spark(p.recent20||[],p.line,p.recent20homes||[]);
+    if(p.min_line!=null&&Array.isArray(p.recent20)&&p.recent20.length){
+      const _beatMin=p.recent20.filter(v=>v>p.min_line).length,_beatProp=p.recent20.filter(v=>v>p.line).length,_tot=p.recent20.length;
+      const _bmC=_beatMin/_tot>=.6?'var(--gr)':_beatMin/_tot<.5?'var(--rd)':'var(--yl)';
+      const _bpC=_beatProp/_tot>=.6?'var(--gr)':_beatProp/_tot<.5?'var(--rd)':'var(--yl)';
+      h+='<div style="display:flex;gap:8px;padding:4px 8px;background:var(--bg);border-radius:6px;border:1px solid var(--bg2);align-items:center;flex-wrap:wrap;margin-top:3px;margin-bottom:5px;font:400 8px var(--S);color:var(--tx3)">Beat min '+p.min_line+': <span style="font:700 9px var(--M);color:'+_bmC+'">'+_beatMin+'/'+_tot+' ('+(_beatMin/_tot*100).toFixed(0)+'%)</span> vs prop line: <span style="font:700 9px var(--M);color:'+_bpC+'">'+_beatProp+'/'+_tot+' ('+(_beatProp/_tot*100).toFixed(0)+'%)</span></div>';
+    }
+
+    // ── DECISION SIGNALS (10) ──
+    h+='<div class="sec">Decision Signals</div><div class="dsig">';
+    const _ds=[
+      [p.usage_l10!=null&&p.usage_l30!=null,(p.usage_l10||0)>(p.usage_l30||0)?'var(--gr)':'var(--rd)','Usage L5 '+((p.usage_l10||0)>(p.usage_l30||0)?'&#9650;':'&#9660;')],
+      [p.min_cv!=null,(p.min_cv||0)>0.2?'var(--yl)':'var(--gr)','Min CV '+(p.min_cv!=null?p.min_cv.toFixed(2):'—')],
+      [p.fta_l10!=null,(p.fta_l10||0)>5?'var(--gr)':'var(--tx3)','FTA L5 '+(p.fta_l10!=null?p.fta_l10.toFixed(1):'—')],
+      [p.line_vs_l30!=null,(p.line_vs_l30||0)>1?'var(--rd)':(p.line_vs_l30||0)<-1?'var(--gr)':'var(--tx3)','Line vs L30 '+((p.line_vs_l30||0)>0?'+':'')+(p.line_vs_l30!=null?p.line_vs_l30.toFixed(1):'—')],
+      [p.level_ewm!=null&&p.l10!=null,(p.level_ewm||0)>(p.l10||0)?'var(--gr)':'var(--rd)','EWM '+(p.level_ewm!=null?p.level_ewm.toFixed(1):'—')+' vs L10'],
+      [p.home_away_split!=null,(p.home_away_split||0)>1?'var(--gr)':(p.home_away_split||0)<-1?'var(--rd)':'var(--tx3)','Home split '+((p.home_away_split||0)>0?'+':'')+(p.home_away_split!=null?p.home_away_split.toFixed(1):'—')],
+      [p.is_long_rest!=null,p.is_long_rest?'var(--yl)':'var(--tx3)','Long rest: '+(p.is_long_rest?'yes':'no')],
+      [p.pts_per_min!=null,(p.pts_per_min||0)>0.75?'var(--gr)':'var(--tx3)','Pts/min '+(p.pts_per_min!=null?p.pts_per_min.toFixed(2):'—')],
+      [p.extreme_hot!=null||p.extreme_cold!=null,p.extreme_hot?'var(--rd)':p.extreme_cold?'var(--bl)':'var(--tx3)',p.extreme_hot?'Extreme hot &#8629;rev':'Extreme cold &#8627;rev'],
+      [p.h2h_trend!=null,(p.h2h_trend||0)>0?'var(--gr)':(p.h2h_trend||0)<0?'var(--rd)':'var(--tx3)','H2H trend '+((p.h2h_trend||0)>0?'&#8599; +':'&#8600; ')+(p.h2h_trend!=null?Math.abs(p.h2h_trend).toFixed(1):'—')],
+    ];
+    _ds.forEach(function(d){if(d[0]!==false){var c=d[1],lbl=d[2];h+='<span class="ds" style="background:'+c+'30;color:'+c+';border-color:'+c+'60">'+lbl+'</span>';}});
+    h+='</div>';
+
+    // ── SEASON STATS ──
+    h+='<div class="sec">Season Stats '+curSeason+'</div><div class="sgrid">';
+    const _playerPlays=P.filter(q=>q.player===p.player&&(q.result==='WIN'||q.result==='LOSS')&&!isLean(q)&&!isDNP(q));
+    const _ppW=_playerPlays.filter(q=>q.result==='WIN').length;
+    const _ppHR=_playerPlays.length?(_ppW/_playerPlays.length*100).toFixed(0)+'%':'—';
+    const _ppHRc=_playerPlays.length?(_ppW/_playerPlays.length>=.55?'var(--gr)':_ppW/_playerPlays.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
+    const _minPlays=_playerPlays.filter(q=>q.min_line!=null&&q.actualPts!=null);
+    const _minW=_minPlays.filter(q=>q.actualPts>q.min_line).length;
+    const _minHR=_minPlays.length?(_minW/_minPlays.length*100).toFixed(0)+'%':'—';
+    const _minHRc=_minPlays.length?(_minW/_minPlays.length>=.55?'var(--gr)':_minW/_minPlays.length<.5?'var(--rd)':'var(--yl)'):'var(--tx)';
+    const _plPL=_ppW-(_playerPlays.length-_ppW);
+    [['PPG',p.l30!=null?p.l30.toFixed(1):'—','var(--tx)'],['GP',_playerPlays.length||'—','var(--tx)'],['Prop HR',_ppHR,_ppHRc],['Min HR',_minHR,_minHRc],['Home',p.homeAvgPts!=null?p.homeAvgPts.toFixed(1):'—',clr(p.homeAvgPts,p.line)],['Away',p.awayAvgPts!=null?p.awayAvgPts.toFixed(1):'—',clr(p.awayAvgPts,p.line)],['B2B',p.is_b2b?'Yes':'No',p.is_b2b?'var(--yl)':'var(--tx)'],['P&L(u)',(_plPL>0?'+':'')+_plPL,_plPL>0?'var(--gr)':'var(--rd)']].forEach(function(r){h+='<div class="sgb"><div class="sgl">'+r[0]+'</div><div class="sgv" style="color:'+r[2]+'">'+r[1]+'</div></div>';});
+    h+='</div>';
+
     // V14 ADAPTIVE FUSION PANEL
     if(p.meanReversionRisk>0||p.earlySeasonW<0.9||p.volRisk!=null){
       h+=`<div class="v14-panel">
@@ -788,6 +968,14 @@ function card(p) {
     if(p.h2hG>0){
       const profileColors={EFFICIENCY:'var(--gr)',VOLUME:'var(--ov)',MINUTES:'var(--bl)',NEUTRAL:'var(--tx3)',MIXED:'var(--yl)'};
       const profC=profileColors[p.h2hProfile]||'var(--tx3)';
+      const _h2hPlays=P.filter(q=>q.player===p.player&&q.opponent===p.opponent&&(q.result==='WIN'||q.result==='LOSS')&&!isLean(q));
+      const _h2hW=_h2hPlays.filter(q=>q.result==='WIN').length;
+      const _h2hMinP=_h2hPlays.filter(q=>q.min_line!=null&&q.actualPts!=null);
+      const _h2hMinW=_h2hMinP.filter(q=>q.actualPts>q.min_line).length;
+      const _h2hPropHR=_h2hPlays.length?(_h2hW/_h2hPlays.length*100).toFixed(0)+'% ('+_h2hW+'/'+_h2hPlays.length+')':'—';
+      const _h2hMinHR=_h2hMinP.length?(_h2hMinW/_h2hMinP.length*100).toFixed(0)+'% ('+_h2hMinW+'/'+_h2hMinP.length+')':'—';
+      const _h2hTrend=p.h2h_trend!=null?((p.h2h_trend>0?'↗ +':'↘ ')+Math.abs(p.h2h_trend).toFixed(1)):'—';
+      const _h2hTrendC=p.h2h_trend!=null?(p.h2h_trend>0?'var(--gr)':'var(--rd)'):'var(--tx3)';
       h+=`<div class="h2h-panel">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
           <span style="font:600 7px var(--M);color:var(--vi);letter-spacing:1px;text-transform:uppercase">H2H vs Opponent</span>
@@ -800,6 +988,7 @@ function card(p) {
           <div class="kv"><div class="kv-l">FGA Dev</div><div class="kv-v" style="font-size:12px">${p.h2hFgaDev!=null?(p.h2hFgaDev>0?'+':'')+p.h2hFgaDev.toFixed(1):'—'}</div></div>
           <div class="kv"><div class="kv-l">H2H Conf</div><div class="kv-v" style="color:${(p.h2hConfidence||0)>=.7?'var(--gr)':(p.h2hConfidence||0)>=.5?'var(--yl)':'var(--tx3)'};font-size:12px">${p.h2hConfidence!=null?Math.round(p.h2hConfidence*100)+'%':'—'}</div></div>
         </div>
+        <div style="font:400 8px var(--S);color:var(--tx3);margin-top:4px">H2H Prop: <strong style="color:var(--gr)">${_h2hPropHR}</strong> &middot; H2H Min: <strong style="color:var(--gr)">${_h2hMinHR}</strong> &middot; Trend: <span style="color:${_h2hTrendC}">${_h2hTrend}</span></div>
       </div>`;
     }
 
@@ -952,6 +1141,26 @@ function renderLeaders(_allLdrs) {
   const ldrs=_lSearch?_allLdrs.filter(l=>l.name.toLowerCase().includes(_lSearch)||(l.team||'').toLowerCase().includes(_lSearch)):_allLdrs.slice(0,100);
   h+=`<div style="font:600 7px var(--M);color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">${_lSearch?'Search results':'Top 100'} HR Leaders &middot; Min 5 Plays &middot; ${_allLdrs.length} total</div>`;
   h+=`<div style="margin-bottom:10px"><input type="search" placeholder="Search player or team..." value="${_lSearch}" oninput="fSearch=this.value;render()" style="width:100%;box-sizing:border-box;padding:7px 11px;border-radius:9px;border:1px solid var(--bg2);background:var(--bg1);color:var(--tx);font:400 12px var(--S);outline:none"/></div>`;
+  // SPLIT LEADERBOARD: Prop HR | Min Line HR
+  const _minLdrs=Object.values(P.reduce((acc,p)=>{
+    if(!p.min_line||p.actualPts==null||!(p.result==='WIN'||p.result==='LOSS')||isLean(p)||isDNP(p))return acc;
+    if(!acc[p.player])acc[p.player]={name:p.player,g:0,w:0};
+    acc[p.player].g++;if(p.actualPts>p.min_line)acc[p.player].w++;
+    return acc;
+  },{})).filter(x=>x.g>=5).sort((a,b)=>(b.w/b.g)-(a.w/a.g)).slice(0,10);
+  const _propTop=_allLdrs.slice(0,10);
+  if(_propTop.length||_minLdrs.length){
+    h+=`<div class="lb-grid">
+      <div class="lb-col">
+        <div class="lb-hdr" style="color:var(--gr)">Prop Line HR</div>
+        ${_propTop.map((l,i)=>{const hr=(l.wins/l.plays*100).toFixed(0)+'%';const hrc2=l.wins/l.plays>=.6?'var(--gr)':l.wins/l.plays>=.55?'var(--yl)':'var(--tx)';return`<div class="lb-row"><span style="color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px">${l.name}</span><span class="lb-v" style="color:${hrc2}">${hr}<span class="lb-ct">${l.wins}/${l.plays}</span></span></div>`;}).join('')}
+      </div>
+      <div class="lb-col">
+        <div class="lb-hdr" style="color:var(--bl)">Min Line HR</div>
+        ${_minLdrs.map(l=>{const hr=(l.w/l.g*100).toFixed(0)+'%';const hrc2=l.w/l.g>=.6?'var(--gr)':l.w/l.g>=.55?'var(--yl)':'var(--tx)';return`<div class="lb-row"><span style="color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px">${l.name}</span><span class="lb-v" style="color:${hrc2}">${hr}<span class="lb-ct">${l.w}/${l.g}</span></span></div>`;}).join('')}
+      </div>
+    </div>`;
+  }
   ldrs.forEach((l,idx)=>{
     const i=_allLdrs.indexOf(l);
     const hr2=(l.wins/l.plays*100).toFixed(1);
