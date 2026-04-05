@@ -1,0 +1,12 @@
+[daily-recalc] 2026-04-05  weekday=6
+  Weekend (Sun) — computing game-relative schedule...
+  [scheduler] First tip detected: 15:40 ET = 20:40 UK
+    B1: 14:00 UK (offset -90min from tip)
+    B2: 19:00 UK (offset -60min from tip)
+    B3: 21:10 UK (offset +30min from tip)
+    B4: 23:40 UK (offset +180min from tip)
+  ✓ Loaded: com.propedge.v14.batch1.plist
+  ✓ Loaded: com.propedge.v14.batch2.plist
+  ✓ Loaded: com.propedge.v14.batch3.plist
+  ✓ Loaded: com.propedge.v14.batch4.plist
+  Weekend schedule applied for 2026-04-05
