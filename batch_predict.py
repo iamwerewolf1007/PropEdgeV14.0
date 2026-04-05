@@ -162,8 +162,9 @@ def fetch_props_from_api(date_str: str) -> list[dict]:
             odds_url = f"{ODDS_BASE_URL}/sports/basketball_nba/events/{eid}/odds"
             r2 = requests.get(odds_url, params={
                 "apiKey": ODDS_API_KEY,
+                "regions": "us",
                 "markets": "player_points",
-                "oddsFormat": "decimal",
+                "oddsFormat": "american",
             }, timeout=15)
             r2.raise_for_status()
             data = r2.json()
@@ -172,6 +173,7 @@ def fetch_props_from_api(date_str: str) -> list[dict]:
             continue
 
         player_lines: dict[str, list] = {}
+        player_odds:  dict[str, dict] = {}
         for bm in data.get("bookmakers", []):
             for mkt in bm.get("markets", []):
                 if mkt.get("key") != "player_points":
@@ -179,28 +181,38 @@ def fetch_props_from_api(date_str: str) -> list[dict]:
                 for outcome in mkt.get("outcomes", []):
                     pname = str(outcome.get("description", outcome.get("name", ""))).strip()
                     point = outcome.get("point")
+                    side  = str(outcome.get("name", "")).upper()
+                    price = outcome.get("price")
                     if not pname or point is None:
                         continue
                     if pname not in player_lines:
                         player_lines[pname] = []
-                    player_lines[pname].append(float(point))
+                        player_odds[pname]  = {"over": None, "under": None}
+                    if side == "OVER":
+                        player_lines[pname].append(float(point))
+                        if player_odds[pname]["over"] is None:
+                            player_odds[pname]["over"] = price
+                    elif side == "UNDER":
+                        if player_odds[pname]["under"] is None:
+                            player_odds[pname]["under"] = price
 
         for pname, line_list in player_lines.items():
             if not line_list:
                 continue
             avg_line = round(sum(line_list) / len(line_list) * 2) / 2
+            od = player_odds.get(pname, {})
             props.append({
-                "player":   pname,
-                "game":     game,
-                "home":     home,
-                "away":     away,
-                "line":     avg_line,
-                "over_odds":  1.909,
-                "under_odds": 1.909,
-                "books":    len(line_list),
-                "min_line": min(line_list),
-                "max_line": max(line_list),
-                "source":   "api",
+                "player":     pname,
+                "game":       game,
+                "home":       home,
+                "away":       away,
+                "line":       avg_line,
+                "over_odds":  od.get("over")  or -110,
+                "under_odds": od.get("under") or -110,
+                "books":      len(line_list),
+                "min_line":   min(line_list),
+                "max_line":   max(line_list),
+                "source":     "api",
             })
 
     print(f"  Odds API: {len(props)} props for {date_str}")
