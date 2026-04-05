@@ -248,6 +248,7 @@ def append_to_excel(props: list[dict], date_str: str) -> None:
                 "Home": p["home"], "Away": p["away"], "Line": p["line"],
                 "Over Odds": p["over_odds"], "Under Odds": p["under_odds"],
                 "Books": p["books"], "Min Line": p["min_line"], "Max Line": p["max_line"],
+                "Game_Time_ET": p.get("game_time", ""),
             })
         new_df = pd.DataFrame(new_rows)
 
