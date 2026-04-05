@@ -722,12 +722,10 @@ function renderDaily(DS,dates,curDate) {
   // Accuracy panel removed — all detail in summary boxes above
 
   // GAME DROPDOWN — sorted by game_time
-  // _tMin defined first so matchMap building can use it for proper time comparison
   function _tMin(s){if(!s)return 9999;const m=s.match(/(\d+):(\d+)\s*(AM|PM)/i);if(!m)return 9999;let h=+m[1],n=+m[2];if(m[3].toUpperCase()==='PM'&&h!==12)h+=12;if(m[3].toUpperCase()==='AM'&&h===12)h=0;return h*60+n;}
   const matchMap={};
   valid.forEach(p=>{
     const cur=matchMap[p.match];
-    // Prefer non-empty gameTime; among non-empty keep earliest
     if(!cur||(p.gameTime&&_tMin(p.gameTime)<_tMin(cur)))matchMap[p.match]=p.gameTime;
   });
   const sortedM=Object.entries(matchMap).sort((a,b)=>{const d=_tMin(a[1])-_tMin(b[1]);return d!==0?d:a[0].localeCompare(b[0]);});

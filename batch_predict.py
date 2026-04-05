@@ -151,12 +151,27 @@ def fetch_props_from_api(date_str: str) -> list[dict]:
         print(f"  API events error: {e}")
         return []
 
+    from zoneinfo import ZoneInfo as _ZI
+    _ET_ZONE = _ZI("America/New_York")
+
+    def _commence_to_et(ts: str) -> str:
+        if not ts:
+            return ""
+        try:
+            from datetime import datetime as _dt, timezone as _tz
+            utc = _dt.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=_tz.utc)
+            et  = utc.astimezone(_ET_ZONE)
+            return et.strftime("%-I:%M %p")
+        except Exception:
+            return ""
+
     props = []
     for event in events:
         eid  = event["id"]
         home = event.get("home_team", "")
         away = event.get("away_team", "")
         game = f"{away} @ {home}"
+        game_time = _commence_to_et(event.get("commence_time", ""))
 
         try:
             odds_url = f"{ODDS_BASE_URL}/sports/basketball_nba/events/{eid}/odds"
@@ -206,6 +221,7 @@ def fetch_props_from_api(date_str: str) -> list[dict]:
                 "game":       game,
                 "home":       home,
                 "away":       away,
+                "game_time":  game_time,
                 "line":       avg_line,
                 "over_odds":  od.get("over")  or -110,
                 "under_odds": od.get("under") or -110,
