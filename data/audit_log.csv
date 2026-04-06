@@ -96,3 +96,7 @@ ts,batch,event,file,rows_before,rows_after,detail
 2026-04-06 08:38:34 UK,B0,ROLLING_CROSSCHECK_FAIL,Max Strus,0,0,"L30 drift 2.35pts (stored 11.4, fresh 13.8)"
 2026-04-06 08:38:35 UK,B0,ROLLING_CROSSCHECK_FAIL,Jayson Tatum,0,0,"L30 drift 3.42pts (stored 24.8, fresh 21.4)"
 2026-04-06 08:38:35 UK,B0,ROLLING_CROSSCHECK_FAIL,Max Strus,0,0,"L30 drift 2.35pts (stored 11.4, fresh 13.8)"
+2026-04-06 13:11:45 UK,B0,BATCH_COMPLETE,,0,0,grade_date=2026-04-05
+2026-04-06 18:30:03 UK,B2,BATCH_START,,0,0,date=2026-04-06
+2026-04-06 18:30:43 UK,B2,PROPS_FETCHED,,0,0,52 props
+2026-04-06 18:30:45 UK,B2,PREDICTIONS,,0,0,"52 plays, skipped={'no_player': 0, 'no_history': 0, 'no_feats': 0}"
