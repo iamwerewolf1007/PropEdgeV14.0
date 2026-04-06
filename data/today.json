@@ -7,11 +7,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 12.5,
-    "overOdds": -125,
-    "underOdds": -106,
+    "overOdds": -125.0,
+    "underOdds": -106.0,
     "books": 15,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "OVER",
     "tierLabel": "T3",
     "tier": 3,
@@ -275,6 +275,11 @@
         "line": 12.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 12.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -286,11 +291,11 @@
     "away": "Cleveland Cavaliers",
     "opponent": "Cleveland Cavaliers",
     "line": 14.5,
-    "overOdds": -130,
-    "underOdds": -102,
+    "overOdds": -130.0,
+    "underOdds": -102.0,
     "books": 14,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "OVER",
     "tierLabel": "T3",
     "tier": 3,
@@ -559,6 +564,11 @@
         "line": 14.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 14.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -570,11 +580,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 19.5,
-    "overOdds": -106,
-    "underOdds": -125,
+    "overOdds": -106.0,
+    "underOdds": -125.0,
     "books": 16,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -838,6 +848,11 @@
         "line": 19.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 19.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -849,11 +864,11 @@
     "away": "Cleveland Cavaliers",
     "opponent": "Cleveland Cavaliers",
     "line": 25.0,
-    "overOdds": 100,
-    "underOdds": -132,
+    "overOdds": 100.0,
+    "underOdds": -132.0,
     "books": 17,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -1117,6 +1132,11 @@
         "line": 25.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 25.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -1128,11 +1148,11 @@
     "away": "Cleveland Cavaliers",
     "opponent": "Cleveland Cavaliers",
     "line": 19.0,
-    "overOdds": -130,
-    "underOdds": -102,
+    "overOdds": -130.0,
+    "underOdds": -102.0,
     "books": 15,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -1396,6 +1416,11 @@
         "line": 19.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 19.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -1407,11 +1432,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 5.5,
-    "overOdds": -102,
-    "underOdds": -130,
+    "overOdds": -102.0,
+    "underOdds": -130.0,
     "books": 11,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -1675,6 +1700,11 @@
         "line": 5.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 5.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -1686,11 +1716,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 7.5,
-    "overOdds": 100,
-    "underOdds": -132,
+    "overOdds": 100.0,
+    "underOdds": -132.0,
     "books": 11,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -1959,6 +1989,11 @@
         "line": 7.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 7.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -1970,11 +2005,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 11.0,
-    "overOdds": -120,
-    "underOdds": -110,
+    "overOdds": -120.0,
+    "underOdds": -110.0,
     "books": 13,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -2238,6 +2273,11 @@
         "line": 11.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 11.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -2249,11 +2289,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 11.5,
-    "overOdds": -122,
-    "underOdds": -108,
+    "overOdds": -122.0,
+    "underOdds": -108.0,
     "books": 14,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -2517,6 +2557,11 @@
         "line": 11.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 11.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -2528,11 +2573,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 8.0,
-    "overOdds": -108,
-    "underOdds": -122,
+    "overOdds": -108.0,
+    "underOdds": -122.0,
     "books": 12,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -2796,6 +2841,11 @@
         "line": 8.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 8.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -2807,11 +2857,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 19.5,
-    "overOdds": -112,
-    "underOdds": -118,
+    "overOdds": -112.0,
+    "underOdds": -118.0,
     "books": 8,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -3075,6 +3125,11 @@
         "line": 19.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 19.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -3086,11 +3141,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 22.5,
-    "overOdds": -111,
-    "underOdds": -120,
+    "overOdds": -111.0,
+    "underOdds": -120.0,
     "books": 1,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -3359,6 +3414,11 @@
         "line": 22.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 22.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -3370,11 +3430,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 25.0,
-    "overOdds": -130,
-    "underOdds": -102,
+    "overOdds": -130.0,
+    "underOdds": -102.0,
     "books": 17,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -3643,6 +3703,11 @@
         "line": 25.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 25.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -3654,11 +3719,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 11.5,
-    "overOdds": -114,
-    "underOdds": -114,
+    "overOdds": -114.0,
+    "underOdds": -114.0,
     "books": 14,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -3927,6 +3992,11 @@
         "line": 11.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 11.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -3938,11 +4008,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 5.5,
-    "overOdds": 100,
-    "underOdds": -132,
+    "overOdds": 100.0,
+    "underOdds": -132.0,
     "books": 10,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -4211,6 +4281,11 @@
         "line": 5.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 5.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -4222,11 +4297,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 20.0,
-    "overOdds": -110,
-    "underOdds": -120,
+    "overOdds": -110.0,
+    "underOdds": -120.0,
     "books": 16,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -4490,6 +4565,11 @@
         "line": 20.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 20.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -4501,11 +4581,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 10.0,
-    "overOdds": -102,
-    "underOdds": -130,
+    "overOdds": -102.0,
+    "underOdds": -130.0,
     "books": 14,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -4769,6 +4849,11 @@
         "line": 10.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 10.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -4780,11 +4865,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 15.0,
-    "overOdds": 100,
-    "underOdds": -132,
+    "overOdds": 100.0,
+    "underOdds": -132.0,
     "books": 15,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -5048,6 +5133,11 @@
         "line": 15.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 15.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -5059,11 +5149,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 17.5,
-    "overOdds": -118,
-    "underOdds": -112,
+    "overOdds": -118.0,
+    "underOdds": -112.0,
     "books": 17,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -5332,6 +5422,11 @@
         "line": 17.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 17.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -5343,11 +5438,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 27.0,
-    "overOdds": -112,
-    "underOdds": -118,
+    "overOdds": -112.0,
+    "underOdds": -118.0,
     "books": 18,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -5611,6 +5706,11 @@
         "line": 27.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 27.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -5622,11 +5722,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 24.5,
-    "overOdds": -125,
-    "underOdds": -106,
+    "overOdds": -125.0,
+    "underOdds": -106.0,
     "books": 18,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -5890,6 +5990,11 @@
         "line": 24.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 24.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -5901,11 +6006,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 16.0,
-    "overOdds": -128,
-    "underOdds": -104,
+    "overOdds": -128.0,
+    "underOdds": -104.0,
     "books": 15,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -6169,6 +6274,11 @@
         "line": 16.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 16.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -6180,11 +6290,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 12.0,
-    "overOdds": -120,
-    "underOdds": -110,
+    "overOdds": -120.0,
+    "underOdds": -110.0,
     "books": 14,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -6448,6 +6558,11 @@
         "line": 12.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 12.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -6459,11 +6574,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 7.5,
-    "overOdds": -106,
-    "underOdds": -125,
+    "overOdds": -106.0,
+    "underOdds": -125.0,
     "books": 11,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -6732,6 +6847,11 @@
         "line": 7.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 7.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -6743,11 +6863,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 15.5,
-    "overOdds": -130,
-    "underOdds": -102,
+    "overOdds": -130.0,
+    "underOdds": -102.0,
     "books": 15,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -7016,6 +7136,11 @@
         "line": 15.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 15.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -7027,11 +7152,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 18.0,
-    "overOdds": -112,
-    "underOdds": -118,
+    "overOdds": -112.0,
+    "underOdds": -118.0,
     "books": 16,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -7295,6 +7420,11 @@
         "line": 18.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 18.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -7306,11 +7436,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 21.5,
-    "overOdds": -112,
-    "underOdds": -118,
+    "overOdds": -112.0,
+    "underOdds": -118.0,
     "books": 17,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -7574,6 +7704,11 @@
         "line": 21.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 21.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -7585,11 +7720,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 14.5,
-    "overOdds": -118,
-    "underOdds": -112,
+    "overOdds": -118.0,
+    "underOdds": -112.0,
     "books": 14,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -7853,6 +7988,11 @@
         "line": 14.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 14.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -7864,11 +8004,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 12.5,
-    "overOdds": 100,
-    "underOdds": -132,
+    "overOdds": 100.0,
+    "underOdds": -132.0,
     "books": 14,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -8137,6 +8277,11 @@
         "line": 12.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 12.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -8148,11 +8293,11 @@
     "away": "Cleveland Cavaliers",
     "opponent": "Cleveland Cavaliers",
     "line": 11.5,
-    "overOdds": -114,
-    "underOdds": -114,
+    "overOdds": -114.0,
+    "underOdds": -114.0,
     "books": 6,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -8421,6 +8566,11 @@
         "line": 11.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 11.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -8432,11 +8582,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 12.5,
-    "overOdds": -122,
-    "underOdds": -108,
+    "overOdds": -122.0,
+    "underOdds": -108.0,
     "books": 14,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -8705,6 +8855,11 @@
         "line": 12.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 12.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -8716,11 +8871,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 10.5,
-    "overOdds": -104,
-    "underOdds": -128,
+    "overOdds": -104.0,
+    "underOdds": -128.0,
     "books": 7,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -8984,6 +9139,11 @@
         "line": 10.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 10.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -8995,11 +9155,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 18.0,
-    "overOdds": 100,
-    "underOdds": -132,
+    "overOdds": 100.0,
+    "underOdds": -132.0,
     "books": 16,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -9263,6 +9423,11 @@
         "line": 18.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 18.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -9274,11 +9439,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 11.0,
-    "overOdds": -132,
-    "underOdds": 100,
+    "overOdds": -132.0,
+    "underOdds": 100.0,
     "books": 13,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -9542,6 +9707,11 @@
         "line": 11.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 11.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -9553,11 +9723,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 13.0,
-    "overOdds": -125,
-    "underOdds": -106,
+    "overOdds": -125.0,
+    "underOdds": -106.0,
     "books": 13,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -9821,6 +9991,11 @@
         "line": 13.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 13.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -9832,11 +10007,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 7.5,
-    "overOdds": -122,
-    "underOdds": -108,
+    "overOdds": -122.0,
+    "underOdds": -108.0,
     "books": 4,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -10105,6 +10280,11 @@
         "line": 7.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 7.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -10116,11 +10296,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 12.0,
-    "overOdds": -104,
-    "underOdds": -128,
+    "overOdds": -104.0,
+    "underOdds": -128.0,
     "books": 14,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -10384,6 +10564,11 @@
         "line": 12.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 12.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -10395,11 +10580,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 14.5,
-    "overOdds": -104,
-    "underOdds": -128,
+    "overOdds": -104.0,
+    "underOdds": -128.0,
     "books": 14,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -10663,6 +10848,11 @@
         "line": 14.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 14.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -10674,11 +10864,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 12.0,
-    "overOdds": -118,
-    "underOdds": -112,
+    "overOdds": -118.0,
+    "underOdds": -112.0,
     "books": 7,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN OVER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -10942,6 +11132,11 @@
         "line": 12.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 12.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -10953,11 +11148,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 13.0,
-    "overOdds": -128,
-    "underOdds": -104,
+    "overOdds": -128.0,
+    "underOdds": -104.0,
     "books": 14,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -11221,6 +11416,11 @@
         "line": 13.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 13.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -11232,11 +11432,11 @@
     "away": "New York Knicks",
     "opponent": "New York Knicks",
     "line": 25.0,
-    "overOdds": -106,
-    "underOdds": -125,
+    "overOdds": -106.0,
+    "underOdds": -125.0,
     "books": 17,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -11505,6 +11705,11 @@
         "line": 25.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 25.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -11516,11 +11721,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 14.5,
-    "overOdds": -125,
-    "underOdds": -106,
+    "overOdds": -125.0,
+    "underOdds": -106.0,
     "books": 14,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -11784,6 +11989,11 @@
         "line": 14.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 14.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -11795,11 +12005,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 18.0,
-    "overOdds": -125,
-    "underOdds": -106,
+    "overOdds": -125.0,
+    "underOdds": -106.0,
     "books": 16,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -12068,6 +12278,11 @@
         "line": 18.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 18.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -12079,11 +12294,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 11.5,
-    "overOdds": -118,
-    "underOdds": -112,
+    "overOdds": -118.0,
+    "underOdds": -112.0,
     "books": 14,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -12352,6 +12567,11 @@
         "line": 11.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 11.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -12363,11 +12583,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 18.5,
-    "overOdds": -105,
-    "underOdds": -125,
+    "overOdds": -105.0,
+    "underOdds": -125.0,
     "books": 1,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -12631,6 +12851,11 @@
         "line": 18.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 18.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -12642,11 +12867,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 28.0,
-    "overOdds": -120,
-    "underOdds": -110,
+    "overOdds": -120.0,
+    "underOdds": -110.0,
     "books": 19,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -12910,6 +13135,11 @@
         "line": 28.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 28.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -12921,11 +13151,11 @@
     "away": "Cleveland Cavaliers",
     "opponent": "Cleveland Cavaliers",
     "line": 19.5,
-    "overOdds": -130,
-    "underOdds": -102,
+    "overOdds": -130.0,
+    "underOdds": -102.0,
     "books": 17,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -13194,6 +13424,11 @@
         "line": 19.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 19.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -13205,11 +13440,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 22.0,
-    "overOdds": -102,
-    "underOdds": -130,
+    "overOdds": -102.0,
+    "underOdds": -130.0,
     "books": 8,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -13473,6 +13708,11 @@
         "line": 22.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 22.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -13484,11 +13724,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 26.0,
-    "overOdds": -122,
-    "underOdds": -108,
+    "overOdds": -122.0,
+    "underOdds": -108.0,
     "books": 17,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -13757,6 +13997,11 @@
         "line": 26.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 26.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -13768,11 +14013,11 @@
     "away": "Portland Trail Blazers",
     "opponent": "Portland Trail Blazers",
     "line": 12.5,
-    "overOdds": -114,
-    "underOdds": -114,
+    "overOdds": -114.0,
+    "underOdds": -114.0,
     "books": 15,
     "position": "Center",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "LEAN UNDER",
     "tierLabel": "T3_LEAN",
     "tier": 3,
@@ -14036,6 +14281,11 @@
         "line": 12.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 12.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -14047,11 +14297,11 @@
     "away": "Detroit Pistons",
     "opponent": "Detroit Pistons",
     "line": 14.5,
-    "overOdds": -118,
-    "underOdds": -112,
+    "overOdds": -118.0,
+    "underOdds": -112.0,
     "books": 8,
     "position": "Guard",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -14320,6 +14570,11 @@
         "line": 14.5,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 14.5,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   },
@@ -14331,11 +14586,11 @@
     "away": "Philadelphia 76ers",
     "opponent": "Philadelphia 76ers",
     "line": 28.0,
-    "overOdds": -118,
-    "underOdds": -112,
+    "overOdds": -118.0,
+    "underOdds": -112.0,
     "books": 18,
     "position": "Forward",
-    "batchTs": "2026-04-06T17:30:03.949327+00:00",
+    "batchTs": "2026-04-06T19:30:03.147882+00:00",
     "direction": "UNDER",
     "tierLabel": "T3",
     "tier": 3,
@@ -14599,6 +14854,11 @@
         "line": 28.0,
         "batch": 2,
         "ts": "2026-04-06T17:30:03.949327+00:00"
+      },
+      {
+        "line": 28.0,
+        "batch": 3,
+        "ts": "2026-04-06T19:30:03.147882+00:00"
       }
     ]
   }
