@@ -10,3 +10,9 @@
   ✓ Loaded: com.propedge.v14.batch3.plist
   ✓ Loaded: com.propedge.v14.batch4.plist
   Weekend schedule applied for 2026-04-05
+[daily-recalc] 2026-04-06  weekday=0
+  Weekday — no schedule change needed.
+  ✓ Loaded: com.propedge.v14.batch1.plist
+  ✓ Loaded: com.propedge.v14.batch2.plist
+  ✓ Loaded: com.propedge.v14.batch3.plist
+  ✓ Loaded: com.propedge.v14.batch4.plist
