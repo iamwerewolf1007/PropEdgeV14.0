@@ -125,3 +125,4 @@ ts,batch,event,file,rows_before,rows_after,detail
 2026-04-07 08:00:15 UK,B0,BOXSCORES_FETCHED,,0,0,"102 rows, 140 players"
 2026-04-07 08:00:18 UK,B0,BATCH_SUMMARY,,0,0,graded=0 wins=0 losses=0 dnp=0
 2026-04-07 08:16:07 UK,B0,BATCH_COMPLETE,,0,0,grade_date=2026-04-06
+2026-04-07 08:26:00 UK,B0,BATCH_COMPLETE,,0,0,grade_date=2026-04-06
