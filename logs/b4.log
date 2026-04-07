@@ -28,3 +28,18 @@
 
   ✓ Batch 4 complete — 129 plays.
 
+
+============================================================
+  PropEdge V14.0 — Batch 4  |  2026-04-06 UK
+============================================================
+  DVP updated: 90 entries written → dvp_rankings.json
+  Loading game logs...
+  ✓ V14 Adaptive Fusion models loaded (502 player trust scores)
+  Excel: 52 props for 2026-04-06
+  Scored: 52 plays | Skipped: {'no_player': 0, 'no_history': 0, 'no_feats': 0}
+  T1: 0  T2: 0
+  today.json: 52 plays saved (0 graded from today preserved)
+  Git push ✓
+
+  ✓ Batch 4 complete — 52 plays.
+
