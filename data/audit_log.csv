@@ -179,3 +179,7 @@ ts,batch,event,file,rows_before,rows_after,detail
 2026-04-10 10:24:59 UK,B0,INTEGRITY_OK,nba_gamelogs_2025_26.csv,25825,25951,
 2026-04-10 10:25:28 UK,B0,ROLLING_CROSSCHECK_FAIL,Jayson Tatum,0,0,"L30 drift 2.30pts (stored 23.9, fresh 21.6)"
 2026-04-10 10:25:28 UK,B0,ROLLING_CROSSCHECK_FAIL,Jayson Tatum,0,0,"L30 drift 2.30pts (stored 23.9, fresh 21.6)"
+2026-04-10 10:52:45 UK,B0,BATCH_COMPLETE,,0,0,grade_date=2026-04-09
+2026-04-10 16:04:25 UK,B3,BATCH_START,,0,0,date=2026-04-10
+2026-04-10 16:05:05 UK,B3,PROPS_FETCHED,,0,0,110 props
+2026-04-10 16:05:07 UK,B3,PREDICTIONS,,0,0,"110 plays, skipped={'no_player': 0, 'no_history': 0, 'no_feats': 0}"
