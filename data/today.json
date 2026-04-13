@@ -91,10 +91,10 @@
     "earlySeasonW": 0.999,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 22.9,
-    "l10": 20.3,
-    "l5": 19.6,
-    "l3": 21.7,
+    "l30": 23.3,
+    "l10": 19.0,
+    "l5": 22.2,
+    "l3": 19.0,
     "std10": 9.08,
     "hr10": 0.4,
     "hr30": 0.5,
@@ -281,7 +281,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 23.0,
+    "actualMin": 37.9,
+    "delta": 2.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Paolo Banchero scored 23pts vs 20.5 line (over by 2.5pts, called LEAN UNDER). Minutes: 38 played vs 33 L10 average (more than expected by 4min). Shot efficiency: 32% FG% vs 45% L10 average \u2014 cold shooting. Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Shooting Variance. Model projection: 18.3pts (error: 4.7pts, direction incorrect). Shooting efficiency deviated sharply \u2014 luck/defence disrupted scoring efficiency.",
+    "lossType": "SHOOTING_VARIANCE"
   },
   {
     "player": "Jalen Johnson",
@@ -565,7 +571,12 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jalen Johnson scored 0pts vs 22.5 line (under by 22.5pts, called UNDER). Despite 6/10 signals agreeing, 4 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 20.2pts (error: 20.2pts, direction correct). Player received 0 min vs expected 34 \u2014 usage was restricted. Monitor Jalen Johnson's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Desmond Bane",
@@ -659,10 +670,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 21.8,
-    "l10": 19.1,
-    "l5": 19.8,
-    "l3": 15.0,
+    "l30": 21.3,
+    "l10": 18.2,
+    "l5": 16.0,
+    "l3": 9.3,
     "std10": 7.12,
     "hr10": 0.5,
     "hr30": 0.567,
@@ -849,7 +860,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 8.0,
+    "actualMin": 17.6,
+    "delta": -11.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Desmond Bane scored 8pts vs 19.5 line (under by 11.5pts, called LEAN UNDER). Minutes: 18 played vs 31 L10 average (fewer than expected by 14min). Shot efficiency: 38% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (3/10 agreed) proved correct. Model projection: 17.4pts (error: 9.4pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Orlando Magic.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Toumani Camara",
@@ -944,9 +961,9 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
     "l30": 14.2,
-    "l10": 18.5,
-    "l5": 18.6,
-    "l3": 17.7,
+    "l10": 18.4,
+    "l5": 18.2,
+    "l3": 12.7,
     "std10": 9.05,
     "hr10": 0.7,
     "hr30": 0.433,
@@ -1133,7 +1150,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 15.0,
+    "actualMin": 33.5,
+    "delta": 0.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Toumani Camara scored 15pts vs 14.5 line (over by 0.5pts, called LEAN UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Close Call. Model projection: 12.0pts (error: 3.0pts, direction incorrect). Margin of 0.5pts \u2014 nearly correct. Statistical noise at the boundary. Consider treating sub-1pt gap plays vs Sacramento Kings as leans going forward.",
+    "lossType": "CLOSE_CALL"
   },
   {
     "player": "Jrue Holiday",
@@ -1227,10 +1250,10 @@
     "earlySeasonW": 0.999,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 17.5,
-    "l10": 16.5,
-    "l5": 19.6,
-    "l3": 13.7,
+    "l30": 17.6,
+    "l10": 17.9,
+    "l5": 18.2,
+    "l3": 15.0,
     "std10": 7.34,
     "hr10": 0.4,
     "hr30": 0.533,
@@ -1417,7 +1440,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 23.0,
+    "actualMin": 32.5,
+    "delta": 7.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Jrue Holiday scored 23pts vs 15.5 line (over by 7.5pts, called LEAN UNDER). Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Model Failure General. Model projection: 13.7pts (error: 9.3pts, direction incorrect). Genuine model uncertainty \u2014 no dominant structural cause identified.",
+    "lossType": "MODEL_FAILURE_GENERAL"
   },
   {
     "player": "Maxime Raynaud",
@@ -1511,10 +1540,10 @@
     "earlySeasonW": 0.989,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 16.3,
-    "l10": 16.4,
-    "l5": 17.0,
-    "l3": 17.0,
+    "l30": 16.8,
+    "l10": 16.3,
+    "l5": 20.0,
+    "l3": 20.3,
     "std10": 6.34,
     "hr10": 0.4,
     "hr30": 0.4,
@@ -1701,7 +1730,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 21.0,
+    "actualMin": 37.4,
+    "delta": 3.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Maxime Raynaud scored 21pts vs 17.5 line (over by 3.5pts, called LEAN UNDER). Minutes: 37 played vs 32 L10 average (more than expected by 6min). Shot efficiency: 70% FG% vs 45% L10 average \u2014 hot shooting. Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Shooting Variance. Model projection: 16.1pts (error: 4.9pts, direction incorrect). Shooting efficiency deviated sharply \u2014 luck/defence disrupted scoring efficiency.",
+    "lossType": "SHOOTING_VARIANCE"
   },
   {
     "player": "Cade Cunningham",
@@ -1795,10 +1830,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 21.4,
-    "l10": 17.4,
-    "l5": 16.6,
-    "l3": 11.0,
+    "l30": 21.3,
+    "l10": 17.1,
+    "l5": 14.6,
+    "l3": 11.3,
     "std10": 8.42,
     "hr10": 0.4,
     "hr30": 0.533,
@@ -1985,7 +2020,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 7.0,
+    "actualMin": 21.8,
+    "delta": -12.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Cade Cunningham scored 7pts vs 19.5 line (under by 12.5pts, called LEAN UNDER). Minutes: 22 played vs 29 L10 average (fewer than expected by 8min). Shot efficiency: 25% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 18.5pts (error: 11.5pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Detroit Pistons.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "VJ Edgecombe",
@@ -2079,10 +2120,10 @@
     "earlySeasonW": 0.99,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 17.5,
-    "l10": 18.4,
-    "l5": 15.6,
-    "l3": 17.0,
+    "l30": 17.7,
+    "l10": 15.8,
+    "l5": 15.8,
+    "l3": 15.3,
     "std10": 7.13,
     "hr10": 0.5,
     "hr30": 0.5,
@@ -2269,7 +2310,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 9.0,
+    "actualMin": 31.2,
+    "delta": -9.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 VJ Edgecombe scored 9pts vs 18.5 line (under by 9.5pts, called LEAN UNDER). Minutes: 31 played vs 36 L10 average (fewer than expected by 4min). Shot efficiency: 36% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (3/10 agreed) proved correct. Model projection: 16.5pts (error: 7.5pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Milwaukee Bucks.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Paul George",
@@ -2363,10 +2410,10 @@
     "earlySeasonW": 0.992,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 18.3,
-    "l10": 21.4,
-    "l5": 17.4,
-    "l3": 14.7,
+    "l30": 18.0,
+    "l10": 21.0,
+    "l5": 15.0,
+    "l3": 13.0,
     "std10": 8.14,
     "hr10": 0.6,
     "hr30": 0.367,
@@ -2553,7 +2600,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 11.0,
+    "actualMin": 21.3,
+    "delta": -8.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Paul George scored 11pts vs 19.5 line (under by 8.5pts, called LEAN UNDER). Minutes: 21 played vs 33 L10 average (fewer than expected by 11min). Shot efficiency: 57% FG% vs 45% L10 average \u2014 hot shooting. Signal alignment (3/10 agreed) proved correct. Model projection: 17.6pts (error: 6.6pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Milwaukee Bucks.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Tyrese Maxey",
@@ -2648,9 +2701,9 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
     "l30": 26.0,
-    "l10": 24.7,
+    "l10": 24.3,
     "l5": 22.8,
-    "l3": 23.3,
+    "l3": 25.3,
     "std10": 4.71,
     "hr10": 0.2,
     "hr30": 0.367,
@@ -2837,7 +2890,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 21.0,
+    "actualMin": 27.0,
+    "delta": -7.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Tyrese Maxey scored 21pts vs 28.5 line (under by 7.5pts, called UNDER). Minutes: 27 played vs 38 L10 average (fewer than expected by 11min). Shot efficiency: 62% FG% vs 45% L10 average \u2014 hot shooting. Signal alignment (5/10 agreed) proved correct. Model projection: 23.3pts (error: 2.3pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Milwaukee Bucks.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Tobias Harris",
@@ -2931,10 +2990,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 12.5,
-    "l10": 13.0,
-    "l5": 10.2,
-    "l3": 12.3,
+    "l30": 12.9,
+    "l10": 14.1,
+    "l5": 12.6,
+    "l3": 14.0,
     "std10": 5.48,
     "hr10": 0.7,
     "hr30": 0.733,
@@ -3121,7 +3180,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 24.0,
+    "actualMin": 21.8,
+    "delta": 13.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Tobias Harris scored 24pts vs 10.5 line (over by 13.5pts, called LEAN UNDER). Minutes: 22 played vs 26 L10 average (fewer than expected by 4min). Shot efficiency: 75% FG% vs 45% L10 average \u2014 hot shooting. Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 10.0pts (error: 14.0pts, direction incorrect). Player received 22 min vs expected 26 \u2014 usage was restricted. Monitor Tobias Harris's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "MINUTES_SHORTFALL"
   },
   {
     "player": "Moussa Diabat\u00e9",
@@ -3215,10 +3280,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 7.7,
-    "l10": 7.6,
-    "l5": 6.4,
-    "l3": 6.0,
+    "l30": 7.5,
+    "l10": 6.9,
+    "l5": 5.2,
+    "l3": 4.7,
     "std10": 4.48,
     "hr10": 0.6,
     "hr30": 0.533,
@@ -3405,7 +3470,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 4.0,
+    "actualMin": 26.1,
+    "delta": -3.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Moussa Diabat\u00e9 scored 4pts vs 7.5 line (under by 3.5pts, called LEAN UNDER). Shot efficiency: 67% FG% vs 45% L10 average \u2014 hot shooting. Signal alignment (2/10 agreed) proved correct. Model projection: 6.6pts (error: 2.6pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Charlotte Hornets.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Micah Potter",
@@ -3499,10 +3570,10 @@
     "earlySeasonW": 0.995,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 11.1,
-    "l10": 11.9,
-    "l5": 13.4,
-    "l3": 14.0,
+    "l30": 11.4,
+    "l10": 12.8,
+    "l5": 15.6,
+    "l3": 15.3,
     "std10": 6.17,
     "hr10": 0.5,
     "hr30": 0.4,
@@ -3689,7 +3760,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 15.0,
+    "actualMin": 34.3,
+    "delta": 2.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Micah Potter scored 15pts vs 12.5 line (over by 2.5pts, called LEAN UNDER). Minutes: 34 played vs 20 L10 average (more than expected by 14min). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Model Failure General. Model projection: 11.4pts (error: 3.6pts, direction incorrect). Genuine model uncertainty \u2014 no dominant structural cause identified.",
+    "lossType": "MODEL_FAILURE_GENERAL"
   },
   {
     "player": "Miles Bridges",
@@ -3783,10 +3860,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 15.1,
-    "l10": 16.2,
-    "l5": 18.4,
-    "l3": 16.0,
+    "l30": 14.7,
+    "l10": 16.0,
+    "l5": 14.8,
+    "l3": 10.0,
     "std10": 5.51,
     "hr10": 0.5,
     "hr30": 0.433,
@@ -3973,7 +4050,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 7.0,
+    "actualMin": 24.2,
+    "delta": -7.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Miles Bridges scored 7pts vs 14.5 line (under by 7.5pts, called LEAN UNDER). Minutes: 24 played vs 28 L10 average (fewer than expected by 4min). Shot efficiency: 38% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (2/10 agreed) proved correct. Model projection: 13.3pts (error: 6.3pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Charlotte Hornets.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Wendell Carter Jr.",
@@ -4067,10 +4150,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 11.7,
-    "l10": 12.6,
-    "l5": 13.6,
-    "l3": 9.0,
+    "l30": 11.6,
+    "l10": 11.4,
+    "l5": 8.6,
+    "l3": 6.0,
     "std10": 6.39,
     "hr10": 0.6,
     "hr30": 0.5,
@@ -4257,7 +4340,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 3.0,
+    "actualMin": 31.1,
+    "delta": -8.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Wendell Carter Jr. scored 3pts vs 11.5 line (under by 8.5pts, called LEAN UNDER). Minutes: 31 played vs 28 L10 average (more than expected by 4min). Shot efficiency: 0% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (2/10 agreed) proved correct. Model projection: 11.0pts (error: 8.0pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Orlando Magic.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "CJ McCollum",
@@ -4541,7 +4630,12 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 CJ McCollum scored 0pts vs 19.5 line (under by 19.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 17.4pts (error: 17.4pts, direction correct). Player received 0 min vs expected 30 \u2014 usage was restricted. Monitor CJ McCollum's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Scoot Henderson",
@@ -4635,10 +4729,10 @@
     "earlySeasonW": 0.998,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 13.9,
-    "l10": 15.5,
+    "l30": 14.2,
+    "l10": 15.7,
     "l5": 15.2,
-    "l3": 15.7,
+    "l3": 14.7,
     "std10": 4.61,
     "hr10": 0.5,
     "hr30": 0.4,
@@ -4825,7 +4919,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 15.0,
+    "actualMin": 27.1,
+    "delta": 0.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Scoot Henderson scored 15pts vs 14.5 line (over by 0.5pts, called LEAN UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Close Call. Model projection: 13.8pts (error: 1.2pts, direction incorrect). Margin of 0.5pts \u2014 nearly correct. Statistical noise at the boundary. Consider treating sub-1pt gap plays vs Sacramento Kings as leans going forward.",
+    "lossType": "CLOSE_CALL"
   },
   {
     "player": "Bam Adebayo",
@@ -4919,10 +5019,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 22.7,
-    "l10": 18.1,
-    "l5": 18.8,
-    "l3": 17.0,
+    "l30": 22.9,
+    "l10": 18.8,
+    "l5": 18.0,
+    "l3": 23.0,
     "std10": 5.91,
     "hr10": 0.2,
     "hr30": 0.333,
@@ -5109,7 +5209,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 25.0,
+    "actualMin": 29.2,
+    "delta": 1.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Bam Adebayo scored 25pts vs 23.5 line (over by 1.5pts, called UNDER). Minutes: 29 played vs 34 L10 average (fewer than expected by 5min). Shot efficiency: 61% FG% vs 45% L10 average \u2014 hot shooting. Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 22.4pts (error: 2.6pts, direction incorrect). Player received 29 min vs expected 34 \u2014 usage was restricted. Monitor Bam Adebayo's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "MINUTES_SHORTFALL"
   },
   {
     "player": "Tyler Herro",
@@ -5203,10 +5309,10 @@
     "earlySeasonW": 0.999,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 20.6,
-    "l10": 20.1,
-    "l5": 21.6,
-    "l3": 15.7,
+    "l30": 20.0,
+    "l10": 18.5,
+    "l5": 16.4,
+    "l3": 11.3,
     "std10": 6.33,
     "hr10": 0.3,
     "hr30": 0.333,
@@ -5393,7 +5499,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 5.0,
+    "actualMin": 22.3,
+    "delta": -17.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Tyler Herro scored 5pts vs 22.5 line (under by 17.5pts, called UNDER). Minutes: 22 played vs 34 L10 average (fewer than expected by 11min). Shot efficiency: 22% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 19.7pts (error: 14.7pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Atlanta Hawks.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Precious Achiuwa",
@@ -5487,10 +5599,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 13.2,
-    "l10": 13.8,
-    "l5": 13.2,
-    "l3": 8.7,
+    "l30": 14.0,
+    "l10": 15.3,
+    "l5": 13.0,
+    "l3": 15.0,
     "std10": 5.74,
     "hr10": 0.3,
     "hr30": 0.3,
@@ -5677,7 +5789,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 27.0,
+    "actualMin": 35.0,
+    "delta": 12.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Precious Achiuwa scored 27pts vs 14.5 line (over by 12.5pts, called UNDER). Minutes: 35 played vs 29 L10 average (more than expected by 6min). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Blowout Effect. Model projection: 13.6pts (error: 13.4pts, direction incorrect). Margin of 12pts suggests game script disrupted normal patterns.",
+    "lossType": "BLOWOUT_EFFECT"
   },
   {
     "player": "Nickeil Alexander-Walker",
@@ -5961,7 +6079,12 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Nickeil Alexander-Walker scored 0pts vs 24.5 line (under by 24.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 20.6pts (error: 20.6pts, direction correct). Player received 0 min vs expected 35 \u2014 usage was restricted. Monitor Nickeil Alexander-Walker's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Ace Bailey",
@@ -6055,10 +6178,10 @@
     "earlySeasonW": 0.988,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 17.1,
-    "l10": 19.5,
-    "l5": 18.0,
-    "l3": 19.7,
+    "l30": 17.2,
+    "l10": 18.5,
+    "l5": 17.2,
+    "l3": 17.3,
     "std10": 7.24,
     "hr10": 0.4,
     "hr30": 0.333,
@@ -6245,7 +6368,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 15.0,
+    "actualMin": 29.4,
+    "delta": -4.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Ace Bailey scored 15pts vs 19.5 line (under by 4.5pts, called UNDER). Shot efficiency: 33% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 17.0pts (error: 2.0pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Utah Jazz.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Brandon Ingram",
@@ -6339,10 +6468,10 @@
     "earlySeasonW": 0.997,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 21.3,
-    "l10": 18.7,
-    "l5": 21.8,
-    "l3": 25.7,
+    "l30": 21.2,
+    "l10": 19.3,
+    "l5": 23.4,
+    "l3": 26.3,
     "std10": 7.87,
     "hr10": 0.3,
     "hr30": 0.467,
@@ -6529,7 +6658,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 25.0,
+    "actualMin": 32.0,
+    "delta": 4.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Brandon Ingram scored 25pts vs 20.5 line (over by 4.5pts, called LEAN UNDER). Shot efficiency: 70% FG% vs 45% L10 average \u2014 hot shooting. Despite 2/10 signals agreeing, 8 counter-signals proved relevant. Loss type: Shooting Variance. Model projection: 19.9pts (error: 5.1pts, direction incorrect). Shooting efficiency deviated sharply \u2014 luck/defence disrupted scoring efficiency.",
+    "lossType": "SHOOTING_VARIANCE"
   },
   {
     "player": "Donovan Clingan",
@@ -6623,10 +6758,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 13.7,
-    "l10": 10.6,
-    "l5": 11.0,
-    "l3": 15.7,
+    "l30": 13.6,
+    "l10": 10.1,
+    "l5": 12.8,
+    "l3": 14.0,
     "std10": 5.64,
     "hr10": 0.4,
     "hr30": 0.533,
@@ -6813,7 +6948,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 13.0,
+    "actualMin": 23.8,
+    "delta": -0.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Donovan Clingan scored 13pts vs 13.5 line (under by 0.5pts, called LEAN UNDER). Shot efficiency: 60% FG% vs 45% L10 average \u2014 hot shooting. Signal alignment (2/10 agreed) proved correct. Model projection: 13.6pts (error: 0.6pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Sacramento Kings.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Brandon Miller",
@@ -6907,10 +7048,10 @@
     "earlySeasonW": 0.997,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 19.7,
-    "l10": 18.9,
-    "l5": 17.6,
-    "l3": 16.3,
+    "l30": 19.9,
+    "l10": 19.5,
+    "l5": 18.0,
+    "l3": 20.3,
     "std10": 6.16,
     "hr10": 0.5,
     "hr30": 0.5,
@@ -7097,7 +7238,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 19.0,
+    "actualMin": 27.3,
+    "delta": -1.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Brandon Miller scored 19pts vs 20.5 line (under by 1.5pts, called UNDER). Minutes: 27 played vs 31 L10 average (fewer than expected by 4min). Signal alignment (3/10 agreed) proved correct. Model projection: 17.8pts (error: 1.2pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Charlotte Hornets.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Kawhi Leonard",
@@ -7381,7 +7528,12 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Kawhi Leonard scored 0pts vs 29.5 line (under by 29.5pts, called UNDER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 25.4pts (error: 25.4pts, direction correct). Player received 0 min vs expected 31 \u2014 usage was restricted. Monitor Kawhi Leonard's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Darius Garland",
@@ -7475,10 +7627,10 @@
     "earlySeasonW": 0.999,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 19.4,
-    "l10": 21.1,
-    "l5": 17.2,
-    "l3": 18.3,
+    "l30": 19.6,
+    "l10": 18.5,
+    "l5": 16.2,
+    "l3": 17.7,
     "std10": 8.4,
     "hr10": 0.5,
     "hr30": 0.5,
@@ -7665,7 +7817,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 15.0,
+    "actualMin": 26.6,
+    "delta": -4.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Darius Garland scored 15pts vs 19.5 line (under by 4.5pts, called UNDER). Minutes: 27 played vs 31 L10 average (fewer than expected by 4min). Shot efficiency: 35% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (3/10 agreed) proved correct. Model projection: 17.4pts (error: 2.4pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Golden State Warriors.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "LaMelo Ball",
@@ -7760,9 +7918,9 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
     "l30": 21.4,
-    "l10": 22.6,
-    "l5": 26.2,
-    "l3": 32.7,
+    "l10": 22.5,
+    "l5": 27.0,
+    "l3": 27.3,
     "std10": 7.3,
     "hr10": 0.3,
     "hr30": 0.267,
@@ -7949,7 +8107,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 19.0,
+    "actualMin": 29.1,
+    "delta": -3.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 LaMelo Ball scored 19pts vs 22.5 line (under by 3.5pts, called UNDER). Shot efficiency: 37% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 22.0pts (error: 3.0pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Charlotte Hornets.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Deni Avdija",
@@ -8043,10 +8207,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 1.0,
-    "l30": 22.6,
-    "l10": 24.3,
-    "l5": 28.8,
-    "l3": 30.0,
+    "l30": 22.5,
+    "l10": 24.5,
+    "l5": 28.2,
+    "l3": 29.7,
     "std10": 5.24,
     "hr10": 0.5,
     "hr30": 0.367,
@@ -8233,7 +8397,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 25.0,
+    "actualMin": 33.1,
+    "delta": -0.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Deni Avdija scored 25pts vs 25.5 line (under by 0.5pts, called UNDER). Signal alignment (3/10 agreed) proved correct. Model projection: 22.8pts (error: 2.2pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Sacramento Kings.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Ausar Thompson",
@@ -8328,9 +8498,9 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
     "l30": 8.8,
-    "l10": 9.9,
+    "l10": 8.8,
     "l5": 10.2,
-    "l3": 10.0,
+    "l3": 9.7,
     "std10": 3.78,
     "hr10": 0.5,
     "hr30": 0.4,
@@ -8517,7 +8687,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 7.0,
+    "actualMin": 21.7,
+    "delta": -2.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Ausar Thompson scored 7pts vs 9.5 line (under by 2.5pts, called UNDER). Minutes: 22 played vs 28 L10 average (fewer than expected by 6min). Shot efficiency: 75% FG% vs 45% L10 average \u2014 hot shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 9.0pts (error: 2.0pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Detroit Pistons.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Brice Sensabaugh",
@@ -8611,10 +8787,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 19.4,
-    "l10": 24.4,
-    "l5": 23.6,
-    "l3": 24.0,
+    "l30": 19.2,
+    "l10": 23.7,
+    "l5": 23.0,
+    "l3": 22.3,
     "std10": 7.88,
     "hr10": 0.6,
     "hr30": 0.367,
@@ -8801,7 +8977,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 15.0,
+    "actualMin": 13.2,
+    "delta": -6.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Brice Sensabaugh scored 15pts vs 21.5 line (under by 6.5pts, called UNDER). Minutes: 13 played vs 31 L10 average (fewer than expected by 18min). Signal alignment (3/10 agreed) proved correct. Model projection: 18.4pts (error: 3.4pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Utah Jazz.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Luguentz Dort",
@@ -8896,9 +9078,9 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
     "l30": 7.9,
-    "l10": 7.9,
-    "l5": 9.2,
-    "l3": 6.3,
+    "l10": 8.3,
+    "l5": 7.6,
+    "l3": 5.7,
     "std10": 4.72,
     "hr10": 0.5,
     "hr30": 0.467,
@@ -9085,7 +9267,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 6.0,
+    "actualMin": 20.1,
+    "delta": -1.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Luguentz Dort scored 6pts vs 7.5 line (under by 1.5pts, called UNDER). Shot efficiency: 33% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (1/10 agreed) proved correct. Model projection: 7.4pts (error: 1.4pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Phoenix Suns.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Kon Knueppel",
@@ -9179,10 +9367,10 @@
     "earlySeasonW": 0.993,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 18.3,
+    "l30": 17.9,
     "l10": 14.6,
-    "l5": 14.8,
-    "l3": 11.3,
+    "l5": 13.6,
+    "l3": 12.3,
     "std10": 5.33,
     "hr10": 0.3,
     "hr30": 0.533,
@@ -9369,7 +9557,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 14.0,
+    "actualMin": 31.2,
+    "delta": -3.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Kon Knueppel scored 14pts vs 17.5 line (under by 3.5pts, called UNDER). Shot efficiency: 36% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (3/10 agreed) proved correct. Model projection: 16.3pts (error: 2.3pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Charlotte Hornets.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Immanuel Quickley",
@@ -9463,10 +9657,10 @@
     "earlySeasonW": 0.998,
     "seasonProgress": 0.96,
     "meanReversionRisk": 1.0,
-    "l30": 16.8,
-    "l10": 12.0,
-    "l5": 10.0,
-    "l3": 8.3,
+    "l30": 16.3,
+    "l10": 11.4,
+    "l5": 8.8,
+    "l3": 6.0,
     "std10": 5.74,
     "hr10": 0.3,
     "hr30": 0.567,
@@ -9653,7 +9847,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 4.0,
+    "actualMin": 16.6,
+    "delta": -10.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Immanuel Quickley scored 4pts vs 14.5 line (under by 10.5pts, called LEAN UNDER). Minutes: 17 played vs 30 L10 average (fewer than expected by 13min). Shot efficiency: 33% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 13.7pts (error: 9.7pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Brooklyn Nets.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "LeBron James",
@@ -9747,10 +9947,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 19.4,
-    "l10": 18.2,
-    "l5": 20.4,
-    "l3": 22.3,
+    "l30": 19.6,
+    "l10": 18.1,
+    "l5": 19.8,
+    "l3": 24.0,
     "std10": 5.72,
     "hr10": 0.1,
     "hr30": 0.1,
@@ -9937,7 +10137,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 18.0,
+    "actualMin": 16.6,
+    "delta": -9.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 LeBron James scored 18pts vs 27.5 line (under by 9.5pts, called UNDER). Minutes: 17 played vs 34 L10 average (fewer than expected by 17min). Signal alignment (5/10 agreed) proved correct. Model projection: 22.2pts (error: 4.2pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Utah Jazz.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Scottie Barnes",
@@ -10031,10 +10237,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 15.9,
-    "l10": 14.7,
-    "l5": 14.6,
-    "l3": 17.7,
+    "l30": 16.1,
+    "l10": 15.6,
+    "l5": 16.2,
+    "l3": 15.3,
     "std10": 6.47,
     "hr10": 0.3,
     "hr30": 0.233,
@@ -10221,7 +10427,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 18.0,
+    "actualMin": 32.0,
+    "delta": -1.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Scottie Barnes scored 18pts vs 19.5 line (under by 1.5pts, called UNDER). Shot efficiency: 73% FG% vs 45% L10 average \u2014 hot shooting. Signal alignment (5/10 agreed) proved correct. Model projection: 17.1pts (error: 0.9pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Brooklyn Nets.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Aaron Wiggins",
@@ -10315,10 +10527,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 8.4,
-    "l10": 7.8,
-    "l5": 6.4,
-    "l3": 8.3,
+    "l30": 8.0,
+    "l10": 6.4,
+    "l5": 5.6,
+    "l3": 6.0,
     "std10": 4.83,
     "hr10": 0.0,
     "hr30": 0.1,
@@ -10505,7 +10717,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 3.0,
+    "actualMin": 27.0,
+    "delta": -14.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Aaron Wiggins scored 3pts vs 17.5 line (under by 14.5pts, called UNDER). Minutes: 27 played vs 16 L10 average (more than expected by 11min). Shot efficiency: 14% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (5/10 agreed) proved correct. Model projection: 13.7pts (error: 10.7pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Phoenix Suns.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Andrew Wiggins",
@@ -10599,10 +10817,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 15.2,
-    "l10": 13.6,
-    "l5": 14.8,
-    "l3": 13.3,
+    "l30": 14.9,
+    "l10": 13.1,
+    "l5": 13.0,
+    "l3": 6.7,
     "std10": 5.22,
     "hr10": 0.2,
     "hr30": 0.2,
@@ -10789,7 +11007,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 4.0,
+    "actualMin": 25.7,
+    "delta": -14.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Andrew Wiggins scored 4pts vs 18.5 line (under by 14.5pts, called UNDER). Shot efficiency: 11% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (5/10 agreed) proved correct. Model projection: 15.9pts (error: 11.9pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Atlanta Hawks.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Jarace Walker",
@@ -11073,7 +11297,12 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "result": "DNP",
+    "actualPts": null,
+    "actualMin": 0,
+    "postMatchReason": "MISSED \u2717 \u2014 Jarace Walker scored 0pts vs 19.5 line (under by 19.5pts, called UNDER). Despite 5/10 signals agreeing, 5 counter-signals proved relevant. Loss type: Minutes Shortfall. Model projection: 17.6pts (error: 17.6pts, direction correct). Player received 0 min vs expected 28 \u2014 usage was restricted. Monitor Jarace Walker's minutes situation \u2014 rotation changes may be underway.",
+    "lossType": "DNP"
   },
   {
     "player": "Cody Williams",
@@ -11168,9 +11397,9 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
     "l30": 12.2,
-    "l10": 16.6,
-    "l5": 15.4,
-    "l3": 13.7,
+    "l10": 16.5,
+    "l5": 16.4,
+    "l3": 15.7,
     "std10": 8.53,
     "hr10": 0.5,
     "hr30": 0.267,
@@ -11357,7 +11586,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 14.0,
+    "actualMin": 39.2,
+    "delta": -3.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Cody Williams scored 14pts vs 17.5 line (under by 3.5pts, called UNDER). Minutes: 39 played vs 35 L10 average (more than expected by 4min). Shot efficiency: 33% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (3/10 agreed) proved correct. Model projection: 14.1pts (error: 0.1pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Utah Jazz.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Kenrich Williams",
@@ -11452,9 +11687,9 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
     "l30": 6.8,
-    "l10": 5.2,
-    "l5": 6.4,
-    "l3": 5.7,
+    "l10": 5.6,
+    "l5": 7.6,
+    "l3": 9.3,
     "std10": 5.23,
     "hr10": 0.0,
     "hr30": 0.033,
@@ -11641,7 +11876,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 13.0,
+    "actualMin": 32.9,
+    "delta": -2.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Kenrich Williams scored 13pts vs 15.5 line (under by 2.5pts, called UNDER). Minutes: 33 played vs 11 L10 average (more than expected by 22min). Signal alignment (4/10 agreed) proved correct. Model projection: 12.0pts (error: 1.0pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Phoenix Suns.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Jared McCain",
@@ -11735,10 +11976,10 @@
     "earlySeasonW": 0.996,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 10.1,
-    "l10": 7.1,
-    "l5": 9.0,
-    "l3": 11.3,
+    "l30": 10.4,
+    "l10": 6.7,
+    "l5": 9.2,
+    "l3": 9.3,
     "std10": 5.37,
     "hr10": 0.0,
     "hr30": 0.133,
@@ -11925,7 +12166,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 9.0,
+    "actualMin": 24.8,
+    "delta": -9.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Jared McCain scored 9pts vs 18.5 line (under by 9.5pts, called UNDER). Minutes: 25 played vs 15 L10 average (more than expected by 10min). Shot efficiency: 31% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (5/10 agreed) proved correct. Model projection: 15.9pts (error: 6.9pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Phoenix Suns.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Jake LaRavia",
@@ -12020,8 +12267,8 @@
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
     "l30": 6.1,
-    "l10": 5.7,
-    "l5": 8.0,
+    "l10": 5.9,
+    "l5": 5.6,
     "l3": 6.7,
     "std10": 5.22,
     "hr10": 0.2,
@@ -12209,7 +12456,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 2.0,
+    "actualMin": 24.8,
+    "delta": -9.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Jake LaRavia scored 2pts vs 11.5 line (under by 9.5pts, called UNDER). Shot efficiency: 33% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 9.0pts (error: 7.0pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Utah Jazz.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Nique Clifford",
@@ -12303,10 +12556,10 @@
     "earlySeasonW": 0.99,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 12.6,
-    "l10": 13.4,
-    "l5": 16.4,
-    "l3": 16.7,
+    "l30": 13.3,
+    "l10": 14.8,
+    "l5": 19.4,
+    "l3": 18.7,
     "std10": 5.95,
     "hr10": 0.3,
     "hr30": 0.2,
@@ -12493,7 +12746,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 24.0,
+    "actualMin": 38.8,
+    "delta": 6.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Nique Clifford scored 24pts vs 17.5 line (over by 6.5pts, called UNDER). Minutes: 39 played vs 33 L10 average (more than expected by 6min). Shot efficiency: 77% FG% vs 45% L10 average \u2014 hot shooting. Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Shooting Variance. Model projection: 14.8pts (error: 9.2pts, direction incorrect). Shooting efficiency deviated sharply \u2014 luck/defence disrupted scoring efficiency.",
+    "lossType": "SHOOTING_VARIANCE"
   },
   {
     "player": "AJ Green",
@@ -12587,10 +12846,10 @@
     "earlySeasonW": 1.0,
     "seasonProgress": 0.96,
     "meanReversionRisk": 1.0,
-    "l30": 9.7,
-    "l10": 14.8,
-    "l5": 17.8,
-    "l3": 22.7,
+    "l30": 10.1,
+    "l10": 16.2,
+    "l5": 18.6,
+    "l3": 22.3,
     "std10": 8.23,
     "hr10": 0.2,
     "hr30": 0.067,
@@ -12777,7 +13036,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 19.0,
+    "actualMin": 36.3,
+    "delta": -0.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 AJ Green scored 19pts vs 19.5 line (under by 0.5pts, called UNDER). Minutes: 36 played vs 33 L10 average (more than expected by 3min). Signal alignment (4/10 agreed) proved correct. Model projection: 16.0pts (error: 3.0pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Milwaukee Bucks.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Quenton Jackson",
@@ -12871,10 +13136,10 @@
     "earlySeasonW": 0.991,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 9.8,
-    "l10": 9.9,
-    "l5": 13.6,
-    "l3": 12.3,
+    "l30": 10.1,
+    "l10": 11.4,
+    "l5": 14.6,
+    "l3": 16.3,
     "std10": 4.81,
     "hr10": 0.3,
     "hr30": 0.233,
@@ -13061,7 +13326,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 21.0,
+    "actualMin": 29.7,
+    "delta": 6.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Quenton Jackson scored 21pts vs 14.5 line (over by 6.5pts, called UNDER). Minutes: 30 played vs 21 L10 average (more than expected by 9min). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Model Failure General. Model projection: 12.3pts (error: 8.7pts, direction incorrect). Genuine model uncertainty \u2014 no dominant structural cause identified.",
+    "lossType": "MODEL_FAILURE_GENERAL"
   },
   {
     "player": "Devin Carter",
@@ -13155,10 +13426,10 @@
     "earlySeasonW": 0.989,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.5,
-    "l30": 10.8,
-    "l10": 14.8,
-    "l5": 15.6,
-    "l3": 18.7,
+    "l30": 10.7,
+    "l10": 14.0,
+    "l5": 14.6,
+    "l3": 14.3,
     "std10": 7.47,
     "hr10": 0.4,
     "hr30": 0.233,
@@ -13345,7 +13616,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 8.0,
+    "actualMin": 34.4,
+    "delta": -9.5,
+    "result": "WIN",
+    "postMatchReason": "HIT \u2713 \u2014 Devin Carter scored 8pts vs 17.5 line (under by 9.5pts, called UNDER). Minutes: 34 played vs 28 L10 average (more than expected by 6min). Shot efficiency: 21% FG% vs 45% L10 average \u2014 cold shooting. Signal alignment (4/10 agreed) proved correct. Model projection: 14.4pts (error: 6.4pts, direction correct). Prediction confirmed. Model and signal alignment validated vs Sacramento Kings.",
+    "lossType": "MODEL_CORRECT"
   },
   {
     "player": "Tari Eason",
@@ -13439,10 +13716,10 @@
     "earlySeasonW": 0.999,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 8.3,
-    "l10": 10.1,
-    "l5": 9.0,
-    "l3": 9.0,
+    "l30": 8.7,
+    "l10": 11.8,
+    "l5": 9.8,
+    "l3": 11.7,
     "std10": 6.43,
     "hr10": 0.5,
     "hr30": 0.167,
@@ -13629,7 +13906,13 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 20.0,
+    "actualMin": 23.8,
+    "delta": 5.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Tari Eason scored 20pts vs 14.5 line (over by 5.5pts, called UNDER). Despite 3/10 signals agreeing, 7 counter-signals proved relevant. Loss type: Model Failure General. Model projection: 12.4pts (error: 7.6pts, direction incorrect). Genuine model uncertainty \u2014 no dominant structural cause identified.",
+    "lossType": "MODEL_FAILURE_GENERAL"
   },
   {
     "player": "Nikola Topi\u0107",
@@ -13723,10 +14006,10 @@
     "earlySeasonW": 0.234,
     "seasonProgress": 0.96,
     "meanReversionRisk": 0.0,
-    "l30": 3.8,
-    "l10": 3.8,
-    "l5": 3.6,
-    "l3": 5.3,
+    "l30": 5.2,
+    "l10": 5.2,
+    "l5": 7.2,
+    "l3": 10.7,
     "std10": 4.39,
     "hr10": 0.0,
     "hr30": 0.0,
@@ -13836,6 +14119,12 @@
         "batch": 3,
         "ts": "2026-04-12T15:51:25.093477+00:00"
       }
-    ]
+    ],
+    "actualPts": 18.0,
+    "actualMin": 39.4,
+    "delta": 3.5,
+    "result": "LOSS",
+    "postMatchReason": "MISSED \u2717 \u2014 Nikola Topi\u0107 scored 18pts vs 14.5 line (over by 3.5pts, called UNDER). Minutes: 39 played vs 13 L10 average (more than expected by 26min). Despite 4/10 signals agreeing, 6 counter-signals proved relevant. Loss type: Model Failure General. Model projection: 11.1pts (error: 6.9pts, direction incorrect). Genuine model uncertainty \u2014 no dominant structural cause identified.",
+    "lossType": "MODEL_FAILURE_GENERAL"
   }
 ]
