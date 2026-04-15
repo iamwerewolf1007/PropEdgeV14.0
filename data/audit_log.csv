@@ -212,3 +212,9 @@ ts,batch,event,file,rows_before,rows_after,detail
 2026-04-14 11:00:07 UK,B1,BATCH_START,,0,0,date=2026-04-14
 2026-04-14 11:00:45 UK,B1,PROPS_FETCHED,,0,0,29 props
 2026-04-14 11:00:46 UK,B1,PREDICTIONS,,0,0,"29 plays, skipped={'no_player': 0, 'no_history': 0, 'no_feats': 0}"
+2026-04-14 11:01:10 UK,B1,BATCH_COMPLETE,,0,0,29 plays written
+2026-04-15 11:37:42 UK,B0,BATCH_START,,0,0,grading_date=2026-04-14
+2026-04-15 11:37:46 UK,B0,BOXSCORES_FETCHED,,0,0,"38 rows, 58 players"
+2026-04-15 11:38:03 UK,B0,BATCH_SUMMARY,,0,0,graded=58 wins=28 losses=28 dnp=2
+2026-04-15 11:38:08 UK,B0,FILE_STATE_BEFORE_APPEND,nba_gamelogs_2025_26.csv,26600,26600,
+2026-04-15 11:39:44 UK,B0,INTEGRITY_OK,nba_gamelogs_2025_26.csv,26600,26639,
